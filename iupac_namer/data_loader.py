@@ -1747,6 +1747,35 @@ _RING_CURATED_SMILES: dict[str, dict] = {
     # idx0=C2, idx1=N3, idx2=C4, idx3=C5, idx4=N1(H).
     "C1=NCCN1":        {"name": "4,5-dihydro-1H-imidazole", "substituent_form": "4,5-dihydro-1H-imidazolyl", "alkyl_stem_ok": False,
                         "atom_locants": {0: 2, 1: 3, 2: 4, 3: 5, 4: 1}},
+    # The pyrazole counterparts of the entry above.  They were missing, and
+    # without them the partially-saturated 1,2-diazole ring fell through to
+    # Hantzsch-Widman, which spells it "1,2-diazole": 2-pyrazoline came out as
+    # "4,5-dihydro-1H-1,2-diazole".  That denotes the right molecule but is not
+    # the PIN -- "pyrazole" is a retained ring name (P-25.2.1), exactly as
+    # "imidazole" is for the 1,3-isomer above.  Aromatic pyrazole was never
+    # affected: it matches the "c1cn[nH]c1" entry two lines up.
+    #
+    # Why only pyrazole was wrong: imidazole and pyrrole have curated
+    # partially-saturated entries, and oxazole/thiazole get away without one
+    # because their Hantzsch-Widman names ("1,3-oxazole", "1,3-thiazole") ARE
+    # the preferred forms.  Pyrazole is the only 5-ring here whose HW name
+    # differs from its PIN.
+    #
+    # 4,5-dihydro-1H-pyrazole (2-pyrazoline).  RDKit canonical 'C1=NNCC1':
+    # idx0=C, idx1=N, idx2=N, idx3=C, idx4=C.
+    # atom_locants from OPSIN chloro-probing of the canonical form:
+    #   1-Cl -> idx2, 3-Cl -> idx0, 4-Cl -> idx4, 5-Cl -> idx3.
+    # Locant 2 is the remaining atom, idx1: it is the =N- and cannot carry a
+    # substituent without saturating the ring, so 2-chloro probes back to
+    # pyrazolidine rather than to this parent.
+    "C1=NNCC1":        {"name": "4,5-dihydro-1H-pyrazole", "substituent_form": "4,5-dihydro-1H-pyrazolyl", "alkyl_stem_ok": False,
+                        "atom_locants": {2: 1, 1: 2, 0: 3, 4: 4, 3: 5}},
+    # 2,3-dihydro-1H-pyrazole (3-pyrazoline).  RDKit canonical 'C1=CNNC1':
+    # idx0=C, idx1=C, idx2=N, idx3=N, idx4=C.  All five locants probed
+    # cleanly: 1-Cl -> idx2, 2-Cl -> idx3, 3-Cl -> idx4, 4-Cl -> idx0,
+    # 5-Cl -> idx1.
+    "C1=CNNC1":        {"name": "2,3-dihydro-1H-pyrazole", "substituent_form": "2,3-dihydro-1H-pyrazolyl", "alkyl_stem_ok": False,
+                        "atom_locants": {2: 1, 3: 2, 4: 3, 0: 4, 1: 5}},
     # S,N
     # 1,3-thiazole: S=1, C=2 (between S and N), N=3, C=4 (next to N), C=5 (next to S).
     # Canonical 'c1cscn1': idx0=C, idx1=C, idx2=S, idx3=C, idx4=N. Ring bonds 0-1, 1-2, 2-3, 3-4, 4-0.
@@ -1774,7 +1803,17 @@ _RING_CURATED_SMILES: dict[str, dict] = {
 
     # Three heteroatoms
     # N,N,N
-    "c1cn[nH]n1":      {"name": "1H-1,2,3-triazole",  "substituent_form": "1,2,3-triazolyl",  "alkyl_stem_ok": False},
+    # 1,2,3-triazole, both tautomers.  The 2H entry used to be labelled
+    # "1H-1,2,3-triazole", which is simply the wrong tautomer: OPSIN parses
+    # 1H- to c1c[nH]nn1 and 2H- to c1cn[nH]n1.  The effect was that the 2H
+    # form was named 1H- and the 1H form had no entry at all, so BOTH inputs
+    # came back as the 1H structure and the indicated hydrogen the caller
+    # supplied was discarded.  The 1,2,4-triazole and tetrazole entries
+    # nearby already distinguish their tautomers; this one was the odd one
+    # out rather than a deliberate normalisation (contrast the purine block,
+    # which collapses its four tautomers on purpose and says so).
+    "c1c[nH]nn1":      {"name": "1H-1,2,3-triazole",  "substituent_form": "1,2,3-triazolyl",  "alkyl_stem_ok": False},
+    "c1cn[nH]n1":      {"name": "2H-1,2,3-triazole",  "substituent_form": "1,2,3-triazolyl",  "alkyl_stem_ok": False},
     # 1H-1,2,4-triazole: N(H) on an adjacent N (N1). Atoms (canonical 'c1nc[nH]n1'):
     # 0=C, 1=N, 2=C, 3=[nH], 4=N. Ring bonds: 0-1, 1-2, 2-3, 3-4, 4-0.
     # [nH] at 3 is N1; its ring neighbors are 2 (C) and 4 (N). Atom 4 is the adjacent N2.
