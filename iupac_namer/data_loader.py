@@ -796,6 +796,11 @@ _RING_CURATED_SMILES: dict[str, dict] = {
     # numbering directions are equivalent by C2v symmetry; we pick one.
     "c1ccncc1":        {"name": "pyridine",   "substituent_form": "pyridinyl",   "alkyl_stem_ok": False,
                         "atom_locants": {3: 1, 2: 2, 1: 3, 0: 4, 5: 5, 4: 6}},
+    # NB a curated entry keyed on the N-oxide ring ("[O-][n+]1ccccc1") would
+    # be dead data: the additive N-oxide path strips the exocyclic [O-]
+    # before ring lookup, names what is left, and appends " 1-oxide", so the
+    # ring that reaches this table is plain pyridine.  Tried and removed.
+    # See D-024 in KNOWN_LIMITATIONS.md.
     # 1,4-dihydropyridine — DHP drugs (nifedipine class). RDKit canonical: C1=CNC=CC1
     # Atom_locants: N(idx2)=pos1, C(idx1, adj-N, C=C)=pos2, C(idx0, adj-sp3, C=C)=pos3,
     #               C(idx5, sp3)=pos4, C(idx4, adj-sp3, C=C)=pos5, C(idx3, adj-N, C=C)=pos6
@@ -4598,6 +4603,16 @@ _INORGANIC_CURATED_SMILES: dict[str, dict] = {
     # --- Monoatomic cations ---
     "[NH4+]":  {"name": "azanium"},             # P-73.2.1; also "ammonium" (common)
     "[H3O+]":  {"name": "oxidanium"},           # hydronium
+    # Formylium (CHO+), the R=H member of the acylium family.
+    # _classify_acylium cannot reach it: it requires the [C+] to carry no
+    # hydrogen AND to have a single-bonded R neighbour, and formylium fails
+    # both -- it has one H and no R.  Relaxing those guards for the sake of a
+    # one-atom family would widen the acylium pattern for nothing, so the
+    # single species is curated instead.  Without this the charge was dropped
+    # and it named as "oxomethane".
+    # "formylium" is the PIN (formyl is a retained acyl group, P-65.1.7.1) and
+    # matches the acetylium / benzoylium the engine already emits.
+    "[CH+]=O": {"name": "formylium"},
     "[Li+]":   {"name": "lithium(1+)"},
     "[Na+]":   {"name": "sodium(1+)"},
     "[K+]":    {"name": "potassium(1+)"},
@@ -4888,6 +4903,14 @@ _INORGANIC_CURATED_SMILES: dict[str, dict] = {
     "[N-]=C=O":   {"name": "isocyanate"},
     # Isothiocyanate: canonical "[N-]=C=S"
     "[N-]=C=S":   {"name": "isothiocyanate"},
+    # Azide: canonical "[N-]=[N+]=[N-]".  Without this entry the engine
+    # named BOTH the azide anion and its conjugate acid "diiminoazanium",
+    # which denotes N=[N+]=N -- a CATION, and therefore neither of them.
+    # One name, given confidently, for three different species.
+    "[N-]=[N+]=[N-]": {"name": "azide"},
+    # Hydrogen azide (HN3): canonical "[N-]=[N+]=N".  The PIN; "hydrazoic
+    # acid" is the retained common name and OPSIN accepts both.
+    "[N-]=[N+]=N":    {"name": "hydrogen azide"},
 
     # --- Terminal alkynyl carbanion anions (P-72.2 / P-73 salt context) ---
     # These ``[C-]#C-R`` anions arise in metal-acetylide salts.  The engine
