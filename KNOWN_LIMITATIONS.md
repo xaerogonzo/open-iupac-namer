@@ -206,6 +206,44 @@ returning `(azanylidyne)(methyl)azanium`. On the benchmark diazomethane moved
 `wrong_structure -> no_prediction`; the score is unchanged at 120/124 because
 both are failures, but one of them was lying.
 
+## Substituent locants the tree cannot supply (open, 2026-09-17)
+
+A ring system inside a SUBSTITUENT gets no atom locants out of the name tree,
+so a consumer drawing numbering on a structure numbers a fentanyl's acetyl
+chain and neither its piperidine nor its phenyls. Three measured reasons:
+
+* The nested prefix subtree DOES carry a numbering, and it is FRAGMENT-LOCAL.
+  Measured on acetyl fentanyl, the piperidinyl subtree numbers its own atoms
+  `{13: 1, 9: 2, 6: 3, 5: 4, 7: 5, 10: 6}` - indices of the carved fragment,
+  not of the molecule.
+* The tree exposes NO fragment-to-parent map. `named_parent.candidate` carries
+  fragment-local indices too, and no node holds the carved mol, so the mapping
+  would have to be re-derived by inference.
+* The curated ring table cannot fill the gap: 302 of its 371 entries carry an
+  `atom_locants` map, and PIPERIDINE and BENZENE are not among them
+  (pyrrolidine has no entry keyed by its ring SMILES at all). For benzene a
+  skeleton numbering would be arbitrary anyway - every position is equivalent
+  until a substituent breaks the tie.
+
+Fixing it properly means having `carve_substituent` return its
+fragment-to-parent map alongside the fragment, which is a change to the
+extraction layer's contract. Inferring it instead is how a numbering ends up
+confident and wrong.
+
+Indole is a smaller instance of the same shape: its table entry numbers 7 of
+its 9 ring atoms, so 3a and 7a are missing. That one is a data gap in
+`atom_locants` rather than an algorithm.
+
+## An indicated hydrogen dropped from a substituent name (open, 2026-09-17)
+
+`OC(=O)c1ccc(cc1)c1cc2ccccc2[nH]1` is named `4-(indol-2-yl)benzoic acid`,
+where the PIN carries the indicated hydrogen: `4-(1H-indol-2-yl)benzoic acid`.
+Severity B - OPSIN resolves a bare `indol-2-yl` to the 1H form, so the name
+round-trips and denotes the right molecule. The N-substituted case is already
+correct (`4-(1-methyl-1H-indol-2-yl)benzoic acid`), which places the gap in
+the unsubstituted-N path rather than in the indicated-hydrogen machinery.
+Found while fixing D-029; it predates it.
+
 ## Not limitations
 
 * The five tests that shipped red are not engine defects. They asserted a
