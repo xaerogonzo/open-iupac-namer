@@ -154,7 +154,6 @@ signal either of them gives about its own blind spot.
 | input | emits | preferred | rule |
 |---|---|---|---|
 | `ClC(=O)C(=O)Cl` | `ethane-1,2-dioyl chloride` | `oxalyl dichloride` | `oxalyl` IS the PIN acyl group (P-65.1.7.2.1); the `di` multiplier is also missing |
-| `CC(C)C` | `isobutane` | `2-methylpropane` | retained, not a PIN |
 
 The acyl-halide case is **not** a matter of adding a table entry. Instrumenting
 `_acid_name_to_acyl` over 200+ molecules showed only two distinct acid names
@@ -173,10 +172,12 @@ citation and must not be "corrected" to match.
 
 ### Unaudited data
 
-74 of the 292 `retained_pins` entries carry `"source": "algorithm.py", "rule":
-"various"`, meaning no rule was ever cited for them. Two turned out to be
-wrong on inspection. The other 72 are unexamined — not known to be wrong, but
-not known to be right either, and that is the honest description.
+261 of the 292 `retained_pins` entries carry `"rule": "various"`, meaning
+no rule was ever cited for them, and 161 were harvested from OPSIN's
+dictionary. Round 3 audited 18, chosen from those a benchmark name reaches (see
+`CHANGELOG.md`, D-036; `isobutane` was one, now `2-methylpropane`). The
+other 274 carry no `pin_status` -- not known to be wrong, but not known to
+be right either, and that is the honest description.
 
 ## Severity C
 
@@ -243,6 +244,29 @@ round-trips and denotes the right molecule. The N-substituted case is already
 correct (`4-(1-methyl-1H-indol-2-yl)benzoic acid`), which places the gap in
 the unsubstituted-N path rather than in the indicated-hydrogen machinery.
 Found while fixing D-029; it predates it.
+
+## Open after naming round 3 (2026-09-17)
+
+Each of these has a known target, quoted from the Blue Book, and is not yet
+implemented. Listed by layer, because the round's finding was that defects
+which all look like "the ranking picked wrong" live in different places.
+
+| layer | case | emits | preferred |
+|---|---|---|---|
+| candidate generation | chloroquine | `...quinolin-4-amine` | `...pentane-1,4-diamine`: no candidate carries two PCGs (P-44.1.1) |
+| PCG assignment | warfarin | `4-(4-hydroxycoumarin-3-yl)...butan-2-one` | `4-hydroxy-3-(...)chromen-2-one`: the ring is offered with a phenol suffix only |
+| PCG assignment | caffeine | `1,3,7-trimethyl-2,6-dioxo-1H-purine` | `1,3,7-trimethylpurine-2,6-dione`: exposed by D-036 |
+| data | p-xylene | `1,4-dimethylbenzene` | `1,4-xylene` (P-22.1.3): the registry needs an entry ADDED |
+| functional class | dimethyl sulfoxide | `dimethyl sulfoxide` | `(methanesulfinyl)methane` (P-63.6) |
+| additive | trimethylamine N-oxide | `N,N-dimethylmethanamine oxide` | `N,N-dimethylmethanamine N-oxide` |
+| serialization | hexamethyldisiloxane | `trimethyl(trimethylsiloxy)silane` | `...silyloxy...`: the O-bridge assembly drops a `yl` |
+| serialization | a tertiary-amine prefix | `{[(ethyl)][...]amino}` | `{ethyl[...]amino}`: a simple prefix wrapped twice |
+
+Deliberately deferred rather than half-done: the preference score is still a
+float with hand-tuned bands; `NamingSession`'s cache key does not include
+the strategy and `IUPACCanonical()` is constructed directly at 11 sites, so a
+custom strategy cannot yet change every decision; and 274 registry entries
+have no audited `pin_status`.
 
 ## Not limitations
 

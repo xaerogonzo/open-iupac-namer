@@ -501,3 +501,118 @@ Measured on that corpus, scored by OPSIN round trip on canonical SMILES and
 InChIKey: **184/187 before (82 exact, three names carrying a contradicted
 stereodescriptor) -> 187/187 after (87 exact)**. Suite: 3,255 passing, 16
 skipped, 0 failing.
+
+## Naming round 3 (2026-09-17): preference, not just correctness
+
+Every name before this round already round-tripped. That is the engine's
+correctness criterion, and it is blind to PREFERENCE: `caffeine`,
+`(trimethylsilan-yl)benzene` and `2-methoxynaphthalen-6-yl` all parse back
+to the right molecule. Measured against the external corpus, 60 names
+round-tripped while differing from the reference string, and this round
+worked through them against the IUPAC Blue Book itself -- the 2013
+recommendations with the 2022 corrections (`BlueBookV2.pdf`, sha256
+`6b607a40...fb563f`), quoted verbatim in each entry below. The per-name
+verdicts, with the quotation for each, live in OpenChem Studio at
+`benchmarks/naming/adjudication.toml`; the two comments in this package
+that cite that path refer to it.
+
+**The main finding is about where defects live.** Four flagship cases
+looked like one defect -- "the preference score picked the wrong
+candidate" -- and were measured to sit in four different layers: the plan
+BUDGET (a silicon parent never proposed), candidate GENERATION (no
+candidate with two principal characteristic groups), PCG ASSIGNMENT (a ring
+offered as a phenol, never as its ketone) and NUMBERING. Replacing the
+float score with a lexicographic key would have fixed none of them; it is
+still planned, as hygiene.
+
+* **D-030, severity A: a bridged free valence named a constitutional
+  isomer.** `CNC(C)CC12CC3CC(CC(C3)C1C1CCCCC1)C2` came out
+  `1-(2-cyclohexyladamantan-5-yl)-N-methylpropan-2-amine`, a different
+  InChIKey. Bridged rings kept an older branch that SORTED numberings and
+  relied on "later-generated wins a tie"; any competing ring prefix broke
+  the tie the wrong way. They now take the same free-valence FILTER as every
+  other ring substituent (`_lowest_free_valence_numberings`, P-31.1.4.2.4).
+  Found by a 40-row corpus selected without consulting the engine -- the
+  curated corpus scored 187/187 both before and after. Fixing it exposed a
+  second defect: `-yl` elision of locant 1 was decided by a different
+  predicate from stem contraction, giving `adamantan-yl`. They are one
+  decision now, `assembly.render_free_valence_suffix(stem_contracts=...)`.
+* **D-031: a fused free valence where locant 1 is unreachable.** The
+  fused-ring branch filtered for "attachment at 1" and, finding none on a
+  fused ring, yielded every numbering, so the prefix band decided:
+  `2-methoxynaphthalen-6-yl`. It now falls back to the lowest REACHABLE
+  free-valence locant. Verified on naphthalene, anthracene, phenanthrene,
+  quinoline and a substituted naphthalene.
+* **D-032: the plan budget is two budgets.** A single 20-plan cap was spent
+  on benzene's numbering variants before a second parent hypothesis was
+  proposed, so `trimethyl(phenyl)silane` never had a silicon plan to rank.
+  `_PlanBudget` separates a work bound (`_TOTAL_PLAN_BUDGET = 512`, measured
+  maximum 138) from a per-hypothesis bound (`_PLANS_PER_HYPOTHESIS = 128`,
+  measured maximum 96). Runtime did not move. Eight tests here pinned the
+  pre-fix parent and were wrong: P-44.1.2 (p. 375) puts carbon LAST in the
+  senior-atom order, "applied ... to choose between rings and chains", so
+  `(silyl)benzene` becomes `phenylsilane`, and likewise for Bi, Pb and Sb.
+* **D-033: a mononuclear parent does not cite locant 1** (P-29.2, p. 301):
+  `trimethylazanium-1-yl` -> `trimethylazaniumyl`. Method (1) applies BY NAME
+  to Si, Ge, Sn and Pb, so `trimethylsilan-1-yl` -> `trimethylsilyl`;
+  phosphorus keeps `phosphanyl`, and a pinned row holds that line.
+* **D-034: the nesting order of enclosing marks cycles.** P-16.5.4:
+  `{[({[( )]})]}` -- there is no deepest level, so `{...{...}...}` becomes
+  `(...{...}...)`. The parent-structure brackets of spiro, fusion and von
+  Baeyer names and the parentheses of added hydrogen are exempt
+  (P-16.5.4.1.1-2), as are the braces of superscript locants.
+  `tests/test_namer_enclosing_marks.py` pins the book's own Fig. 1.3.
+* **D-035: the isotope hyphen depends on what follows it** (P-82.2.1):
+  `(1-2H)-methanol` -> `(1-2H)methanol`, but `(2-13C)-1H-indole` keeps its
+  hyphen, because an indicated-hydrogen locant is a preceding locant.
+* **D-036: a retained name is not automatically a preferred name.**
+  `retained_pins` in `data/retained_names_expanded.json` asserted PIN status
+  for 292 names while citing a rule for 31; 161 were harvested from OPSIN's
+  name-to-structure dictionary, where presence means a name can be READ.
+  Entries now carry `pin_status` (`PIN` / `RETAINED_NOT_PIN`; absent means
+  unaudited) with `pin_evidence` and `pin_source`. Eighteen are audited,
+  chosen from the entries a benchmark name reaches, and eight demoted:
+  butyraldehyde, chloroform, isobutane, triethylamine, trimethylamine,
+  camphor, caffeine, ibuprofen. `toluene` is audited as a PIN, because
+  P-22.1.3 says so; a sweep demoting every retained name would have broken
+  it. The other 274 behave exactly as before.
+
+  **This changes `name_smiles` output for existing callers**: caffeine is
+  now named systematically. `NamingStrategy.preferred_name_policy()`
+  (`"PIN"` by default, or `"RETAINED_PREFERRED"`) decides whether a
+  `RETAINED_NOT_PIN` name may take the preferred slot.
+  `retained_name_policy()` never had a reader and is deprecated, with the
+  mapping `ALWAYS_IF_AVAILABLE`/`PREFER` -> `RETAINED_PREFERRED`,
+  `NEVER` -> `PIN` in its docstring. Two tests here asserted camphor was a
+  PIN on a citation (P-66.6.3) that is about chalcogen analogues of
+  aldehydes; camphor appears on two pages of the book, neither a
+  retained-name table.
+* **D-037: two ring names were not the preferred ones.** `isoxazole` ->
+  `1,2-oxazole`, `isothiazole` -> `1,2-thiazole` (Table 2.2), `benzofuran` ->
+  `1-benzofuran` (p. 208, which also gives `2-benzofuran`). Each was
+  inconsistent with its neighbours in the same table.
+* **`_opsin_can_parse` uses a private input file per call.** py2opsin's
+  `tmp_fpath` defaults to one relative filename in the working directory,
+  shared by every caller in the process and deleted in a `finally`.
+  Measured with 16 concurrent calls: 5 correct on the shared path, 16 with a
+  private one. A lost call reads as "cannot parse" and strips
+  stereodescriptors that were fine; it was also the source of one to eight
+  spurious test failures per suite run.
+* **The stereo-validation cache no longer makes a missing JRE permanent.**
+  `_STEREO_OPSIN_VALIDATION_CACHE` was keyed on the name alone, though its
+  answer depends on `strip_modes`, and it cached inconclusive results -- so
+  one call without Java kept stereodescriptors stripped for the life of the
+  process. Keyed on `(name, strip_modes)`, and only a confirmed verdict is
+  cached. `tests/test_namer_stereo_validation_cache.py` fails under the old
+  behaviour.
+
+New tests: `test_namer_plan_budget.py` (mutation-tested: collapsing every
+plan into one bucket kills 6 of its 14 assertions),
+`test_namer_enclosing_marks.py`, `test_namer_stereo_validation_cache.py`,
+and 61 rows in `test_namer_known_defects.py` covering D-030 to D-037.
+
+Measured on the external corpus, by OPSIN round trip on canonical SMILES and
+InChIKey: **187/187 before and after, exact 87 -> 98**; on the 40-row
+held-out corpus **39/40 -> 40/40**. Nothing structurally regressed at any
+step. Exact agreement is with PubChem's generated string, which is itself
+sometimes the non-preferred name -- fixing chloroform LOST an exact match.
