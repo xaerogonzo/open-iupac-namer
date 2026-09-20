@@ -378,3 +378,25 @@ maintained from; what follows is the summary a caller needs.
   which the book says it is not. It agrees with P-44.2.1 except for a ring
   whose senior atom is O/S/Se/Te against one whose is P..B, a pair no corpus
   molecule has.
+
+## Open after naming round 6
+
+* **Cyanamide as a PREFIX** (`3-(cyanoamino)propanoic acid`): the Blue Book
+  prints no name for it (searched: no `cyanoamino`, `cyanamido` or `N-cyano`
+  prefix), so none is targeted.
+* **`cyanato` is not enclosed** (`3-cyanatopropanoic acid`) while `thiocyanato`
+  is: the book prints only the latter's enclosure (`3-(thiocyanato)propanoic
+  acid (PIN)`); a cyanate ester is derived from the rule, not printed.
+* **The two new functional-parent routes return a leaf**, so they share the
+  ownership blind spot recorded for round 5: the leaf is trusted to name its
+  whole fragment.
+* **Acyl cyanates and thiocyanates** (`CC(=O)SC#N`, named `acetyl thiocyanate`
+  by the acyl route) are not attempted by the ester route.
+* **Not from this round, found beside it: carboxylate ANIONS carrying a
+  hydroxy or amino group are named as if that group were the principal one.**
+  `Oc1ccccc1C(=O)[O-]` comes out `2-oxidooxomethylphenol`, which OPSIN reads
+  as a phenolate aldehyde, a different molecule; likewise the 2- and
+  4-aminobenzoates and 3-hydroxybenzoate. The aliphatic cases round-trip and
+  are not preferred: lactate is `1-oxido-1-oxopropan-2-ol` (the book's name is
+  `2-hydroxypropanoate`) and glycolate `2-oxido-2-oxoethan-1-ol`. Benzoate,
+  acetate, chloroacetate and 2-methylbenzoate are unaffected. In no corpus.

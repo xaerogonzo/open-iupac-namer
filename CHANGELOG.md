@@ -801,3 +801,45 @@ back to the structure it came from, 13 of the 40 matching PubChem's string
 exactly. Agreement with an adjudicated preferred name rose on all three
 tuning corpora (28/30 to 30/31, 14/16 to 17/18, and 20/23 where none had been
 adjudicated before).
+
+## Naming round 6: amides and esters of cyanic acid
+
+Found by cross-checking the engine's perception against an independent
+functional-group vocabulary, which showed methyl thiocyanate being PERCEIVED as
+a plain nitrile. The molecules were right in every case; the names were not
+the preferred ones. Measured before any change: `NC#N` was
+`aminomethanenitrile` where the Blue Book retains `cyanamide (PIN)`
+(P-66.1.6.2, PDF p. 663); `CCN(CC)C#N` was `(diethylamino)methanenitrile` for
+`diethylcyanamide (PIN)`; `CC(C)SC#N` was
+`[(propan-2-yl)sulfanyl]methanenitrile` for `propan-2-yl thiocyanate (PIN)`
+(P-65.6.3.3.7.2.1, p. 629); `N#CSCCC(=O)O` was `3-(cyanosulfanyl)propanoic
+acid` for `3-(thiocyanato)propanoic acid (PIN)` (P-65.2.2, p. 604).
+
+Four changes, each pinned by D-094a-q in `tests/test_namer_known_defects.py`:
+
+* **`cyanamide` is a registry entry typed PIN**, with the page quoted, and a
+  substituted cyanamide is named by `_name_cyanamide_functional_parent` on the
+  shared N-core builder, with no locant (the nitrogen is the only position, as
+  in the book's own examples).
+* **An O- or S-bonded cyano group is `cyanato` / `thiocyanato`**, not a nitrile.
+  The nitrile pattern is blind to what the cyano carbon is bonded to, so it and
+  the prefix-only groups overlapped; the engine logged "Unknown FG overlap ...
+  Treating as ambiguity" and the nitrile won. Two subsumption entries in
+  `perception/fg_detection.py` settle it, and
+  `_name_cyanic_ester_functional_parent` names the ester (`methyl cyanate`,
+  `propan-2-yl thiocyanate`, `S-ethyl 3-(thiocyanato)propanethioate`).
+* **The prefixes** `cyanato` / `thiocyanato` replace `cyanooxy` /
+  `cyanosulfanyl`, including in the ether-prefix branch, which builds its own
+  name and had to be taught the same thing.
+* **`thiocyanato` is enclosed as the book prints it, by an EXACT match**,
+  because `isothiocyanato` contains the word and is printed bare (D-094p).
+
+`tests/test_namer_cyanic_perception.py` pins the subsumption itself, because it
+is invisible in names for most molecules and visible in perception. It reads
+the engine's own `Perception`. (The repository this package is vendored into
+keeps the same test against its annotation layer; that layer cannot exist
+here, so this copy is written for the package rather than copied.)
+
+The regression, held-out and second held-out corpora contain no cyano
+compound, so no name in them changed. The third held-out set was not
+consulted.
