@@ -724,3 +724,80 @@ measurable regressed", not as something reproducible here): 187/187 and
 held-out set. On rows with a settled Blue Book target the engine gives the
 preferred name 28/30 and 14/16 times; PubChem's own string, 15/30 and 5/16.
 What is still open is in `KNOWN_LIMITATIONS.md`, "Open after naming round 4".
+
+## Naming round 5
+
+Nine stages on top of round 4, each measured against the same three corpora
+before it was accepted. The two findings worth reading first are both WRONG
+MOLECULES, because nothing else in this list can hurt a caller as much:
+`H2N-C(=NH)-CH2CH2-COOH` was named `4-carbamimidoylbutanoic acid`, one carbon
+too many, and an N-substituted ring amidine came out as
+`4-(carbamimidoylmethyl)benzoic acid`. Both are fixed and pinned.
+
+**An atom-ownership invariant on the semantic tree** (`ownership.py`). Every
+heavy atom of the named component must be owned exactly once by a tree node,
+or be classified as an allowed non-owned entity with a reason. It runs before
+serialization and never by parsing the emitted string. Set
+`IUPAC_NAMER_OWNERSHIP=strict` to raise instead of recording. It caught three
+defects during the round that no round trip could see, and its own blind spot
+is recorded in `KNOWN_LIMITATIONS.md`: a prefix's CLAIMED atoms are not the
+atoms its NAME denotes.
+
+**General fusion nomenclature, P-25.3** (`ring_naming/fusion_general.py`,
+`ring_naming/fusion_orientation.py`). A fused system with no retained name is
+drawn as the book draws it (every permitted ring shape as the compass
+directions its sides face) and numbered from that drawing. 78 of the book's 79
+in-class P-25 examples are exact end to end; 46 out-of-class cases refuse with
+a stated reason rather than emitting a partial name. The numbering agrees with
+OPSIN's on every in-class example that can be probed, and on 40 common drug
+scaffolds.
+
+**Multiplicative names** (`multiplicative.py`): bis-guanidines,
+methylenebis(phosphonic acid), N',N'''-methylenediacetohydrazide, and 22 of
+the book's P-15.3/P-51.3 preferred names exact.
+
+**Parents the engine could not reach**: hydrazine as a parent hydride
+(`hydrazinecarboxamide`), N-substituted nitrogen oxoacids
+(`N-methylsulfamic acid`), oxamide, silicic acid, and a(ba)n chains
+(`hexamethyldisiloxane`, `chlorodisiloxane`).
+
+**A gate over the names harvested from OPSIN's dictionary.** The 1,824-name
+vocabulary file and the 174 registry entries copied from it establish that a
+name can be READ, which is not that IUPAC prefers it. Such a name is now
+emitted only where the registry types it with a normative rule, so
+`fluorouracil` and `tabun` no longer appear as whole-molecule names. A
+converse test proves it is not a lexical blacklist: the same spelling is still
+produced wherever the engine's own rules construct it.
+
+**Principal-group seniority and assignment**: urea ranks below the amides
+(P-66.1.6.1.1.5), a chain-terminal amidine is amino + imino, a silanol counts
+same-class groups instead of stepping aside, hydroxamic acids are N-hydroxy
+amides, and an enol takes `-ol`.
+
+**Numbering**: hydro-prefix locants now reach the preference key, so
+`1,2,3,6-tetrahydropyridine-4-carboxylic acid` and `pyridin-1(2H)-yl` come out
+as the book prints them. The orientations had tied, and the tie went to
+whichever was generated first.
+
+**Serialization**, five rules, each classified as lexical before it was built:
+a one-stem `ylidene` prefix is not enclosed; elision does not apply between a
+prefix and its parent; the first cited simple prefix on a mononuclear parent
+goes bare; P-14.3.4.5 omits locants when every position of an all-carbon or
+a(ba)n parent carries the same substituent; a contracted alkoxy prefix is
+substitutable; and an acyclic hydrazide ends in `-hydrazide`, not
+`-ohydrazide`.
+
+**The retained-name registry is audited where it is usable.** Every entry the
+gate lets through now carries a typed status with a quoted rule. Three entries
+were REMOVED because they bound a name to the wrong stereoisomer
+("L-proline" on D-proline, "L-threonine" on L-allothreonine, "L-isoleucine"
+on L-alloisoleucine); two new tests check that every registry name denotes
+its own structure, OPSIN being the independent reader, and that no name is
+bound to two structures.
+
+Measured at the end of the round on a corpus of 40 molecules drawn and frozen
+before any of this work, never consulted while making it: every name parses
+back to the structure it came from, 13 of the 40 matching PubChem's string
+exactly. Agreement with an adjudicated preferred name rose on all three
+tuning corpora (28/30 to 30/31, 14/16 to 17/18, and 20/23 where none had been
+adjudicated before).

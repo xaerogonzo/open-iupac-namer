@@ -341,3 +341,40 @@ from `NamingSession`'s cache key with `IUPACCanonical()` built at 11 sites
 * The five tests that shipped red are not engine defects. They asserted a
   non-minimal lambda numbering and three general-nomenclature-only acylium
   names; the engine's output is correct in every case. See `CHANGELOG.md`.
+
+## Open after naming round 5
+
+Round 5's own list, by layer. The full table, with every case's emitted name
+and its cited target, is in the OpenChem Studio repository this fork is
+maintained from; what follows is the summary a caller needs.
+
+* **Fusion**, beyond one parent plus first-order attached components: a
+  second-order attached component (16 of the book's P-25 examples), a
+  multiparent system, interior heteroatoms (P-25.3.3.2), a 7- or 8-membered
+  ring fused on three or more sides, rings larger than eight members, and
+  helicenes. Each refuses with a code rather than guessing.
+* **Ownership**, two blind spots: a prefix whose NAME denotes an atom it does
+  not CLAIM (which let one wrong molecule through, found by probe instead),
+  and the 66 of 267 corpus molecules named with no substitutive level at all,
+  where a leaf is trusted to name its whole fragment.
+* **Candidate generation**: N'-acyl hydrazides, carbazate esters, a C=O
+  between two N=, a substituted hydrazide as a prefix, condensed ureas
+  (`2-imidodicarbonic diamide`), two acyl groups on one nitrogen
+  (`N-acetylbenzamide`), Si-NH-Si, phosphoramidocyanidate esters, and
+  skeletal replacement where a principal group is present.
+* **Serialization**, classified and left: `tert-butyl` in a preferred name
+  (it renames the prefix and moves the alphanumerical citation order, so it
+  is not the ranking-neutral change that stage admits), `tert-butoxycarbonyl`,
+  `propane-2-sulfonyl`, `ethanethioamido`, `phosphoryl`, and the substituted
+  carbamimidoyl prefix. P-14.3.4.5 is not applied to an unsaturated parent or
+  to a heteroaromatic one: `1,5-dimethyl-1H-tetrazole` keeps its locants
+  because `2,5-` is another compound.
+* **Data**: OPSIN's RING vocabulary (705 ring names, 821 fusion components)
+  is read as parent names and is not audited. Of the 44 ring parents that win
+  on the tuning corpora, 10 come only from that vocabulary, and all 10 are
+  book names. 171 registry entries remain untyped; the gate refuses every one
+  of them that came from OPSIN's dictionary.
+* **Ranking**: the P-44.1.2 senior-atom tier is compared ring against ring,
+  which the book says it is not. It agrees with P-44.2.1 except for a ring
+  whose senior atom is O/S/Se/Te against one whose is P..B, a pair no corpus
+  molecule has.
