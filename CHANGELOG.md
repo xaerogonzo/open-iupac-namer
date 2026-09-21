@@ -843,3 +843,46 @@ here, so this copy is written for the package rather than copied.)
 The regression, held-out and second held-out corpora contain no cyano
 compound, so no name in them changed. The third held-out set was not
 consulted.
+
+## Naming round 7: anions that carry another group, and the retained anion names
+
+Found by putting a salt through the application, not by any corpus. A carboxylate or sulfonate beside a neutral
+hydroxy, amino or sulfanyl group was named as if that group were the principal one: salicylate came out
+`2-oxidooxomethylphenol` (OPSIN reads a different molecule) and lactate `1-oxido-1-oxopropan-2-ol` (which parses
+back, and is wrong anyway). Nothing caught it because half of the affected names round-trip.
+
+**The cause was a missing owner between two guards.** `_classify_acidic_anion` deferred every "mixed charged and
+neutral" molecule to plan search, and plan search's `_carved_acid_anion_sites` excluded carboxylate because "the
+dedicated path handles it". Each comment was true of its own half. `charge_perception.acid_anion_route(mol)` is now
+the one function both routes ask, following P-41 (anions outrank acids; everything below an acid is a prefix):
+`"classifier"` for a pure anion or one beside groups junior to an acid, `"carved"` for another neutral acid, a
+nitro group or a net-negative zwitterion, `None` for a genuine other ion. The carved route takes its acid group from
+perception on an index-preserving neutral view (`neutral_view`), and its principal-group restriction covers the whole
+anion-variant family.
+
+Also changed, each pinned by D-095 to D-099 in `tests/test_namer_known_defects.py` (fixes red before, with converses
+that differ by reason):
+
+* **A charge ledger for the functional-group route.** A zwitterion with one carboxylate and one NEUTRAL COOH was
+  named as the dianion (a wrong molecule from a route that owned the site): in `ANION` mode the suffix now sits only
+  on the charged instances of a type that has both. A net-negative zwitterion (glutamate and aspartate as drawn at
+  pH 7) had no owner at all and is now carved (`2-azaniumylpentanedioate`).
+* **The retained anion names the book prints** (P-72.2.2.2.2, pdf p. 808; P-103.2.4.2, p. 1047): `methoxide`,
+  `ethoxide`, `propoxide`, `butoxide`, `tert-butoxide`, `phenoxide` and `glycinate`, in the curated whole-molecule
+  table. `isopropoxide` is deliberately NOT added (the book prints `propan-2-olate`); the chiral amino acids are not
+  added either (below).
+* **A salt with two identical organic `-ate` anions takes a multiplying prefix**: `calcium diacetate`, and
+  `bis(...)` for a prefixed anion. The older collapse stays narrow on purpose (`disulfate` is a different ion).
+* **An amide anion is an acyl group on the parent anion `azanide`** (`acetylazanide`, p. 810), not `acetylamide`.
+
+**Ownership is a checked property.** `perception/charge_ownership.py` compares three independent sources for every
+charged atom: its structural class, the routes that would claim it (taken from the real predicates before the
+first-claimer-wins de-duplication), and the route the engine actually took (`diagnostics.record_route`). The
+verdicts are OWNED, HOLE, OVERLAP, INCONSISTENT and a declared UNSUPPORTED that carries its reason in words.
+`tests/test_charge_ownership.py` pins the decision function, both failure shapes as mutations, and the declared
+edges; its one test that sweeps the panel reads `tests/charged_panel_smiles.json` here (the panel itself, its
+baseline and its adjudication live in the OpenChem Studio repository, with the test that pins them).
+
+The instrumentation changes no result: `classify_charges(claims_out=...)` and `diagnostics.record_route` are inert,
+and 0 of the 307 names in the regression, held-out and second and third held-out corpora changed at any stage.
+`tests/test_namer_salt_multiplier.py` unit-tests the multiplier, because the D-rows go through whole salts.

@@ -1,0 +1,434 @@
+[
+ {
+  "id": "A0-acetate",
+  "smiles": "CC(=O)[O-]"
+ },
+ {
+  "id": "A0-benzoate",
+  "smiles": "[O-]C(=O)c1ccccc1"
+ },
+ {
+  "id": "A0-chloroacetate",
+  "smiles": "ClCC(=O)[O-]"
+ },
+ {
+  "id": "A0-4-methoxybenzoate",
+  "smiles": "COc1ccc(cc1)C(=O)[O-]"
+ },
+ {
+  "id": "A0-4-nitrobenzoate",
+  "smiles": "[O-]C(=O)c1ccc(cc1)[N+](=O)[O-]"
+ },
+ {
+  "id": "A0-nicotinate",
+  "smiles": "[O-]C(=O)c1cccnc1"
+ },
+ {
+  "id": "A1-lactate",
+  "smiles": "CC(O)C(=O)[O-]"
+ },
+ {
+  "id": "A1-glycolate",
+  "smiles": "OCC(=O)[O-]"
+ },
+ {
+  "id": "A1-mandelate",
+  "smiles": "OC(c1ccccc1)C(=O)[O-]"
+ },
+ {
+  "id": "A1-salicylate",
+  "smiles": "Oc1ccccc1C(=O)[O-]"
+ },
+ {
+  "id": "A1-3-hydroxybenzoate",
+  "smiles": "Oc1cccc(c1)C(=O)[O-]"
+ },
+ {
+  "id": "A1-4-hydroxybenzoate",
+  "smiles": "Oc1ccc(cc1)C(=O)[O-]"
+ },
+ {
+  "id": "A1-3-hydroxybutanoate",
+  "smiles": "CC(O)CC(=O)[O-]"
+ },
+ {
+  "id": "A1-4-hydroxybutanoate",
+  "smiles": "OCCCC(=O)[O-]"
+ },
+ {
+  "id": "A1-gluconate",
+  "smiles": "OCC(O)C(O)C(O)C(O)C(=O)[O-]"
+ },
+ {
+  "id": "A2-glycinate",
+  "smiles": "NCC(=O)[O-]"
+ },
+ {
+  "id": "A2-alaninate",
+  "smiles": "CC(N)C(=O)[O-]"
+ },
+ {
+  "id": "A2-prolinate",
+  "smiles": "[O-]C(=O)C1CCCN1"
+ },
+ {
+  "id": "A2-tyrosinate",
+  "smiles": "NC(Cc1ccc(O)cc1)C(=O)[O-]"
+ },
+ {
+  "id": "A2-cysteinate",
+  "smiles": "NC(CS)C(=O)[O-]"
+ },
+ {
+  "id": "A2-4-aminobenzoate",
+  "smiles": "Nc1ccc(cc1)C(=O)[O-]"
+ },
+ {
+  "id": "A2-anthranilate",
+  "smiles": "Nc1ccccc1C(=O)[O-]"
+ },
+ {
+  "id": "A2-3-aminopropanoate",
+  "smiles": "NCCC(=O)[O-]"
+ },
+ {
+  "id": "A2-N-methylglycinate",
+  "smiles": "CNCC(=O)[O-]"
+ },
+ {
+  "id": "A3-3-sulfanylpropanoate",
+  "smiles": "SCCC(=O)[O-]"
+ },
+ {
+  "id": "A3-sulfanylacetate",
+  "smiles": "SCC(=O)[O-]"
+ },
+ {
+  "id": "A4-5-carboxypentanoate",
+  "smiles": "OC(=O)CCCCC(=O)[O-]"
+ },
+ {
+  "id": "A4-3-carboxypropanoate",
+  "smiles": "OC(=O)CCC(=O)[O-]"
+ },
+ {
+  "id": "A4-3-carboxy-2-hydroxypropanoate",
+  "smiles": "OC(=O)CC(O)C(=O)[O-]"
+ },
+ {
+  "id": "A4-2-carboxybenzoate",
+  "smiles": "OC(=O)c1ccccc1C(=O)[O-]"
+ },
+ {
+  "id": "A4-oxalate-mono",
+  "smiles": "OC(=O)C(=O)[O-]"
+ },
+ {
+  "id": "A5-3-carbamoylpropanoate",
+  "smiles": "NC(=O)CCC(=O)[O-]"
+ },
+ {
+  "id": "A5-4-ethoxy-4-oxobutanoate",
+  "smiles": "CCOC(=O)CCC(=O)[O-]"
+ },
+ {
+  "id": "A5-4-methoxy-4-oxobutanoate",
+  "smiles": "COC(=O)CCC(=O)[O-]"
+ },
+ {
+  "id": "A5-citrate-diester-anion",
+  "smiles": "CCOC(=O)CC(O)(CC(O)=O)C([O-])=O"
+ },
+ {
+  "id": "A6-butanedioate",
+  "smiles": "[O-]C(=O)CCC([O-])=O"
+ },
+ {
+  "id": "A6-pyridine-2,6-dicarboxylate",
+  "smiles": "[O-]C(=O)c1cccc(n1)C([O-])=O"
+ },
+ {
+  "id": "A6-2-hydroxybutanedioate-dianion",
+  "smiles": "[O-]C(=O)CC(O)C([O-])=O"
+ },
+ {
+  "id": "B0-benzenesulfonate",
+  "smiles": "[O-]S(=O)(=O)c1ccccc1"
+ },
+ {
+  "id": "B0-tosylate",
+  "smiles": "Cc1ccc(cc1)S(=O)(=O)[O-]"
+ },
+ {
+  "id": "B0-mesylate",
+  "smiles": "CS(=O)(=O)[O-]"
+ },
+ {
+  "id": "B1-2-hydroxybenzenesulfonate",
+  "smiles": "Oc1ccccc1S(=O)(=O)[O-]"
+ },
+ {
+  "id": "B1-sulfanilate",
+  "smiles": "Nc1ccc(cc1)S(=O)(=O)[O-]"
+ },
+ {
+  "id": "B1-taurinate",
+  "smiles": "NCCS(=O)(=O)[O-]"
+ },
+ {
+  "id": "B1-isethionate",
+  "smiles": "OCCS(=O)(=O)[O-]"
+ },
+ {
+  "id": "B2-benzenesulfinate",
+  "smiles": "[O-]S(=O)c1ccccc1"
+ },
+ {
+  "id": "B3-hydrogen-phenylphosphonate",
+  "smiles": "OP(=O)([O-])c1ccccc1"
+ },
+ {
+  "id": "B3-phenyl-hydrogen-phosphate",
+  "smiles": "OP(=O)([O-])Oc1ccccc1"
+ },
+ {
+  "id": "B4-4-sulfobenzoate",
+  "smiles": "[O-]C(=O)c1ccc(cc1)S(O)(=O)=O"
+ },
+ {
+  "id": "B4-4-carboxybenzenesulfonate",
+  "smiles": "OC(=O)c1ccc(cc1)S(=O)(=O)[O-]"
+ },
+ {
+  "id": "C0-methoxide",
+  "smiles": "C[O-]"
+ },
+ {
+  "id": "C0-ethoxide",
+  "smiles": "CC[O-]"
+ },
+ {
+  "id": "C0-propan-2-olate",
+  "smiles": "CC(C)[O-]"
+ },
+ {
+  "id": "C0-tert-butoxide",
+  "smiles": "CC(C)(C)[O-]"
+ },
+ {
+  "id": "C0-phenoxide",
+  "smiles": "[O-]c1ccccc1"
+ },
+ {
+  "id": "C1-4-aminophenolate",
+  "smiles": "Nc1ccc(cc1)[O-]"
+ },
+ {
+  "id": "C1-4-methylphenolate",
+  "smiles": "Cc1ccc(cc1)[O-]"
+ },
+ {
+  "id": "C1-2-hydroxyethan-1-olate",
+  "smiles": "OCC[O-]"
+ },
+ {
+  "id": "C1-2-sulfanylethan-1-olate",
+  "smiles": "SCC[O-]"
+ },
+ {
+  "id": "C2-benzenethiolate",
+  "smiles": "[S-]c1ccccc1"
+ },
+ {
+  "id": "C2-2-sulfanylbenzene-1-thiolate",
+  "smiles": "[S-]c1ccccc1S"
+ },
+ {
+  "id": "C2-2-hydroxyethane-1-thiolate",
+  "smiles": "OCC[S-]"
+ },
+ {
+  "id": "C3-benzene-1,2-dithiolate",
+  "smiles": "[S-]c1ccccc1[S-]"
+ },
+ {
+  "id": "D0-methanaminide",
+  "smiles": "C[NH-]"
+ },
+ {
+  "id": "D0-benzenaminide",
+  "smiles": "[NH-]c1ccccc1"
+ },
+ {
+  "id": "D1-acetylazanide",
+  "smiles": "CC(=O)[NH-]"
+ },
+ {
+  "id": "D2-carbamate",
+  "smiles": "NC(=O)[O-]"
+ },
+ {
+  "id": "E0-glycine-zwitterion",
+  "smiles": "[NH3+]CC([O-])=O"
+ },
+ {
+  "id": "E0-S-methylcysteine-zwitterion",
+  "smiles": "CSCC([NH3+])C([O-])=O"
+ },
+ {
+  "id": "E1-alanine-zwitterion",
+  "smiles": "CC([NH3+])C([O-])=O"
+ },
+ {
+  "id": "E1-betaine",
+  "smiles": "C[N+](C)(C)CC([O-])=O"
+ },
+ {
+  "id": "E1-taurine-zwitterion",
+  "smiles": "[NH3+]CCS(=O)(=O)[O-]"
+ },
+ {
+  "id": "E1-pyridinium-carboxylate",
+  "smiles": "C[n+]1c(cc(cc1-c1ccccc1)-c1ccccc1)C([O-])=O"
+ },
+ {
+  "id": "E2-glutamate-monoanion",
+  "smiles": "[NH3+]C(CCC(O)=O)C([O-])=O"
+ },
+ {
+  "id": "E2-glutamate-dianion",
+  "smiles": "NC(CCC([O-])=O)C([O-])=O"
+ },
+ {
+  "id": "F0-tetramethylammonium",
+  "smiles": "C[N+](C)(C)C"
+ },
+ {
+  "id": "F0-choline",
+  "smiles": "C[N+](C)(C)CCO"
+ },
+ {
+  "id": "F0-acetylcholine",
+  "smiles": "CC(=O)OCC[N+](C)(C)C"
+ },
+ {
+  "id": "F0-ethoxycarbonylethyl-trimethylammonium",
+  "smiles": "CCOC(=O)CC[N+](C)(C)C"
+ },
+ {
+  "id": "F0-carnitine-like",
+  "smiles": "C[N+](C)(C)CCC(O)=O"
+ },
+ {
+  "id": "F1-methylammonium",
+  "smiles": "C[NH3+]"
+ },
+ {
+  "id": "F1-anilinium",
+  "smiles": "[NH3+]c1ccccc1"
+ },
+ {
+  "id": "F1-ammonium",
+  "smiles": "[NH4+]"
+ },
+ {
+  "id": "F2-pyridinium",
+  "smiles": "c1cc[nH+]cc1"
+ },
+ {
+  "id": "F2-N-methylpyridinium",
+  "smiles": "C[n+]1ccccc1"
+ },
+ {
+  "id": "F2-imidazolium",
+  "smiles": "c1c[nH]c[nH+]1"
+ },
+ {
+  "id": "F2-bmim",
+  "smiles": "CCCCn1cc[n+](C)c1"
+ },
+ {
+  "id": "F3-guanidinium",
+  "smiles": "NC(N)=[NH2+]"
+ },
+ {
+  "id": "F3-trimethylsulfonium",
+  "smiles": "C[S+](C)C"
+ },
+ {
+  "id": "F3-tetramethylphosphonium",
+  "smiles": "C[P+](C)(C)C"
+ },
+ {
+  "id": "F4-2-aminoethylammonium",
+  "smiles": "NCC[NH3+]"
+ },
+ {
+  "id": "G0-sodium-acetate",
+  "smiles": "[Na+].CC(=O)[O-]"
+ },
+ {
+  "id": "G0-potassium-butanoate",
+  "smiles": "[K+].CCCC(=O)[O-]"
+ },
+ {
+  "id": "G0-calcium-diacetate",
+  "smiles": "[Ca+2].CC(=O)[O-].CC(=O)[O-]"
+ },
+ {
+  "id": "G0-sodium-salicylate",
+  "smiles": "[Na+].Oc1ccccc1C(=O)[O-]"
+ },
+ {
+  "id": "G0-sodium-lactate",
+  "smiles": "[Na+].CC(O)C(=O)[O-]"
+ },
+ {
+  "id": "G0-sodium-glycinate",
+  "smiles": "[Na+].NCC(=O)[O-]"
+ },
+ {
+  "id": "G0-potassium-3-carboxypropanoate",
+  "smiles": "[K+].OC(=O)CCC(=O)[O-]"
+ },
+ {
+  "id": "G0-calcium-bis-gluconate",
+  "smiles": "[Ca+2].OCC(O)C(O)C(O)C(O)C(=O)[O-].OCC(O)C(O)C(O)C(O)C(=O)[O-]"
+ },
+ {
+  "id": "G0-sodium-benzenesulfonate",
+  "smiles": "[Na+].[O-]S(=O)(=O)c1ccccc1"
+ },
+ {
+  "id": "G0-sodium-4-aminobenzene-sulfonate",
+  "smiles": "[Na+].Nc1ccc(cc1)S(=O)(=O)[O-]"
+ },
+ {
+  "id": "G0-sodium-phenoxide",
+  "smiles": "[Na+].[O-]c1ccccc1"
+ },
+ {
+  "id": "G0-potassium-tert-butoxide",
+  "smiles": "[K+].CC(C)(C)[O-]"
+ },
+ {
+  "id": "G1-choline-salicylate",
+  "smiles": "C[N+](C)(C)CCO.Oc1ccccc1C(=O)[O-]"
+ },
+ {
+  "id": "G1-choline-acetate",
+  "smiles": "C[N+](C)(C)CCO.CC(=O)[O-]"
+ },
+ {
+  "id": "G1-tetramethylammonium-acetate",
+  "smiles": "C[N+](C)(C)C.CC(=O)[O-]"
+ },
+ {
+  "id": "G1-choline-lactate",
+  "smiles": "C[N+](C)(C)CCO.CC(O)C(=O)[O-]"
+ },
+ {
+  "id": "G2-caffeine-hydrate",
+  "smiles": "Cn1cnc2c1c(=O)n(C)c(=O)n2C.O"
+ }
+]

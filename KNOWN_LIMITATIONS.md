@@ -400,3 +400,38 @@ maintained from; what follows is the summary a caller needs.
   are not preferred: lactate is `1-oxido-1-oxopropan-2-ol` (the book's name is
   `2-hydroxypropanoate`) and glycolate `2-oxido-2-oxoethan-1-ol`. Benzoate,
   acetate, chloroacetate and 2-methylbenzoate are unaffected. In no corpus.
+
+## Open after naming round 7
+
+Round 7 closed the acid-anion class and made ownership of a charged atom a measured property; what is left:
+
+* **Deprotonated phosphonic and phosphoric acids are a DECLARED unsupported class** (`hydroxy(oxido)(oxo)(phenyl)
+  phosphane` for `hydrogen phenylphosphonate`, p. 808): the "hydrogen" method for acid esters of inorganic acids is
+  a construction of its own. Structurally right, not preferred; in `charge_ownership.DECLARED_UNSUPPORTED`.
+* **The chiral amino-acid anions** (`alaninate`, `prolinate`, `tyrosinate`, `cysteinate`, `glutamate`) get the flat
+  systematic name (`2-aminopropanoate`). OPSIN reads a bare `alaninate` as the L-isomer while P-103.1.3.1 designates
+  configuration by D/L, so a whole-molecule retained name needs a stereo policy first. Glycine (achiral) is done.
+* **Protonated imidazole** is `1,3-diazol-1-ium` (the book: `1H-imidazol-3-ium`) and **protonated benzimidazole** is a
+  NAMING ERROR (a refusal, not a wrong name). The retained ring is found for a fully N-substituted cation and not
+  when `[nH+]` sits beside `[nH]`; abandoned under the round's stop rule after a short look.
+* **A betaine's cationic prefix** is `(trimethylazaniumyl)acetate`; the book prints `(N,N-dimethylmethanaminiumyl)
+  acetate` (pp. 362, 837). Both denote the same structure and the pages read do not say whether the first is also
+  permitted.
+* **A zwitterion with an anion of ANOTHER class** (`[NH3+]C(C[O-])C([O-])=O`) round-trips but is not preferred:
+  `acid_anion_route` returns `None` for two anion classes, so the carboxylate is not carved.
+* **A compound acyl name on `azanide`** (`chloroacetylazanide`) is written solid: the enclosure test looks for locant
+  characters and misses a substituent without one.
+* **WRONG MOLECULE, found after the final evaluation and not fixed: the trianion of a tricarboxylic acid** (citrate
+  `[O-]C(=O)CC(O)(CC([O-])=O)C([O-])=O`) is named `3-carboxy-3-hydroxypentanedioate`, with one carboxylate written as
+  a neutral `carboxy` prefix: two charges for three sites. Two layers: the NEUTRAL acid is named
+  `3-carboxy-3-hydroxypentanedioic acid` where the book prints `2-hydroxypropane-1,2,3-tricarboxylic acid (PIN)`
+  (P-65.1.1.2.3, p. 578), and the classifier route then converts only the suffix groups. It was a wrong name before
+  the round too. A sound fix is a charge ledger on that route (every acid group there IS a deprotonated site, so an
+  acid prefix in the name is a wrong charge) plus the neutral chain choice.
+* **Found by the same check: the biguanidium cation** (`CN(C)C(=N)NC(N)=[NH2+]`) is named as a dication
+  (`...-1-iminomethanebis(aminium)`). Not an anion, so outside the class this round worked on.
+* **Not attempted this round, and not investigated** (so no diagnosis is recorded): N'-acyl hydrazides and the
+  substituted-hydrazide prefix, two acyl groups on one N, carbon with two double-bonded suffix groups, Si-NH-Si and
+  condensed ureas. Each keeps its row in "Open after naming round 5".
+* **The carboxylate-anion item that closes the round-6 section above is FIXED**: salicylate is `2-hydroxybenzoate`,
+  lactate `2-hydroxypropanoate`, glycolate `hydroxyacetate`.
