@@ -435,3 +435,29 @@ Round 7 closed the acid-anion class and made ownership of a charged atom a measu
   condensed ureas. Each keeps its row in "Open after naming round 5".
 * **The carboxylate-anion item that closes the round-6 section above is FIXED**: salicylate is `2-hydroxybenzoate`,
   lactate `2-hydroxypropanoate`, glycolate `hydroxyacetate`.
+
+## Open after naming round 8
+
+Found and recorded, by layer; none is a wrong molecule, and each reads back through OPSIN. The repository's `KNOWN_LIMITATIONS.md` carries the same list with
+its measurements and the panel it was measured on.
+
+* **A thiolate beside an acid anion** (`[S-]c1ccccc1C(=O)[O-]`) is `2-[oxido(oxo)methyl]benzene-1-thiolate`; the carved route takes an olate, and a thiolate's anionic
+  prefix is not built.
+* **A charged acid group inside a substituent** is named with `oxido`: `4-[(oxidosulfonyl)methyl]benzoate`, `3-carboxy-4-(2-oxido-2-oxoethyl)benzoate`, where the
+  book prints `sulfonatomethyl`, `carboxylatomethyl` (p. 619).
+* **N-alkoxy amides and amines**: a thioamide (`N-methoxy-N-methyl-1-thioxoethan-1-amine`), an N,N-dialkoxy amide, and O-alkylhydroxylamines
+  (`(aminooxy)methane`, the book's `O-methylhydroxylamine`, a retained parent the engine does not build).
+* **Several nitrate groups** (`1,2,3-tris(nitrooxy)propane`, the book's `propane-1,2,3-triyl trinitrate`); **chloroformates and dicarbonates**
+  (`methoxymethanoyl chloride`, a nine-part name for di-tert-butyl dicarbonate); **carbazate esters** (`(ethoxycarbonyl)hydrazine`: the carbamate plan for a
+  carbazate is tried and fails with 'atoms unclaimed', and the engine names the next plan; the old comment saying the anion cannot be named is stale).
+* **Peptide-like acyl prefixes**: `acetamidoacetamidoacetic acid` is not enclosed, and a glycyl is `2-amino-1-oxoethyl`.
+* **Benzil** keeps its locants (`1,2-diphenylethane-1,2-dione`; the book prints `diphenylethanedione`); **substituted carbamimidoyl** is
+  `[(dimethylamino)(ethylimino)methyl]`; **peroxide, sulfur, phosphorus and boron pseudoketones** keep oxo prefixes; diacyl peroxides and xanthate esters are
+  named by prefixes; a one-carbon ketone parent's second prefix is not enclosed (`(morpholin-4-yl)phenylmethanone`).
+* **Condensed guanidines and ureas with n >= 5 AND substituents** are refused (a guard keeps them from taking the bare chain's name).
+* **Not attempted, unchanged from earlier rounds**: the P-15.3 multiplicative constructions, the silicon rows (`D-089s`, `u`, `v`, `D-090b`), the hydrazide prefix
+  spelling (`D-088d`, partly fixed), fusion (`D-086a` to `c`), chiral amino-acid anions (a stereo policy first), deprotonated phosphorus acids (declared
+  unsupported), second-order and multiparent fusion, interior heteroatoms, and helicenes.
+* **The one deliberate deviation from the book**: the curated ring table numbers pyrene's interior carbons `10b`, `10c` (the book's PIN: `3a1`, `5a1`, P-25.3.3.3.1,
+  p. 224), perylene's `12c`, `12d`, and a phenalene-type hydro ring's `9b`, because the round-trip oracle reads the CAS letters and not the superscripts. Declared in
+  the repository's `benchmarks/naming/known_deviations.toml` with its guard; OPSIN reading a name is never a reason to add another.

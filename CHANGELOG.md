@@ -886,3 +886,41 @@ baseline and its adjudication live in the OpenChem Studio repository, with the t
 The instrumentation changes no result: `classify_charges(claims_out=...)` and `diagnostics.record_route` are inert,
 and 0 of the 307 names in the regression, held-out and second and third held-out corpora changed at any stage.
 `tests/test_namer_salt_multiplier.py` unit-tests the multiplier, because the D-rows go through whole salts.
+
+## Naming round 8: polyacids, guanidines, protonated azoles, and what ordinary compounds showed
+
+A planned part (polyacids, condensed guanidines and ureas, protonated azoles and cations, the round-5 open list, one carried-over wrong structure) and a
+limitations pass whose defects came from naming ordinary compounds and reading the names. `tests/test_namer_known_defects.py` holds the evidence (D-100 to
+D-129, each red before its fix, with converses that differ by reason); the vendored-suite figure and the benchmark measurements live in the OpenChem Studio
+repository, which has the corpora and panels this package does not.
+
+**Planned part.**
+
+* **Polyacids.** A chain with three or more C-anchored suffix groups (P-65.1.2.2.1, p. 579) needs an exo-skeleton parent candidate the generator never
+  offered: `2-hydroxypropane-1,2,3-tricarboxylic acid`, `pentane-1,3,5-tricarboxylic acid`, `ethane-1,1,2,2-tetracarboxylic acid`. The classifier route gained a
+  site-level charge ledger (`_balance_the_charge_ledger`): a neutral `carboxy` word on the all-anion route is a deprotonated site, so it is `carboxylato`, and
+  the citrate trianion is `2-hydroxypropane-1,2,3-tricarboxylate` (a wrong molecule before, two charges for three sites).
+* **An isothiourea** whose demoted prefix was written `(aminosulfanylmethylidene)amino`, which OPSIN reads as another molecule, is enclosed as the book prints
+  (`[amino(sulfanyl)methylidene]amino`, P-16.5.1.3.1): the enclosure rule applies to a substituent's own prefixes.
+* **Condensed guanidines and ureas** (P-66.1.6.1.4, P-66.4.1.2): `diimidotricarbonimidic diamide`, `2-imidodicarbonic diamide`, the n >= 5 skeletal-replacement
+  names (unsubstituted chains only, guarded), and the metforminium and biguanidium cations (a wrong molecule and a dication name for a monocation).
+* **Protonated azoles and cations.** The ring carve keeps a protonated nitrogen a target (`1H-imidazol-3-ium`, `1H-benzimidazol-3-ium`, `1H-pyrazol-2-ium`,
+  retained names for saturated protonated rings), a ring cation outranks every uncharged suffix, tetrazolium and N-oxide cations are right, and a net-positive
+  component that holds a carboxylate (lysinium, histidinium) is named for its own ionisation state.
+* **Imide parent, hydrazides, pseudoketones.** `N-acetylbenzamide`; an N'-acyl hydrazide and a hydrazide never ranked above an acid
+  (`3-hydrazinyl-3-oxopropanoic acid`); a carbonyl on a ring, azo or silicon heteroatom is 'one' (P-64.3.2: `1-(piperidin-1-yl)propan-1-one`). The group
+  definitions gained `context_indices`, a declared heteroatom root of a substituent that the group does not claim.
+
+**Limitations pass, each a class no corpus contained.** The `e` of `ene`/`yne` elides before `amide` and `amine` (`prop-2-enamide`, `prop-2-en-1-amine`); an
+alkoxy on a nitrogen is `methoxy`, not `methyloxy`; an amide or amine whose nitrogen carries an alkoxy is one (the Weinreb amide was named as an ester of
+azinous acid); a carbonyl between two ring nitrogens is a pseudoketone (`bis(1H-imidazol-1-yl)methanone`); nitrate and nitrite esters and acyclic carbonic
+diesters are named as esters (`pentyl nitrate`, `dimethyl carbonate`); an acyclic onium cation outranks the groups beside it; a mixed-class acid polyanion is owned
+by the carved route (`4-sulfonatobenzoate`, `2-oxidobenzoate`); two adjacent acyclic ketones are a dione (`butane-2,3-dione`); the acyl prefix of a ring-nitrogen
+amide is `piperidine-1-carbonyl`. Carbonyldiimidazole no longer crashes the multiplicative route.
+
+**A dated decision.** A name that reads back as another TAUTOMER is no longer withheld by the application; that is an application-layer decision and changes
+nothing here. The engine's own change is that an embedded `NAMING ERROR` is never returned as a name by the callers that use it.
+
+`tests/test_namer_probe_shapes.py` and its fixture pin the names of 200 shapes no corpus contains, and read each back through OPSIN; the fork's variant does not
+use the application's provider (see its docstring). `tests/test_namer_charge_ledger.py` and `tests/test_namer_exo_skeleton.py` unit-test the two W1 mechanisms.
+The hand-written `tests/test_charge_ownership.py` pins two more routes (an olate beside an acid anion, and two acid classes, are now `carved`).
