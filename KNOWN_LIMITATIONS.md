@@ -461,3 +461,20 @@ its measurements and the panel it was measured on.
 * **The one deliberate deviation from the book**: the curated ring table numbers pyrene's interior carbons `10b`, `10c` (the book's PIN: `3a1`, `5a1`, P-25.3.3.3.1,
   p. 224), perylene's `12c`, `12d`, and a phenalene-type hydro ring's `9b`, because the round-trip oracle reads the CAS letters and not the superscripts. Declared in
   the repository's `benchmarks/naming/known_deviations.toml` with its guard; OPSIN reading a name is never a reason to add another.
+
+## Open after naming round 9
+
+Round 9 fixed 9 of 13 findings from a source-backed instruments stage (a Blue Book PDF harvest, an ordinary-compound battery, a frequency census). The
+"peptide-like acyl prefixes" row above is SUPERSEDED, not merely fixed: the retained acyl-plus-parent convention (P-103.2.5/P-103.3.2) is now built as a
+closed table of the 20 proteinogenic amino acids, and `acetamidoacetamidoacetic acid` / `2-amino-1-oxoethyl` no longer appear for the shapes it covers.
+
+Four findings are not fixed, each already diagnosed:
+
+* **A carbamimidate/oxime prefix-bracketing ambiguity**: `COC(=N)NN` and similar, where "(hydrazinyl)" and "methoxy" concatenate without a locant. The
+  fix touches widely-used prefix-assembly logic with real regression risk across every substituent name in the engine; deliberately not rushed.
+* **Two dye-molecule ring-numbering defects, different root causes**: a phenothiazine core (methylene blue) numbers to locant 12, which OPSIN rejects
+  outright -- phenothiazine is registered for automorphism matching but has no traditional-numbering override table entry, unlike its anthracene/
+  acridine/xanthene analogues. A spiro xanthene (fluorescein) numbers to locant 13, out of xanthene's own valid range -- xanthene itself IS correctly
+  registered, so this is a spiro-combination numbering bug, not a missing table entry; not yet isolated to a fix.
+* **A polycarbocation** (two independent tertiary-carbocation substituents on one ring) needs the multiplicative and charge-perception machinery to
+  work together to reach a name like "(1,3-phenylene)di(propan-2-ylium)"; no existing pattern in the codebase does this yet.

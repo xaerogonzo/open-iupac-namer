@@ -924,3 +924,41 @@ nothing here. The engine's own change is that an embedded `NAMING ERROR` is neve
 `tests/test_namer_probe_shapes.py` and its fixture pin the names of 200 shapes no corpus contains, and read each back through OPSIN; the fork's variant does not
 use the application's provider (see its docstring). `tests/test_namer_charge_ledger.py` and `tests/test_namer_exo_skeleton.py` unit-test the two W1 mechanisms.
 The hand-written `tests/test_charge_ownership.py` pins two more routes (an olate beside an acid anion, and two acid classes, are now `carved`).
+
+## Naming round 9: a source-backed battery first, 9 of 13 admitted findings fixed
+
+Ported from a source-backed instruments stage (a Blue Book PDF harvest, an ordinary-compound battery, a frequency census) run BEFORE any fix, which
+admitted 13 findings into a hash-frozen ledger and fixed 9 of them. Every fix has its own D-row (D-130 to D-138) and its own stage-comparison
+against a 1129-row tuning population, checked before the commit.
+
+* **Carbodiimide, wrong molecule fixed (PIN open).** The multiplicative-linker route checks for a C=O in the linker (P-15.3.3.2.2) but had nothing
+  for a C=N: DCC named as a saturated bis-amine instead of the carbodiimide. `_linker_has_imine` declines the linker the same way the existing
+  carbonyl check does; falls back to a structurally correct substitutive name. Reaching the printed PIN
+  ("dicyclohexylmethanediimine", P-62.3.1.4) needs imine functional-group perception, which is empty for this structure in every context tried.
+* **Carbamimidoyl locant, fixed.** Two carboximidamide groups at the SAME parent position collided onto one N/N' prime pair, because primes were
+  assigned by chemical role alone; instances sharing a position are now ordered by anchor atom index, each later one shifted two more prime marks.
+* **Naphthalene ring drop, wrong molecule fixed (no PIN claimed).** The multiplicative linker builder's shortest-path walk between two attachment
+  atoms took the direct one-bond route across a fused ring, letting the whole OTHER ring pass an existing per-atom "is this atom part of some lone
+  benzo ring" check and silently drop out of the name -- 4 of naphthalene's 10 ring atoms never appearing. `_fused_ring_count` declines whenever the
+  linker's skeleton spans more than one SSSR ring; falls back to substitutive naming that keeps every ring atom.
+* **Sulfinyl bromide, wrong molecule fixed -> honest failure.** A `{R}sulfonyl`/`{R}sulfinyl` substituent shortcut assumed the sulfur carries
+  exactly one substituent beside its oxo oxygens; a hypervalent S(=O)(=N-)(Br)(N<) let it silently keep whichever neighbour it reached first and
+  drop the rest. `_sulfonyl_sulfinyl_has_single_substituent` declines when S carries more than one non-oxo substituent; no route exists yet to
+  NAME a sulfinimidoyl/sulfonimidoyl halide, so the result is an honest parse failure rather than a plausible wrong structure.
+* **Phosphine oxide, wrong molecule fixed (no PIN claimed).** A P(V) phosphine oxide named as a trivalent P(III) "phosphanetriyl": the multiplicative
+  linker builder strips a terminal oxo atom from the linker's skeleton before naming (needed so the oxo belongs to its own component), but nothing
+  checked whether a P=O being stripped should have blocked the construction the way a C=O or C=N already can. `_linker_has_phosphine_oxide` mirrors
+  the carbonyl/imine checks.
+* **Peptide acyl naming, fixed (P-103.3.2).** A new module (`iupac_namer/perception/fg/peptide_acyl.py`) matches a dipeptide's two residues against a
+  closed, stereo-matched table of the 20 proteinogenic amino acids and, on a match, emits the retained acyl-plus-parent form -- "glycylalanine",
+  the book's own worked example, verbatim -- instead of fully systematic substitutive nomenclature. Also handles proline as the C-terminal residue
+  (a tertiary amide, since proline's ring nitrogen is already secondary before acylation), a second base shape beyond the open-chain one. A residue
+  with under-specified stereochemistry (only the alpha carbon given) correctly declines rather than guesses the diastereomer.
+* **Three charge-anion classifiers, wrong molecules fixed.** An ethynediide dianion, a bicyclic phosphide anion (`1-phosphabicyclo[2.2.2]octan-1-uide`,
+  P-73), and an imine-nitrogen anion (butaniminide) all previously dropped their charge to a neutral structure. The phosphide classifier is gated to
+  RING phosphorus only: a first version also claimed an acyclic phosphide (`dimethylphosphide`, already named correctly through a different route)
+  and rendered it wrong -- caught before landing, fixed with the ring gate.
+
+**Not ported** (round 10's starting material, already diagnosed): a carbamimidate/oxime prefix-bracketing ambiguity; two dye-molecule ring-numbering
+defects (a phenothiazine core and a spiro xanthene, different root causes, neither isolated to a fix yet); a polycarbocation needing the
+multiplicative and charge-perception machinery to work together, which has no existing pattern to build from.
