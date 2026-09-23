@@ -543,10 +543,43 @@ document until now.
 
 **Re-verified, found narrower but still genuinely open, re-diagnosed deeper:**
 
-* **A charged acid group inside a carved substituent**: still broken, confirmed on the exact repro. Traced to root
+* **A charged acid group inside a carved substituent** (FIXED in round 12, D-144; see below): still broken at the time of round 11, confirmed on the exact repro. Traced to root
   cause -- `_carved_acid_group_fgs` (`engine.py`) already computes the correct anionic prefix form ("carboxylato",
   "sulfonato") for a demoted acid-anion site on the "carved" route, but that value is never threaded into the
   recursive substituent-naming call that renders a nested acid-anion group, whose own fresh `Perception()` call does
   not detect a charged chalcogen as an FG at all. Broader than previously known: affects a demoted CARBOXYLATE the
   same way as a demoted SULFONATE, not only sulfonate. Not rushed, given the shared code path several existing
   special cases (including this round's own carbamimidoyl fix) already sit beside.
+
+## Open after naming round 12
+
+Round 12 was deliberately small: one fully diagnosed item and one census signal that had never been triaged. Round 11's deferred
+item is fixed; the fused-cation signal was measured and NOT admitted, because no single mechanism reaches the admission floor.
+
+**Fixed this round:**
+
+* **A charged acid group inside a substituent, FIXED (D-144, moved from open)**: on the carved acid-anion route the OUTER plan already
+  held the right typed fact (a `DetectedFG` with `prefix_form` `carboxylato`/`sulfonato`, from `_carved_acid_group_fgs`), but a group
+  inside a substituent is named by a RECURSIVE call on the carved fragment, whose fresh `Perception()` cannot see a charged chalcogen as
+  an FG, so it composed `oxido` + `oxo` atom by atom. `generate_plans` now adds the same typed FGs for a SUBSTITUENT-form fragment, from the
+  fragment's own atoms (`_substituent_acid_anion_fgs`), for exactly the classes in `_ANIONIC_ACID_PREFIX` (any other class would drop its
+  charge; a phosphonate stays on its declared-unsupported path). `3-carboxy-4-(2-oxido-2-oxoethyl)benzoate` is now
+  `3-carboxy-4-(carboxylatomethyl)benzoate`; `4-[(oxidosulfonyl)methyl]benzoate` is now `4-(sulfonatomethyl)benzoate` (P-65.6.2.3.1). The
+  fix skips a group that contains the attachment atom: a first version did not, and double-owned the atom on `[S-]c1ccccc1C(=O)[O-]`
+  (D-121u), a failed plan and a NAMING ERROR fall-back, caught by the known-defects suite before commit.
+
+**The seam.** The outer path computed the correct typed fact, the recursive path discarded it by re-perceiving a fragment, and each guard was
+correct in isolation. A recursive naming call should inherit explicit semantic context and create fresh perception only for genuinely new
+local facts. Here everything the fact depends on (the acid group and its attachment carbon) is inside the fragment, so it is re-derived
+with the same helper the outer path uses; a fact that is NOT local to its fragment would have to be inherited, with the outer atoms mapped
+into the fragment's own indices.
+
+**One tie-break this exposed and did not fix.** `[5-carboxy-2-(carboxylatomethyl)phenyl]acetate` and its `4-carboxy` twin are the same
+molecule; which is emitted depends on the SMILES atom order. Both read back; the book prints no row for this structure.
+
+**The fused-aromatic-ring-cation signal, triaged and not admitted.** Of 36 hits (36 unique structures) 28 name and read back and 8 embed a
+`[NAMING ERROR ...]` marker; a scan of all 292 charged rows of the same 2000-structure sample found 6 more cationic ring-system failures
+outside the proxy. They are visible failures, never a wrong molecule, spread over about ten ring systems (imidazo[1,2-a]pyridin-4-ium 4,
+imidazo[2,1-f]purinium 2, imidazo[2,1-b][1,3]thiazol-4-ium 1, a purin-7-ium as a substituent 1, six saturated or bridged ring-N cations one
+each). The neutral parents name; the bridgehead or ring-N cation does not (a fused CATION with no curated entry). The largest single system
+is 4/2000 = 0.2%, under the 10-structure floor.
