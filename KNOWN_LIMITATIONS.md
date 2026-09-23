@@ -478,3 +478,35 @@ Four findings are not fixed, each already diagnosed:
   registered, so this is a spiro-combination numbering bug, not a missing table entry; not yet isolated to a fix.
 * **A polycarbocation** (two independent tertiary-carbocation substituents on one ring) needs the multiplicative and charge-perception machinery to
   work together to reach a name like "(1,3-phenylene)di(propan-2-ylium)"; no existing pattern in the codebase does this yet.
+
+## Open after naming round 10
+
+Round 10 closed all 4 items round 9 deferred, each turning out deeper than round 9's own diagnosis:
+
+* **Phenothiazine-dye-locant, FIXED**: round 9's diagnosis (a missing traditional-numbering table entry) was incomplete -- adding the entry had
+  zero effect on methylene blue's actual output. The real defect was a THIRD function, `retained_lookup.py`'s `_build_numbering_from_atom_locants`:
+  its bond-generic substructure-match fallback (built to recover a curated ring's numbering when a substituent shifts the Kekule pattern) was gated
+  to require every ring atom aromatic, including phenothiazine's N/S bridge -- non-aromatic on the isolated curated-key SMILES, but aromatic in
+  methylene blue's actual extended-conjugation form. Fixed by relaxing the gate to "every CARBON aromatic" (heteroatom aromaticity is
+  context-dependent; a ring carbon's is structural). Engine now emits `[7-(dimethylamino)phenothiazin-3-ylidene]di(methyl)azanium chloride`,
+  matching PubChem's own name for methylene blue verbatim. Phenoxazine shares the identical defect and fix, proven by direct testing.
+* **Spiro-xanthene-dye-locant, FIXED**: xanthene's own curated `atom_locants` covered only 9 of its 14 real ring positions (missing the four
+  fusion carbons and the bridge oxygen's own locant) -- harmless for a bare or substituted xanthene, but it broke `spiro.py`'s combined-numbering
+  completeness gate for fluorescein entirely. Fixed by completing the table, derived from its own bond topology against the already-correct
+  traditional numbering. Reaches fluorescein's real IUPAC name exactly, including a second latent defect (the lactone's own locant) fixed as a
+  side effect.
+* **Charge-polycarbocation, the wrong-molecule half fixed**: `_classify_polycarbon_charge` already existed and already covered this exact shape,
+  but its guard checked the WHOLE MOLECULE for any aromatic atom rather than the charged atoms' own scope. Narrowed to the charged atoms; the
+  classifier now engages and claims both charges, but no renderer composes a name for two independently-attached substituent cations on a shared
+  aromatic parent yet. Per this engine's own "refusal guard" (a classifier that engages and cannot finish RAISES rather than falling through to
+  the wrong neutral name), the wrong-molecule defect is fixed; the PIN itself is separate, still-open render-side work.
+* **Carbamimidate-oxime-swap, FIXED**: the engine's internal structure was correct the whole time -- the wrong OUTPUT STRING left a trailing
+  "-oxy" prefix unbracketed after a preceding closing paren, and OPSIN's grammar read the adjacency as one nested substituent instead of two
+  siblings on the same parent carbon. No existing enclosure rule covered a carbon-centered one-carbon STANDALONE parent with this shape (the two
+  closest rules are each out of scope for a different reason). Fixed by bracketing a non-leading "-oxy" prefix on any one-carbon chain parent,
+  any output form. A second, independent instance of the same bug (a different prefix pair, a different parent) was found during diagnosis and
+  fixed as the same side effect.
+
+A regression from the phenothiazine fix (item 1's gate widening also covered a structurally-meaningful heteroatom double bond in an unrelated
+ring, arsanthrene) was caught by the standalone suite before this sync and is already fixed in what follows -- narrowed further to exclude a
+non-aromatic heteroatom carrying an explicit double bond.

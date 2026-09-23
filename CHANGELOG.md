@@ -962,3 +962,41 @@ against a 1129-row tuning population, checked before the commit.
 **Not ported** (round 10's starting material, already diagnosed): a carbamimidate/oxime prefix-bracketing ambiguity; two dye-molecule ring-numbering
 defects (a phenothiazine core and a spiro xanthene, different root causes, neither isolated to a fix yet); a polycarbocation needing the
 multiplicative and charge-perception machinery to work together, which has no existing pattern to build from.
+
+## Naming round 10: closing all 4 deferred items, each traced deeper than round 9's own diagnosis
+
+Round 9's own diagnoses turned out to be starting points, not final answers, for three of the four items -- each traced further before any fix
+was written, and each landed somewhere more precise than what round 9 recorded.
+
+* **Phenothiazine-dye-locant, fixed.** Round 9 diagnosed this as a missing traditional-numbering table entry for phenothiazine. That diagnosis
+  was incomplete -- adding the entry (verified correct against OPSIN as a structure oracle: `10-methyl-10H-phenothiazine` places the methyl on
+  N, `phenothiazin-5-ium` protonates S) had zero effect on methylene blue's actual output. The real bug is a THIRD function,
+  `retained_lookup.py`'s `_build_numbering_from_atom_locants`: its bond-generic substructure-match fallback (built to recover a curated ring's
+  numbering when a substituent shifts the Kekule pattern) was gated to require every ring atom aromatic, including the N/S bridge -- non-aromatic
+  on the isolated curated-key SMILES, but aromatic in methylene blue's actual extended-conjugation form. Fixed by relaxing the gate to "every
+  CARBON aromatic". Engine now emits `[7-(dimethylamino)phenothiazin-3-ylidene]di(methyl)azanium chloride` for methylene blue, matching
+  PubChem's own name verbatim. Phenoxazine shares the identical defect and fix, proven by direct testing.
+* **A regression from this fix, caught and fixed before landing.** The widened gate also covered arsanthrene's As atoms, which (unlike
+  phenothiazine's plain-bonded N/S) carry a genuinely structural explicit double bond in their curated key -- the standalone suite's own
+  `test_arsanthrene_atom_locants_assign_peri_to_locant_1` caught it. Narrowed further: a non-aromatic heteroatom only gets the relaxation when
+  it carries no explicit double bond.
+* **Spiro-xanthene-dye-locant, fixed.** Round 9 correctly noted xanthene's own table entry is right, unlike phenothiazine's gap. What it hadn't
+  isolated: the curated `atom_locants` entry for xanthene covered only 9 of its 14 real ring positions -- harmless for a bare or substituted
+  xanthene, but `spiro.py`'s numbering-combination completeness gate never passed for fluorescein with 5 positions missing, so the combined
+  numbering came back empty and substituent locants fell through to a generic, unprimed, out-of-range walk. Fixed by completing the table with
+  the four fusion positions and the bridge oxygen's own locant, derived from this table's own bond topology against the already-verified
+  numbering. Engine now emits `3',6'-dihydroxyspiro[1,3-dihydro-2-benzofuran-1,9'-xanthene]-3-one` for fluorescein, matching its real IUPAC
+  name exactly -- including a second latent defect (the lactone's own locant) fixed as a side effect.
+* **Charge-polycarbocation, the wrong-molecule half fixed.** `_classify_polycarbon_charge` already existed and already covered this exact
+  multi-charged-carbon shape, but its guard checked the WHOLE MOLECULE for any aromatic atom and any non-single bond rather than the charged
+  atoms' own. Narrowed to the charged atoms' scope; the classifier now engages and claims both charges, but no renderer composes a name for two
+  independently-attached substituent cations on a shared aromatic parent yet. Per this engine's own "refusal guard" (a classifier that engages
+  and cannot finish RAISES instead of falling through to the neutralizer), the engine now raises instead of emitting the wrong neutral name --
+  converting the admitted wrong-molecule defect into a visible, honest failure.
+* **Carbamimidate-oxime-swap, fixed.** Round 9 diagnosed "a prefix-bracketing ambiguity" and correctly deferred it for its regression risk.
+  Diagnosis confirms the description exactly, and more: the engine's internal tree was right the whole time -- the wrong OUTPUT STRING left a
+  trailing "methoxy" unbracketed after a preceding closing paren, and OPSIN's grammar read the adjacency as one nested substituent instead of
+  two siblings, a real wrong molecule once parsed back despite the engine's own tree never being wrong. No existing enclosure rule covered a
+  carbon-centered one-carbon STANDALONE parent with a non-leading "-oxy" prefix. Fixed by bracketing a non-leading "-oxy" simple prefix on any
+  one-carbon chain parent, any output form. A second, independent instance of the exact same bug (a different prefix pair, a different parent)
+  was found during diagnosis and fixed as the same side effect, pinning that the rule is general rather than a methanimine patch.
