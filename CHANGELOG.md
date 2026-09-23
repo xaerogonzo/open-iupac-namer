@@ -1031,3 +1031,17 @@ recursive substituent-naming code path several existing special cases (including
 
 Standalone suite: 6524 passed, 2 failed (the same pre-existing, RDKit-2026-dependent trindene indicated-hydrogen mismatches every prior sync
 has recorded), 16 skipped, 14 xfailed.
+
+## Naming round 12: a charged acid inside a substituent (D-144), and a triaged census signal
+
+* **D-144, fixed.** A deprotonated carboxylate or sulfonate on a carved SUBSTITUENT fragment was named `2-oxido-2-oxoethyl` /
+  `(oxidosulfonyl)methyl`; it is now `carboxylatomethyl` / `sulfonatomethyl` (P-65.6.2.3.1). The outer plan held the right typed FG, and the
+  recursive call that names a carved fragment lost it through a fresh `Perception()`. `SubstitutivePath.generate_plans` now adds the same typed
+  FGs for a SUBSTITUENT-form fragment from the fragment's own atoms (`_substituent_acid_anion_fgs`), for exactly the classes in
+  `_ANIONIC_ACID_PREFIX`, and skips a group containing the attachment atom (a first version double-owned that atom on `D-121u`).
+* **The fused-aromatic-ring-cation signal was triaged and not admitted:** 8 of 36 hits, plus 6 cationic ring systems outside the proxy, fail
+  visibly (never as a wrong molecule) across about ten ring systems; the largest is 4 of 2000, under the floor. See `KNOWN_LIMITATIONS.md`,
+  "Open after naming round 12".
+
+Standalone suite (run under the main repository's interpreter, RDKit 2025.09.6, not the fork's own environment): 6560 passed, 0 failed,
+14 xfailed.
