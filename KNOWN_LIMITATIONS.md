@@ -510,3 +510,43 @@ Round 10 closed all 4 items round 9 deferred, each turning out deeper than round
 A regression from the phenothiazine fix (item 1's gate widening also covered a structurally-meaningful heteroatom double bond in an unrelated
 ring, arsanthrene) was caught by the standalone suite before this sync and is already fixed in what follows -- narrowed further to exclude a
 non-aromatic heteroatom carrying an explicit double bond.
+
+## Open after naming round 11
+
+Round 11 re-verified every candidate directly against the current engine before admitting or dropping it -- two of five
+candidates this round looked at were already fixed by other rounds' own general work, never reflected back into this
+document until now.
+
+**Fixed this round:**
+
+* **Ketone-parent enclosure, FIXED (D-143)**: `assembly.py`'s `_assemble_substitutive` had two existing one-carbon-parent
+  P-16.5.1.3.1 enclosure rules (a heteroatom-center mononuclear parent; a SUBSTITUENT-form compound prefix), but neither
+  reached a one-carbon KETONE parent in STANDALONE form. `(morpholin-4-yl)phenylmethanone` left its second, simple
+  "phenyl" prefix unbracketed. Fixed by mirroring the existing heteroatom-center block, scoped to a ketone's own suffix
+  base_form ("one"). Severity C, not A -- OPSIN parses the unbracketed form too.
+* **Carbamimidoyl N'/N,N split, FIXED (D-091v, moved from open)**: the existing "N'-substituted carbamimidoyl" special
+  case required the amino N to be a bare, unsubstituted NH2, so a substituted amino N fell through to the generic
+  recursive path, which OPSIN misreads as an azo-linked structure. Generalized to carve 0/1/2 substituents off the
+  amino N too, gated to REQUIRE the imino N also substituted before firing: an amino-only-substituted, imino-bare
+  fragment round-trips via OPSIN in isolation, but is genuinely APPEARS_AMBIGUOUS when the same shape attaches directly
+  to a GUANIDINIUM parent instead of an ordinary one. A first version without this gate regressed the metformin-cation
+  fixture; caught by the standalone suite before commit, kept as a permanent non-regression test.
+
+**Re-verified and found already correct, no fix needed:**
+
+* **Ring-nitrogen acyl prefix on a ring/chain parent**: the documented repro (a piperidine amide on a benzoic acid)
+  now emits the correct "(piperidine-1-carbonyl)" form directly, verified for piperidine, morpholine and pyrrolidine.
+  Fixed as a side effect of other rounds' own serialization work, never reflected back into this document.
+* **The polyacid-anion charge ledger**: citrate's trianion now emits its printed PIN
+  (2-hydroxypropane-1,2,3-tricarboxylate), bare and as the trisodium salt. The biguanidium dication now correctly
+  RAISES instead of silently naming the wrong molecule -- the same refusal-guard class already established.
+
+**Re-verified, found narrower but still genuinely open, re-diagnosed deeper:**
+
+* **A charged acid group inside a carved substituent**: still broken, confirmed on the exact repro. Traced to root
+  cause -- `_carved_acid_group_fgs` (`engine.py`) already computes the correct anionic prefix form ("carboxylato",
+  "sulfonato") for a demoted acid-anion site on the "carved" route, but that value is never threaded into the
+  recursive substituent-naming call that renders a nested acid-anion group, whose own fresh `Perception()` call does
+  not detect a charged chalcogen as an FG at all. Broader than previously known: affects a demoted CARBOXYLATE the
+  same way as a demoted SULFONATE, not only sulfonate. Not rushed, given the shared code path several existing
+  special cases (including this round's own carbamimidoyl fix) already sit beside.

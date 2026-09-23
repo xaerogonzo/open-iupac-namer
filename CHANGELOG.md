@@ -1000,3 +1000,34 @@ was written, and each landed somewhere more precise than what round 9 recorded.
   carbon-centered one-carbon STANDALONE parent with a non-leading "-oxy" prefix. Fixed by bracketing a non-leading "-oxy" simple prefix on any
   one-carbon chain parent, any output form. A second, independent instance of the exact same bug (a different prefix pair, a different parent)
   was found during diagnosis and fixed as the same side effect, pinning that the rule is general rather than a methanimine patch.
+
+## Naming round 11: two fixes, two backlog rows already resolved, one re-diagnosed deeper
+
+Re-verified every candidate directly against the current engine before admitting or dropping it -- the same discipline round 9 applied to its
+own seed hypotheses. Two of five candidates this round looked at were already fixed by other rounds' general work, never reflected back into
+`KNOWN_LIMITATIONS.md` until now.
+
+* **Ketone-parent enclosure, fixed (D-143).** `assembly.py`'s `_assemble_substitutive` had two existing one-carbon-parent P-16.5.1.3.1 enclosure
+  rules, but neither reached a one-carbon KETONE parent in STANDALONE form. `(morpholin-4-yl)phenylmethanone` left its second, simple "phenyl"
+  prefix unbracketed. Fixed by mirroring the existing heteroatom-center block, scoped to a ketone's own suffix base_form ("one"). Severity C,
+  not A -- OPSIN parses the unbracketed form too.
+* **Carbamimidoyl N'/N,N split, fixed (D-091v, moved from open).** The existing "N'-substituted carbamimidoyl" special case required the amino
+  N to be a bare, unsubstituted NH2, so a substituted amino N fell through to the generic recursive path, which OPSIN misreads as an azo-linked
+  structure. Generalized to carve 0/1/2 substituents off the amino N too, gated to REQUIRE the imino N also substituted before firing: an
+  amino-only-substituted, imino-bare fragment round-trips via OPSIN in isolation, but is genuinely APPEARS_AMBIGUOUS when the same shape
+  attaches directly to a GUANIDINIUM parent instead of an ordinary one -- exactly the shape an existing metformin-cation fixture already chose
+  the decomposed form for, on purpose. A first version without this gate regressed that fixture; caught by the standalone suite before commit,
+  kept as a permanent non-regression test.
+
+**Two backlog rows re-tested and found already resolved**, fixed as side effects of other rounds' own work and never reflected back into
+`KNOWN_LIMITATIONS.md`: a ring-nitrogen acyl prefix on a ring/chain parent (now correctly "(piperidine-1-carbonyl)"-style), and the
+citrate-trianion / biguanidium-dication charge-ledger pair (citrate now emits its printed PIN; the dication now correctly RAISES instead of
+silently naming the wrong molecule).
+
+**One row re-diagnosed to its actual root cause and re-deferred, not rushed.** A charged acid group inside a carved substituent still names
+wrong (e.g. `sulfonato` emitted as the generic `oxidosulfonyl`), traced to a computed-but-never-threaded prefix value between two naming
+layers -- broader than previously documented (affects a demoted carboxylate the same way, not only sulfonate) but not rushed given the shared
+recursive substituent-naming code path several existing special cases (including this round's own carbamimidoyl fix) already sit beside.
+
+Standalone suite: 6524 passed, 2 failed (the same pre-existing, RDKit-2026-dependent trindene indicated-hydrogen mismatches every prior sync
+has recorded), 16 skipped, 14 xfailed.
