@@ -1062,3 +1062,17 @@ Standalone suite (run under the main repository's interpreter, RDKit 2025.09.6, 
 
 Standalone suite (run under the source repository's interpreter, RDKit 2025.09.6, not the fork's own environment): 6637 passed, 0 failed,
 15 xfailed.
+
+## Naming round 14: ring-nitrogen sulfonamides, ring cations, stereo on retained substituents, derived fused-ring tables
+
+* **D-151, D-152, fixed.** A sulfonamide on a ring nitrogen is the prefix `<ring>-N-sulfonyl` (`4-(piperidine-1-sulfonyl)benzoic acid`, and its ester is an ester of the
+  benzoic acid, not of the piperidine); the sulfamoyl prefix gives each N-substituent its own locant (`N-cyclohexyl-N-methylsulfamoyl`).
+* **D-154 to D-157, fixed.** Ring cations with no name: fused cations that are not retained rings, a cation drawn on the bridgehead nitrogen, a quaternary bridgehead cation with a
+  substituent (the curated quinolizidine nitrogen is locant 5, not `4a`), and a ring cation inside an acyl prefix that lost its charge. Tricyclic cations are unchanged.
+* **D-158, D-159, fixed.** A stereocentre on a retained ring substituent (`[(2R)-oxolan-2-yl]methanol`) and on a spiro parent at a plain locant keeps its descriptor.
+* **D-160, D-161, fixed.** Locant tables for heptacene to nonacene and the phenes (derived from the fusion numbering rules), octahydro-1H-indole, the biotin skeleton and
+  `[1,2,4]triazolo[3,4-b][1,3]benzothiazole`.
+* **D-153, fixed.** Tropone, tropolone and hinokitiol are cyclohepta-2,4,6-trien-1-ones, not saturated cycloheptanones.
+* **D-162, open.** An N-hydroxy-N-alkyl amide inside an ester loses its N-substituent.
+
+Standalone suite: see the pull request (run under the source repository's interpreter, RDKit 2025.09.6, not the fork's own environment).
