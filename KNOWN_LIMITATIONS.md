@@ -625,3 +625,34 @@ defect (14 of 2000 sampled structures).
 
 **What a consumer sees.** The engine still emits an embedded `[NAMING ERROR: ...]` for a structure it cannot name (D-133's target is one, on
 purpose); a consumer of this package sees that string. Only a layer that reads names back through a parser can withhold it.
+
+## Open after naming round 14
+
+Round 14 worked the measured residue of round 13 as clusters with ONE root mechanism each; naming a 2000-structure sample and reading every name back through
+OPSIN went from 95.70% to 97.95% exact (no structure that read back exactly stopped doing so). Fixed this round: D-151 to D-162 in `tests/test_namer_known_defects.py`.
+
+**Definitions.** A name is `exact` when the InChIKey of the input equals the InChIKey of OPSIN's read-back of the name (formula equality is never
+correctness). OPSIN is a STRUCTURAL check only: it is not an authority for a preferred numbering or a PIN.
+
+**Fixed this round:**
+
+* **A sulfonamide on a RING nitrogen (D-151, D-152).** `S(=O)(=O)N<ring>` was detected as a sulfonamide whose demoted prefix claimed S, O, O and N and left the
+  ring's carbons unclaimed, so every plan with the other side as parent died and the engine named the ring as the parent: an acid lost its suffix and an ESTER was
+  named as an ester of the piperidine (a different structure). It is left to the structural carve now, and the prefix is the sulfonic acid's `<ring>-N-sulfonyl`
+  (P-65.3.2.3). The sulfamoyl prefix also printed one shared `N,N-` block, so two different N-substituents read `N,N-cyclohexylmethylsulfamoyl`; each carries its own locant.
+* **Ring cations that had no name (D-154 to D-157), four roots.** General fusion nomenclature refused any charged ring atom (now described on a neutral copy with the same
+  atom indices, bicyclic systems only; tricyclic cations stay on the von Baeyer fallback); a ring-fusion `[n+]` beside an `[nH]` is the same cation as the `[nH+]` drawing and
+  the charge is moved; a charged N with three ring bonds was made an indicated-hydrogen target, and the curated quinolizidine row gave its nitrogen `4a` (it is 5); and an
+  acyl or amido prefix, derived by naming the acid recursively, lost a ring cation's `-ium` because STANDALONE is promoted to CATION at depth 0 only.
+* **Stereo dropped (D-158, D-159).** A retained ring substituent (`oxolan-2-yl`) is a leaf that never reads stereo and the stereo-drop gate ran for STANDALONE only, so
+  `(oxolan-2-yl)methanol` lost its descriptor; the gate now also runs for a substituent and reads the parent CIP stash. Tetrahedral stereo on a SPIRO parent is admitted at
+  plain-integer locants, under the existing post-assembly OPSIN validation.
+* **Fused-ring locants (D-160, D-161).** Heptacene, octacene, nonacene and pentaphene to octaphene were named with a bare `-yl`; each now has a table that is one of the
+  numberings `fusion_general.name_fusion` derives under P-25.3.3 (the four helicenes stay unnumbered: the orientation module declines them). octahydro-1H-indole, the biotin
+  skeleton and `[1,2,4]triazolo[3,4-b][1,3]benzothiazole` get complete tables.
+* **An aromatic non-benzene carbocycle named saturated (D-153).** Tropone was `cycloheptanone`, hinokitiol `2-hydroxy-5-(propan-2-yl)cycloheptan-1-one`: RDKit marks the ring
+  aromatic and the carbocycle branch read "no double bond found" as saturated. The Kekule bonds are recovered.
+
+**Open (D-162, and the residue):** an N-hydroxy-N-alkyl amide inside an ester loses its N-substituent (`[(hydroxycarbamoyl)methyl]methyl acetate`), a different
+structure. The rest is 41 of 2000 sampled structures in about ten clusters, none with more than 8 members: spiro parents whose centre has a primed locant (stereo still
+dropped), tricyclic and amidinium ring cations, four neutral polycycles with no valid plan, lost `[S-]` and `[NH+]` charges, and single-row misnames.
