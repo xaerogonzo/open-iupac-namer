@@ -1045,3 +1045,20 @@ has recorded), 16 skipped, 14 xfailed.
 
 Standalone suite (run under the main repository's interpreter, RDKit 2025.09.6, not the fork's own environment): 6560 passed, 0 failed,
 14 xfailed.
+
+## Naming round 13: a wrong ring locant on a heterocyclic substituent, and a demoted ketone that claimed its aryl carbon
+
+* **D-145, fixed.** A monocyclic hetero ring's substituent is numbered with the senior heteroatom at locant 1 (Hantzsch-Widman): a lower combined
+  heteroatom set had outranked it, so `N-(5-methyl-1,3,4-thiadiazol-3-yl)acetamide` is now `...-2-yl...` (`_lowest_free_valence_numberings`). Fused
+  rings are unchanged.
+* **D-146, D-147, fixed.** A ring with no `atom_locants` and a hard-coded locant in its curated substituent form no longer returns that locant for
+  every attachment; benzodioxine also gets an `atom_locants` table.
+* **D-148, fixed.** The curated `1,2,5-oxadiazole` row was keyed on 1,2,3-oxadiazole's SMILES; corrected, and named `1,2,5-oxadiazole` as the Blue
+  Book gives it.
+* **D-149, D-150, fixed.** A demoted ketone no longer claims its aryl or cycloalkyl carbon (`_compute_prefix_assignments` Pass 1):
+  `4-(2-oxo-2-phenylethoxy)benzoic acid` is named instead of failing an ownership check, and `4-oxo-4-phenylbutanoic acid` is no longer named
+  `3-carboxy-1-phenylpropan-1-one`.
+* **D-151, open.** An ester of an acid that also carries a ring-nitrogen sulfonamide is named as an ester of the piperidine.
+
+Standalone suite (run under the source repository's interpreter, RDKit 2025.09.6, not the fork's own environment): 6637 passed, 0 failed,
+15 xfailed.

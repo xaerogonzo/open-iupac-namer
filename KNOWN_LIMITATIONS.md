@@ -583,3 +583,45 @@ outside the proxy. They are visible failures, never a wrong molecule, spread ove
 imidazo[2,1-f]purinium 2, imidazo[2,1-b][1,3]thiazol-4-ium 1, a purin-7-ium as a substituent 1, six saturated or bridged ring-N cations one
 each). The neutral parents name; the bridgehead or ring-N cation does not (a fused CATION with no curated entry). The largest single system
 is 4/2000 = 0.2%, under the 10-structure floor.
+
+## Open after naming round 13
+
+Round 13 started from a measurement: naming EVERY structure of a 2000-structure sample and reading each name back through OPSIN. It found the
+largest wrong-structure cluster in the sample (a wrong ring locant, 1.35%) and an ownership failure (0.65%), both old and in no backlog. Exact
+read-backs went 93.45% -> 94.80% -> 95.70%; candidate wrong structures 2.40% -> 0.90%; embedded engine errors and refusals 1.90% -> 1.15%.
+
+**Fixed this round:**
+
+* **A wrong ring locant on a 1,3,4-oxa/thiadiazole (and 1,2,5-oxa/thiadiazole) substituent, FIXED (D-145).** `_lowest_free_valence_numberings`
+  ranked the lowest COMBINED heteroatom locant set ahead of the senior heteroatom at locant 1. A monocyclic hetero ring is numbered by
+  Hantzsch-Widman (senior heteroatom = 1). 1,3,4-thiadiazole (S1,N3,N4) has the alternative N1,N2,S4 with the lower set {1,2,4}, so the substituent
+  was numbered as another heterocycle and its attachment carbon came out `-3-yl`. Only a ring carrying its own second substituent reached this
+  filter (the bare ring goes through `_heteroaryl_substituent_with_locant`, which weights seniority). For a monocyclic ring the senior heteroatom's
+  locant is now ranked first; a fused ring keeps `together` first.
+* **A hard-coded curated locant returned for every attachment, FIXED (D-146, D-147).** A ring with no `atom_locants` and a `substituent_form`
+  ending in a digit returned that form verbatim (`2,3-dihydro-1,4-benzodioxin-2-yl` for any benzo carbon, `azepan-1-yl` for any carbon of azepane).
+  The numbering computed just above the early return already knew the real locant; it is used now when it differs from the curated digit.
+  Benzodioxine is fused and the generic numbering mislabels the two positions next to the ring fusion, so it also gets an `atom_locants` table
+  derived from its bond topology, as 1,3-benzodioxole's is.
+* **A data row keyed on the wrong ring, FIXED (D-148).** The curated `1,2,5-oxadiazole` row was keyed on `c1conn1`, which is 1,2,3-oxadiazole.
+  The key is `c1cnon1` now, and the parent and substituent are the systematic `1,2,5-oxadiazole` (BlueBookV2.pdf p. 263: "1,2,5-oxadiazole
+  (formerly called furazan)"), where real furazan used to come out `furazan`.
+* **A demoted ketone claimed its aryl carbon, FIXED (D-149, D-150).** `_compute_prefix_assignments` Pass 1 built the `oxo` prefix of a demoted
+  ketone (anchor already in the parent) from every off-parent atom of the group and dropped only heteroatom context. A ketone matches its two
+  flanking carbons as context; the one off the parent chain (an aryl or cycloalkyl ipso carbon) was claimed by the `oxo` AND by the `phenyl` the
+  structural pass carved, so the ownership invariant rejected the plan (`atom 8 owned by prefix[0] and prefix[1]`), correctly. The same double
+  claim silently killed the plan that named an acid or amide as the parent: `4-oxo-4-phenylbutanoic acid` came out `3-carboxy-1-phenylpropan-1-one`.
+  A non-anchor carbon still in `remaining` is no longer claimed when the group is suffix-eligible and its anchor is in the parent.
+
+**Open, found by exposing it (D-151):** an ESTER of an acid that also carries a ring-nitrogen sulfonamide is named as a functional-class ester of
+the piperidine, whose "acid" is a `carboxy` prefix (`ethyl 1-(4-carboxyphenylsulfonyl)piperidine`). A wrong structure; already there for plain
+methyl and ethyl esters, and no longer masked for the phenacyl ester. 2 of 2000 sampled structures. Derived target, read back: `ethyl
+4-(piperidine-1-sulfonyl)benzoate`.
+
+**Open, from testing every curated ring at every attachable position** (7,372 cases; 295 table-backed rings swept at 0 wrong): all-carbon fused
+rings named with a bare `-yl` (nonacene, octacene, heptacene, the phenes, the helicenes: 11 rings) and about 7 partly hydrogenated fused rings on
+the generic numbering path. The neutral parents of the cations that fail to name sweep clean, so those failures are a separate, cation-layer
+defect (14 of 2000 sampled structures).
+
+**What a consumer sees.** The engine still emits an embedded `[NAMING ERROR: ...]` for a structure it cannot name (D-133's target is one, on
+purpose); a consumer of this package sees that string. Only a layer that reads names back through a parser can withhold it.
