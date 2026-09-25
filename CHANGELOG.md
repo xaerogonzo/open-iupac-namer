@@ -1092,3 +1092,19 @@ Standalone suite: see the pull request (run under the source repository's interp
   pattern to an acyclic nitrogen drops the amine nitrogen and names a different molecule (`nitromethane`).
 
 Standalone suite: see the pull request.
+
+## Naming round 16 (2026-09-25)
+
+* **D-164 / D-165, fixed: a nitro or nitroso group on an ACYCLIC nitrogen.** Round 15 fixed the ring nitramines and recorded these open. `CN(C)[N+](=O)[O-]` was
+  `(dimethylamino)(oxido)(oxo)azanium`, nitroguanidine `imino{[oxido(oxo)azaniumyl]amino}methanamine`, nitrourea `1-{[oxido(oxo)azaniumyl]amino}methanamide`, NDMA
+  `1,1-dimethyl-2-oxohydrazine`, and `CC(=O)N(C)[N+](=O)[O-]` `N-methyl-N'-oxido-N'-oxoacetohydrazide`, which OPSIN cannot read; all but the last read back, so a round trip cannot
+  see the problem. They are now `N-methyl-N-nitromethanamine`, `N-nitroguanidine`, `N-nitrourea`, `N-methyl-N-nitrosomethanamine` and `N-methyl-N-nitroacetamide`.
+  Six changes, none sufficient alone. (1) `data/functional_groups.json`: `secondary_amine`/`tertiary_amine` and `secondary_amide`/`tertiary_amide` entries whose nitrogen REQUIRES a nitro
+  (`$(N[NX3+](=O)[O-])`) or nitroso (`$(N[NX2]=O)`) neighbour by a recursive constraint; the neighbour is NOT an atom of the match (as a `context_indices` atom the nitro FG loses the
+  deconfliction, as a match atom the amine owns it twice). (2) A `nitro` prefix group whose match is the nitro group's own three atoms; without it the nitro nitrogen is still
+  offered as the azanium parent. (3) `engine.py`: `_SMALL_FRAGMENT_PREFIXES_BY_ATTACHMENT` gains `("O=[NH+][O-]", "N"): "nitro"` (the carve puts a hydrogen on the attachment
+  nitrogen). (4) A heteroatom-chain (N-N) parent may not take an `-amine` suffix on its own nitrogen. (5)/(6) `_name_urea_functional_parent` and `_name_guanidine_functional_parent`
+  refuse an N-N bond because that is a hydrazide; `_is_nitro_or_nitroso_nitrogen` exempts a nitro or nitroso nitrogen. Eighteen `D-164`/`D-165` rows join the known-defects table.
+* **Open, not fixed:** nitramide itself (`N[N+](=O)[O-]`, no naming plan, D-166) and N-nitro and N-nitroso carbamates (`CCOC(=O)N[N+](=O)[O-]`, D-167).
+
+Standalone suite: see the pull request.
