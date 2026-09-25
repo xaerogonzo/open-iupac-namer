@@ -261,16 +261,22 @@ correct (`4-(1-methyl-1H-indol-2-yl)benzoic acid`), which places the gap in
 the unsubstituted-N path rather than in the indicated-hydrogen machinery.
 Found while fixing D-029; it predates it.
 
+## Open after naming round 16 (2026-09-25)
+
+D-164 and D-165 (a nitro or nitroso group on an ACYCLIC nitrogen) are fixed; see `CHANGELOG.md`. Still open, each with a target OPSIN reads back to the same structure and that is NOT
+checked against the Blue Book:
+
+* **D-166, nitramide itself** (`N[N+](=O)[O-]`): no naming plan (the amine entries need a carbon on the nitrogen; there is no retained name for the bare parent). Target `nitramide`.
+* **D-167, N-nitro and N-nitroso CARBAMATES:** `CCOC(=O)N[N+](=O)[O-]` is `[(nitroamino)(oxo)methoxy]ethane` and `CCOC(=O)N(C)N=O` is `1-(ethoxycarbonyl)-1-methyl-2-oxohydrazine`, both reading
+  back. The functional-class ester route does not take them. Targets `ethyl nitrocarbamate` and `ethyl methyl(nitroso)carbamate`, in the engine's own carbamate style.
+* **Not measured, so not claimed:** N-nitro or N-nitroso on a hydrazine, on a thioamide, on an amidine that is not a guanidine.
+
 ## Open after naming round 15 (2026-09-24)
 
 D-163 (a nitro group on a RING nitrogen) is fixed; see `CHANGELOG.md`. **A nitramine was in no benchmark row**, so every standing measure reported no change for the fix
 and none is evidence for it: the evidence is the nine D-163 rows in `tests/test_namer_known_defects.py` and a before/after diff of a 20-structure battery.
 
-**Open, ACYCLIC N-nitro.** `CN(C)[N+](=O)[O-]` is `(dimethylamino)(oxido)(oxo)azanium`, `CN[N+](=O)[O-]` is `(methylamino)(oxido)(oxo)azanium`, `N[N+](=O)[O-]` is
-`amino(oxido)(oxo)azanium`, and `CC(=O)N(C)[N+](=O)[O-]` is `N-methyl-N'-oxido-N'-oxoacetohydrazide`, which OPSIN cannot read. The names one would expect (not checked
-against the Blue Book here) are `N-methyl-N-nitromethanamine`, `N-methylnitramide`, `nitramide` and `N-methyl-N-nitroacetamide`. Widening the nitro pattern to an acyclic
-nitrogen does not work: the amine nitrogen is claimed as part of the group and dropped. **Open, N-nitroso:** the `nitroso` pattern is carbon-only too (`CN(C=O)N=O` is
-`1-methyl-2-oxohydrazine-1-carbaldehyde`).
+**The acyclic N-nitro and N-nitroso cases this section first listed as open are D-164 and D-165, fixed in round 16 (the section above).**
 
 ## Open after naming round 4 (2026-09-18)
 
