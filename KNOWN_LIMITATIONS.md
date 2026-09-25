@@ -261,6 +261,17 @@ correct (`4-(1-methyl-1H-indol-2-yl)benzoic acid`), which places the gap in
 the unsubstituted-N path rather than in the indicated-hydrogen machinery.
 Found while fixing D-029; it predates it.
 
+## Open after naming round 15 (2026-09-24)
+
+D-163 (a nitro group on a RING nitrogen) is fixed; see `CHANGELOG.md`. **A nitramine was in no benchmark row**, so every standing measure reported no change for the fix
+and none is evidence for it: the evidence is the nine D-163 rows in `tests/test_namer_known_defects.py` and a before/after diff of a 20-structure battery.
+
+**Open, ACYCLIC N-nitro.** `CN(C)[N+](=O)[O-]` is `(dimethylamino)(oxido)(oxo)azanium`, `CN[N+](=O)[O-]` is `(methylamino)(oxido)(oxo)azanium`, `N[N+](=O)[O-]` is
+`amino(oxido)(oxo)azanium`, and `CC(=O)N(C)[N+](=O)[O-]` is `N-methyl-N'-oxido-N'-oxoacetohydrazide`, which OPSIN cannot read. The names one would expect (not checked
+against the Blue Book here) are `N-methyl-N-nitromethanamine`, `N-methylnitramide`, `nitramide` and `N-methyl-N-nitroacetamide`. Widening the nitro pattern to an acyclic
+nitrogen does not work: the amine nitrogen is claimed as part of the group and dropped. **Open, N-nitroso:** the `nitroso` pattern is carbon-only too (`CN(C=O)N=O` is
+`1-methyl-2-oxohydrazine-1-carbaldehyde`).
+
 ## Open after naming round 4 (2026-09-18)
 
 Round 3's table below is closed except for one row: chloroquine, warfarin,
