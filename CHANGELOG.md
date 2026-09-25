@@ -1076,3 +1076,19 @@ Standalone suite (run under the source repository's interpreter, RDKit 2025.09.6
 * **D-162, open.** An N-hydroxy-N-alkyl amide inside an ester loses its N-substituent.
 
 Standalone suite: see the pull request (run under the source repository's interpreter, RDKit 2025.09.6, not the fork's own environment).
+
+## Naming round 15 (2026-09-24)
+
+* **D-163, fixed: a nitro group on a RING nitrogen (a nitramine).** 1,3-Dinitro-1,3-diazetidine was named
+  `oxido{3-[oxido(oxo)azaniumyl]-1,3-diazetidin-1-yl}(oxo)azanium`, and RDX, HMX, TNAZ, N-nitropyrrolidine and the N-nitro azoles the same way. The name reads
+  back, so an OPSIN round trip cannot see the problem, and it is not the name anyone uses. The `nitro` pattern in `data/functional_groups.json` is
+  `[NX3+](=O)([O-])[#6]`: it needs a carbon neighbour, so a nitro nitrogen on a ring nitrogen belonged to no group, and perception's acyclic-N+ azanium candidate
+  (`perception/__init__.py`, +50, "yielded BEFORE rings") offered it as a one-atom parent that outranked the ring. A second `nitro` entry,
+  `[NX3+](=O)([O-])[#7;R]`, claims it: `1,3-dinitro-1,3-diazetidine`, `1,3,5-trinitro-1,3,5-triazinane`, `1,3,5,7-tetranitro-1,3,5,7-tetraazocane`,
+  `1,3,3-trinitroazetidine`, `1-nitropyrrolidine`, `4-nitromorpholine`, `1-nitro-1H-imidazole`, `1-nitro-1H-indole`. Widening the existing pattern to `[#6,#7]` was
+  tried first and is WRONG: the attachment carbon of a prefix-only group is found by a plain `[#6]` atom in the SMARTS text (`perception/fg_detection.py`), and any
+  other spelling silently drops the attachment context (`4-(nitromethyl)piperidine` stopped naming). Nine `D-163` rows join the known-defects table.
+* **Open, not fixed:** an ACYCLIC N-nitro (a nitramide: `CN(C)[N+](=O)[O-]` is `(dimethylamino)(oxido)(oxo)azanium`) and N-nitroso (`CN(C=O)N=O`). Widening the nitro
+  pattern to an acyclic nitrogen drops the amine nitrogen and names a different molecule (`nitromethane`).
+
+Standalone suite: see the pull request.
