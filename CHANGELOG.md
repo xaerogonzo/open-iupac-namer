@@ -1127,3 +1127,19 @@ Standalone suite: see the pull request.
   (`4-nitrosoaminobenzoic acid`). Also not attempted: the nitric and nitrous hydrazides, and ethylenedinitramine (two nitramide groups, a multiplicative parent).
 
 Standalone suite: see the pull request.
+
+
+## Naming round 18 (2026-09-26)
+
+* **D-168, fixed: the `-NH-NO2` and `-NH-NO` prefixes.** Where a nitramide is not the parent, P-67.1.4.3.2 (pdf p. 717) prints "-NH-NO2 nitramido (preselected prefix)" and "-NH-NO nitrosoamino
+  (preselected prefix)". `OC(=O)c1ccc(N[N+](=O)[O-])cc1` was `4-(nitroamino)benzoic acid` and is `4-nitramidobenzoic acid`; `OC(=O)c1ccc(NN=O)cc1` was `4-nitrosoaminobenzoic acid` and is
+  `4-(nitrosoamino)benzoic acid`; two of either multiply as `3,5-dinitramidobenzoic acid` and `3,5-bis(nitrosoamino)benzoic acid`. Three small changes: `assembly._preferred_prefix_spelling` maps the bare
+  word `nitroamino` to `nitramido` (next to `phenylamino` -> `anilino`), with a matching case in `_name_heteroatom_fv_substituent` for the prefix inside an imino group; `nitrosoamino` leaves
+  `_SIMPLE_PREFIXES` (it is a substituted amino group and a compound prefix); `nitramido` joins `_LEADING_PREFIX_WORDS`.
+* **A round-17 guard tightened.** A hydrazone of nitramide (`C=N-NH-NO2`) had been named as a nitramide with an ylideneamino prefix; `_is_hydrazone_type_nitrogen` now declines, and the hydrazine name
+  stays until the hydrazide route exists. Isocyanato and isothiocyanato still take the nitramide parent.
+* Measured in the vendoring repository (the fork has no frozen populations): census scan 0 of 2000 rows changed; 1712 reference structures, 0 changed; the blind Blue Book held-out set, scored once in
+  aggregate, identical to round 17. Rows `D-168a-g` join the known-defects table and each change was removed in turn to confirm one fails.
+* **Open, not fixed (D-169):** the nitric and nitrous hydrazides (`nitric hydrazide`, `nitrous hydrazide`, `N'-benzylidenenitric hydrazide`), OPEN rows with OPSIN-verified targets.
+
+Standalone suite: see the pull request.
