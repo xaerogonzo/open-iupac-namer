@@ -1108,3 +1108,22 @@ Standalone suite: see the pull request.
 * **Open, not fixed:** nitramide itself (`N[N+](=O)[O-]`, no naming plan, D-166) and N-nitro and N-nitroso carbamates (`CCOC(=O)N[N+](=O)[O-]`, D-167).
 
 Standalone suite: see the pull request.
+
+
+## Naming round 17 (2026-09-25)
+
+* **D-166 / D-167, fixed: nitramide and nitrous amide as PARENTS, and N-nitro / N-nitroso carbamates.** Round 16 named the plain nitramines and nitrosamines as the amine with a nitro or nitroso
+  prefix and recorded that as not checked against the Blue Book. P-67.1.2.6.3 (pdf p. 708): "Preferred IUPAC names for amides and hydrazides of nitric and nitrous acids are now systematically
+  based on nitric or nitrous amide and hydrazide, in accordance with the seniority order of classes rather than as nitro and nitroso amines; the latter names can be used in general
+  nomenclature", and p. 709 prints `(chloromethyl)(methyl)nitramide (PIN)` beside `1-chloro-N-methyl-N-nitromethanamine`. So `CN(C)[N+](=O)[O-]` is now `dimethylnitramide`, NDMA `dimethylnitrous amide`,
+  `N[N+](=O)[O-]` `nitramide` (it had no naming plan), `CCOC(=O)N[N+](=O)[O-]` `ethyl nitrocarbamate` and `CCOC(=O)N(C)N=O` `ethyl methyl(nitroso)carbamate`.
+  Two changes. (1) `_name_nitramide_functional_parent`, built on `_name_n_core_parent` like the cyanamide and sulfamic acid routes: the one substitutable amino nitrogen takes its prefixes with no
+  locant; it declines for a group of the amide class or above elsewhere, for a nitrogen on a carbon doubly bonded to N, O or S (an acyl, imidoyl or carbamoyl carbon), a cyano carbon, a hydrazine, a ring
+  nitrogen and a second nitramide group. (2) `_build_carbamate_decomposition` took the nitro or nitroso nitrogen for a carbazate's second nitrogen and offered no functional-class plan; the predicate
+  moves to `types.py` as `is_nitro_or_nitroso_nitrogen`. Rows `D-164a-d` and `D-165a-d` are retargeted to the PINs; `D-166a-h` and `D-167a-b` join the known-defects table.
+  Measured in the vendoring repository (the fork has no frozen populations): census scan 0 of 2000 rows changed; 1712 reference structures, 3 names changed, each now equal to the name the book prints; the blind
+  Blue Book held-out set, scored once in aggregate, exact 506 -> 510 with nothing worse.
+* **Open, not fixed (D-168):** the `-NH-NO2` prefix is `nitramido` in the book (P-67.1.4.3.2, pdf p. 717) and `(nitroamino)` here, and `-NH-NO` is written without its parentheses
+  (`4-nitrosoaminobenzoic acid`). Also not attempted: the nitric and nitrous hydrazides, and ethylenedinitramine (two nitramide groups, a multiplicative parent).
+
+Standalone suite: see the pull request.
