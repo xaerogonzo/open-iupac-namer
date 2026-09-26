@@ -261,7 +261,17 @@ correct (`4-(1-methyl-1H-indol-2-yl)benzoic acid`), which places the gap in
 the unsubstituted-N path rather than in the indicated-hydrogen machinery.
 Found while fixing D-029; it predates it.
 
-## Open after naming round 16 (2026-09-25)
+## Open after naming round 17 (2026-09-25)
+
+D-166 (`nitramide`) and D-167 (N-nitro and N-nitroso carbamates) are fixed, and round 17 changed round 16's names for the plain nitramines and nitrosamines to the book's PINs (P-67.1.2.6.3, pdf p. 708):
+`dimethylnitramide`, `dimethylnitrous amide`. `CHANGELOG.md`, round 17. Still open:
+
+* **D-168, the substituent prefixes:** where a nitramide is not the parent, `-NH-NO2` is `(nitroamino)` and the book prints `nitramido` (pdf p. 717); `-NH-NO` is written `4-nitrosoaminobenzoic acid`,
+  without the parentheses a compound prefix needs.
+* **Nitric and nitrous hydrazides** (`O2N-NH-NH2`, `ON-NH-NH2`) keep their hydrazine names; **two or more nitramide groups** (ethylenedinitramine) keep round 16's amine name, which is NOT the PIN;
+  **a cyano group on the nitramide nitrogen** is left to the general path.
+
+## Open after naming round 16 (closed in round 17 above) (2026-09-25)
 
 D-164 and D-165 (a nitro or nitroso group on an ACYCLIC nitrogen) are fixed; see `CHANGELOG.md`. Still open, each with a target OPSIN reads back to the same structure and that is NOT
 checked against the Blue Book:
