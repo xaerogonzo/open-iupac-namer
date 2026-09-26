@@ -261,7 +261,15 @@ correct (`4-(1-methyl-1H-indol-2-yl)benzoic acid`), which places the gap in
 the unsubstituted-N path rather than in the indicated-hydrogen machinery.
 Found while fixing D-029; it predates it.
 
-## Open after naming round 18 (2026-09-26)
+## Open after naming round 19 (2026-09-26)
+
+D-169 (nitric and nitrous hydrazides as parents) is fixed; see `CHANGELOG.md`, round 19. Still open:
+
+* **D-170, the substituent names of a hydrazone or hydrazine** (OPEN `D-170a-c`): the book prints `=N-NH2` as `hydrazinylidene` ("3-amino-3-hydrazinylidenepropanoic acid (PIN)", pdf p. 682) and the nitro and nitroso
+  derivatives as `nitrohydrazinylidene` / `nitrosohydrazinylidene` (p. 717); the engine writes `(aminoimino)` and `(R-aminoimino)` for the whole `=N-NH-R` family, of which round 18's `(nitramidoimino)` is one member.
+* **Two or more nitramide groups** (ethylenedinitramine) keep round 16's amine name, which is NOT the PIN; **a cyano group on the nitramide nitrogen** is left to the general path.
+
+## Open after naming round 18 (2026-09-26; D-169 closed in round 19 above)
 
 D-168 (the `nitramido` and `nitrosoamino` prefixes) is fixed; see `CHANGELOG.md`, round 18. Still open:
 
