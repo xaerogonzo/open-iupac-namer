@@ -1143,3 +1143,19 @@ Standalone suite: see the pull request.
 * **Open, not fixed (D-169):** the nitric and nitrous hydrazides (`nitric hydrazide`, `nitrous hydrazide`, `N'-benzylidenenitric hydrazide`), OPEN rows with OPSIN-verified targets.
 
 Standalone suite: see the pull request.
+
+
+## Naming round 19 (2026-09-26)
+
+* **D-169, fixed: nitric and nitrous HYDRAZIDES as parents.** P-67.1.2.6.3 (pdf p. 708): "nitric hydrazide (I) and nitrous hydrazide (II) are preselected names used as parent structures for generation of
+  preferred IUPAC names", and p. 709 prints `N'-hexylidenenitrous hydrazide (PIN)`. `O2N-NH-NH2` was `nitrohydrazine` and is `nitric hydrazide`; `ON-NH-NH2` was `1-amino-2-oxohydrazine` and is `nitrous hydrazide`;
+  `CNN[N+](=O)[O-]` was `1-methyl-2-nitrohydrazine` and is `N'-methylnitric hydrazide` (N is the nitrogen that bears the nitro or nitroso group, N' the terminal one); a hydrazone is named with an N'-ylidene
+  (`N'-(propan-2-ylidene)nitric hydrazide`); and a hydrazide outranks an alcohol. One new `_name_nitric_hydrazide_functional_parent` on `_name_n_core_parent` with fixed `N` / `N'` labels, and an
+  `allow_ylidene` extension so a nitrogen can carry a double-bonded substituent. It declines for a hydrazide-class or senior group elsewhere, a carbon acid derivative next to the nitrogen or on the hydrazone
+  carbon (an amidine, a guanidine, a hydrazonoyl halide), a triazane and a ring nitrogen. Rows `D-169a-k`, thirteen control rows and `D-168g` (its round-18 stopgap replaced) join the known-defects table.
+  Measured in the vendoring repository (the fork has no frozen populations): census scan 0 rows changed class and 1 changed name, 1712 reference structures 0 changed, the blind Blue Book held-out set scored once in
+  aggregate and identical to round 18; seven changes were each removed and a row failed.
+* **Open, not fixed (D-170):** the substituent names of a hydrazone or hydrazine. The book prints `3-amino-3-hydrazinylidenepropanoic acid (PIN)` (p. 682) and `nitrosohydrazinylidene` (p. 717); the engine writes
+  `3-amino-3-(aminoimino)propanoic acid` and `(R-aminoimino)` for the `=N-NH-R` family. OPEN rows `D-170a-c`.
+
+Standalone suite: see the pull request.
