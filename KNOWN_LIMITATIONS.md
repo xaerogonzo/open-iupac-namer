@@ -261,7 +261,14 @@ correct (`4-(1-methyl-1H-indol-2-yl)benzoic acid`), which places the gap in
 the unsubstituted-N path rather than in the indicated-hydrogen machinery.
 Found while fixing D-029; it predates it.
 
-## Open after naming round 21 (2026-09-27)
+## Open after naming round 22 (2026-09-27)
+
+D-171 (hydrazones of a carbon-acid hydrazide) is fixed; see `CHANGELOG.md`, round 22. Still open:
+
+* **Plain thiohydrazides** (`CC(=S)NN` is `(1-thioxoethyl)hydrazine`, not `acetothiohydrazide`): the `fg:hydrazide` SMARTS matches only a carbonyl oxygen; no
+  chalcogen-generic path exists for it, unlike carboxamide/carbothioamide.
+
+## Open after naming round 21 (2026-09-27; D-171 closed in round 22 above)
 
 D-173 (retained `benzylidene`/`benzylidyne`) and D-178 (halogen-oxoacid amides) are fixed; see `CHANGELOG.md`, round 21. Still open, all investigated this round:
 

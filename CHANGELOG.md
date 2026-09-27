@@ -1196,3 +1196,23 @@ times); 1712 reference structures 2 changed (one tuning row, one the r8 benzonit
 held-out set scored once in aggregate, `bluebook_frozen` exact rising 510 -> 511 (one row moved equivalent -> exact), every other bucket unchanged.
 
 Standalone suite: see the pull request.
+
+
+## Naming round 22 (2026-09-27)
+
+* **D-171, fixed: hydrazones of a carbon-acid hydrazide are named on the hydrazide, with an N'-ylidene.** P-66.3.3 prints the same pattern round 19 built for the
+  nitric/nitrous hydrazide, "N'-hexylidenenitrous hydrazide (PIN)". `CC(=O)NN=CCCCCC` was `1-acetyl-2-hexylidenehydrazine` and is
+  `N'-hexylideneacetohydrazide`. The `fg:hydrazide` SMARTS required both nitrogens at `NX3` (three connections), which a hydrazone's terminal `=N-` (`NX2`,
+  double-bonded to carbon) failed. The fix is one recursive clause on the terminal nitrogen, `$([NX2;!R]=[#6])`, restricted to a carbon partner so a genuine
+  azo/triazene nitrogen is not mistaken for a hydrazone. Nothing downstream needed touching: the general "PCG N-substituents" machinery already carves
+  N-substituents and renders a bond-order-2 one as an ylidene. Also fixes a hydrazide-vs-amine seniority bug the same shape exposed (a hydrazone carbon
+  bearing two amino groups was naming an amine as parent over a class-12 hydrazide). Rows `D-171a-f` join the known-defects table; two guards were each
+  removed in turn and a control row failed.
+* **Also found, not fixed:** plain thiohydrazides (`CC(=S)NN` is `(1-thioxoethyl)hydrazine`, not `acetothiohydrazide`) are a separate, pre-existing defect --
+  the `fg:hydrazide` SMARTS matches only a carbonyl oxygen, with no chalcogen-generic path.
+
+Measured in the vendoring repository (this fork has no frozen populations): census scan 0 rows changed class and 40 changed name (all this pattern, the
+family is common in drug-like corpora); 1712 reference structures 1 changed, reading back; the blind Blue Book held-out set scored once in aggregate and
+identical to round 21.
+
+Standalone suite: see the pull request.
