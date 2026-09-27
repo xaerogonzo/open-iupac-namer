@@ -1159,3 +1159,17 @@ Standalone suite: see the pull request.
   `3-amino-3-(aminoimino)propanoic acid` and `(R-aminoimino)` for the `=N-NH-R` family. OPEN rows `D-170a-c`.
 
 Standalone suite: see the pull request.
+
+
+## Naming round 20 (2026-09-26)
+
+* **D-170, fixed: the SUBSTITUENT `hydrazinylidene`.** P-66.4.1.2 (pdf p. 682) prints `3-amino-3-hydrazinylidenepropanoic acid (PIN)` and p. 717 `nitrosohydrazinylidene (preselected prefix)`. The engine read every
+  `=N-N(R)(R')` group as an imino group on an amino group, which OPSIN reads back correctly and which is not the name: `OC(=O)CC(N)=NN` was `3-amino-3-(aminoimino)propanoic acid` and is
+  `3-amino-3-hydrazinylidenepropanoic acid`; `OC(=O)CC(C)=NNC` was `3-(methylaminoimino)butanoic acid` and is `3-(2-methylhydrazinylidene)butanoic acid`; an acyl hydrazone was `3-acetamidoiminobutanoic acid` and is
+  `3-(2-acetylhydrazinylidene)butanoic acid`; round 18's stopgap `(nitramidoimino)acetic acid` is `(nitrohydrazinylidene)acetic acid`. One new `_hydrazinylidene_prefix` cites N2's substituents at 2, writes a lone nitro or
+  nitroso group unlocanted as the book prints it, and leaves the bare group unenclosed; an azine, a triazane and a ring N2 keep the imino form. Rows `D-170a-m`, five control rows, and `D-168f` (its round-18 stopgap replaced)
+  join the known-defects table. Measured in the vendoring repository (the fork has no frozen populations): census scan 0 rows changed class and 19 changed name (all this prefix, exact both times), 1712 reference structures 19
+  changed (all read back, none unexpected), the blind Blue Book held-out set scored once in aggregate and identical to round 19; eight of nine guards were removed in turn and a row failed (the ninth is an equivalent mutant).
+* **Open, not fixed:** hydrazones of carbon acid hydrazides (the book names the hydrazide, `N'-...-ylideneacetohydrazide`), an azine and a triazane on N2.
+
+Standalone suite: see the pull request.
