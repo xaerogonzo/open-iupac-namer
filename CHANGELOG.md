@@ -1173,3 +1173,26 @@ Standalone suite: see the pull request.
 * **Open, not fixed:** hydrazones of carbon acid hydrazides (the book names the hydrazide, `N'-...-ylideneacetohydrazide`), an azine and a triazane on N2.
 
 Standalone suite: see the pull request.
+
+
+## Naming round 21 (2026-09-27)
+
+* **D-173, fixed: the retained prefixes `benzyl`, `benzylidene`, `benzylidyne`, unenclosed and unsubstituted-only.** P-29.6.1 (pdf p. 312): "benzyl, benzylidene,
+  benzylidyne are retained preferred prefixes, but are not to be substituted"; printed "2-benzylpyridine (PIN)". `benzyl` (bond order 1) was already right; this
+  round adds `benzylidene`/`benzylidyne` (bond orders 2/3), and reaches two hand-built compound prefixes that bypass the usual spelling substitution entirely (so
+  even plain `benzyl` needed a second fix there). A substituted one (ring or alpha) stays systematic, per the book's own `carboxy(4-carboxyphenyl)methylidene`
+  example. Rows `D-173a-f` join the known-defects table; ten guards were each removed in turn and a row failed.
+* **D-178, fixed: amides of the mononuclear halogen oxoacids, `R2N-X` and its `=O` homologues.** P-62.4 (pdf p. 528): "compounds such as R-NH-Cl, R-NH-NO, and
+  R-NH-NO2 are now named as derivatives of amides" -- the same reclassification round 17 built for nitro/nitroso, extended to a halogen. `CCNCl` was
+  `(chloroamino)ethane` and is `ethylhypochlorous amide` (the printed example); iodine alone climbs the oxidation ladder (`iodous amide`, `iodic amide`) because
+  RDKit accepts a neutral tri- or pentavalent iodine but refuses the same shape for chlorine or bromine outright, so the book's own bromous-amide example is not
+  reachable through this engine at all. Rows `D-178a-m`; ten guards were each removed in turn and a row failed.
+* **Investigated, not fixed:** hydrazones of carbon-acid hydrazides (the FG-suffix SMARTS is too broad to touch narrowly), the azine/triazane/ring-N2 imino
+  cases, the book's own `hydrazin-1-yl` inconsistency, cyanamide vs nitramide competing for one nitrogen, and ethylenedinitramine (a verified candidate PIN,
+  `ethane-1,2-diylbis(nitramide)`, is now recorded, not yet implemented).
+
+Measured in the vendoring repository (this fork has no frozen populations): census scan 0 rows changed class and 10 changed name (benzylidene family, exact both
+times); 1712 reference structures 2 changed (one tuning row, one the r8 benzonitrilium reference structure itself), both reading back; the blind Blue Book
+held-out set scored once in aggregate, `bluebook_frozen` exact rising 510 -> 511 (one row moved equivalent -> exact), every other bucket unchanged.
+
+Standalone suite: see the pull request.

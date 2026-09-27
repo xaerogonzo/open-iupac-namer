@@ -261,7 +261,20 @@ correct (`4-(1-methyl-1H-indol-2-yl)benzoic acid`), which places the gap in
 the unsubstituted-N path rather than in the indicated-hydrogen machinery.
 Found while fixing D-029; it predates it.
 
-## Open after naming round 20 (2026-09-26)
+## Open after naming round 21 (2026-09-27)
+
+D-173 (retained `benzylidene`/`benzylidyne`) and D-178 (halogen-oxoacid amides) are fixed; see `CHANGELOG.md`, round 21. Still open, all investigated this round:
+
+* **Hydrazones of carbon-acid hydrazides** (`CC(=O)NN=CCCCCC` is `1-acetyl-2-hexylidenehydrazine`; P-66.3.3 names the hydrazide,
+  `N'-hexylideneacetohydrazide`): the FG SMARTS (`fg:hydrazide`) requires both nitrogens at `NX3`, which a hydrazone's terminal `=N-` fails, and the fix
+  touches the general FG-suffix rendering pipeline broadly enough that a self-contained one was not found.
+* **An azine, a triazane or a ring nitrogen on the second nitrogen of an `=N-N` group** keeps the imino form; no book names were found for these.
+* **A cyano group on the nitramide nitrogen**: cyanamide (P-66.1.6.2, pdf p. 664) and nitramide are both preselected amide-class parents competing for one
+  nitrogen; the book prints no example resolving which wins.
+* **Ethylenedinitramine** (two nitramide groups) keeps round 16's amine name; a candidate PIN, `ethane-1,2-diylbis(nitramide)`, is derived and
+  OPSIN-verified but not implemented (nitramide is a hand-built functional parent, not an ordinary suffix `multiplicative.py` already joins).
+
+## Open after naming round 20 (2026-09-26; D-173 and D-178 closed in round 21 above)
 
 D-170 (the substituent `hydrazinylidene`) is fixed; see `CHANGELOG.md`, round 20. Still open:
 
