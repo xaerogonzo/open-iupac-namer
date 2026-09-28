@@ -1216,3 +1216,18 @@ family is common in drug-like corpora); 1712 reference structures 1 changed, rea
 identical to round 21.
 
 Standalone suite: see the pull request.
+
+
+## Naming round 23 (2026-09-27)
+
+* **D-179, fixed: the chalcogen analogue thiohydrazide, `R-C(=S)-NH-NH2`.** P-66.3.4 (pdf p. 672) prints "propanethiohydrazide (PIN)" and
+  "benzenecarbothiohydrazide (PIN)". `fg:hydrazide`'s SMARTS matched only a carbonyl oxygen, so a thiohydrazide was never recognized as the hydrazide
+  class at all (`CC(=S)NN` was `(1-thioxoethyl)hydrazine`). One new `thiohydrazide` FG entry mirrors `hydrazide` exactly; three engine.py sites keyed
+  on the literal string `"hydrazide"` also needed the new type name (N-substituent carving, N/N' role primes, the anchor-in-parent guard -- the last
+  caught a WRONG STRUCTURE, a double-counted carbon, before it shipped). One preprocessing entry, added for symmetry, is verified dead behind the
+  anchor guard for every shape tried. Rows `D-179a-h` join the known-defects table; nine guards removed in turn each failed a row for eight of nine.
+
+Measured in the vendoring repository (this fork has no frozen populations): census and both frozen sets 0 changes (the family is rare); 1712 reference
+structures 2 changed, both the book's own printed examples, reading back; nine guards removed in turn each failed a row for eight of nine.
+
+Standalone suite: see the pull request.
