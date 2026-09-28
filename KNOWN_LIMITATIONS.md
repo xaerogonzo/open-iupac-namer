@@ -261,7 +261,11 @@ correct (`4-(1-methyl-1H-indol-2-yl)benzoic acid`), which places the gap in
 the unsubstituted-N path rather than in the indicated-hydrogen machinery.
 Found while fixing D-029; it predates it.
 
-## Open after naming round 22 (2026-09-27)
+## Open after naming round 23 (2026-09-27)
+
+D-179 (the chalcogen analogue thiohydrazide) is fixed; see `CHANGELOG.md`, round 23. Still open (unchanged from round 22).
+
+## Open after naming round 22 (2026-09-27; D-179 closed in round 23 above)
 
 D-171 (hydrazones of a carbon-acid hydrazide) is fixed; see `CHANGELOG.md`, round 22. Still open:
 
