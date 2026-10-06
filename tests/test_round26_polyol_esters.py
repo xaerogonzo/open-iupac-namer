@@ -253,3 +253,26 @@ def test_a_polyol_ester_the_rule_declines_still_has_one_name_in_every_atom_order
     rdBase.SeedRandomNumberGenerator(20261006)
     mol = Chem.MolFromSmiles(smiles)
     assert len({name_smiles(Chem.MolToSmiles(mol, doRandom=True)) for _ in range(12)}) == 1
+
+
+# The same shapes, where the RULE and a canonical rank would choose different esters: `_break_ester_tie` compares the executed alcohol components
+# (round 25, D-186: the lowest free-valence locant, so `propyl`, not `propan-2-yl`). If the polyol plan's decline skipped that comparison the
+# names would still be stable, but they would be the rank's choice, and 7 of the 20 unsymmetric shapes measured here moved (`...butan-2-yl` for
+# `...ethyl`). Each name was read back by OPSIN to the input structure.
+DECLINED_RULE = [
+    ("thioether", "CC(=O)OCCSCC(OC(C)=O)C", "2-{[2-(acetyloxy)propyl]sulfanyl}ethyl acetate"),
+    ("ether", "CC(=O)OCCCOCC(OC(C)=O)C", "3-[2-(acetyloxy)propoxy]propyl acetate"),
+    ("amine", "CC(=O)OCCN(C)CC(C)OC(C)=O", "2-{[2-(acetyloxy)propyl](methyl)amino}ethyl acetate"),
+    ("branched ether", "CC(=O)OC(C)CCOCCOC(C)=O", "2-[3-(acetyloxy)butoxy]ethyl acetate"),
+]
+
+
+@pytest.mark.parametrize("label,smiles,expected", DECLINED_RULE, ids=[r[0] for r in DECLINED_RULE])
+def test_a_declined_polyol_ester_keeps_the_lowest_locant_choice_of_round_25(label, smiles, expected):
+    assert name_smiles(smiles) == expected
+
+
+@needs_opsin
+@pytest.mark.parametrize("label,smiles,expected", DECLINED_RULE, ids=[r[0] for r in DECLINED_RULE])
+def test_opsin_reads_the_declined_polyol_names_back(label, smiles, expected):
+    assert _opsin_structure(name_smiles(smiles)) == _canon(smiles)
