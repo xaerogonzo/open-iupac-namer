@@ -19,7 +19,7 @@ FAMILY = [
     ("codeine", "COc1ccc2C[C@H]3N(C)CC[C@@]45[C@@H](Oc1c24)[C@@H](O)C=C[C@@H]35",
      "(5R,6S,9R,13S,14R)-4,5-epoxy-3-methoxy-17-methyl-7,8-didehydromorphinan-6-ol"),
     ("heroin", "CC(=O)O[C@H]1C=C[C@H]2[C@H]3Cc4ccc(OC(C)=O)c5O[C@@H]1[C@]2(CCN3C)c45",
-     "(5R,6S,9R,13S,14R)-3-(acetyloxy)-4,5-epoxy-17-methyl-7,8-didehydromorphinan-6-yl acetate"),
+     "(5R,6S,9R,13S,14R)-6-(acetyloxy)-4,5-epoxy-17-methyl-7,8-didehydromorphinan-3-yl acetate"),
     ("hydromorphone", "CN1CC[C@]23[C@@H]4C(=O)CC[C@]2([C@H]1CC5=C3C(=C(C=C5)O)O4)O",
      "(5R,9R,13S,14S)-4,5-epoxy-3,14-dihydroxy-17-methylmorphinan-6-one"),
     ("oxycodone", "COc1ccc2C[C@H]3N(C)CC[C@@]45[C@@H](Oc1c24)C(=O)CC[C@@]35O",
@@ -30,7 +30,7 @@ FAMILY = [
      "(5R,9R,13S)-4,5-epoxy-3,6-dimethoxy-17-methyl-6,7,8,14-tetradehydromorphinan"),
     # the molecule that started the round (a diacetoxy-oxo morphinan, drawn in the app)
     ("3,14-diacetoxy-6-oxo", "CC(=O)Oc1ccc2c3c1O[C@H]1C(=O)CC[C@@]4(OC(C)=O)[C@@H](C2)N(C)CC[C@]314",
-     "(5R,9R,13S,14S)-3-(acetyloxy)-4,5-epoxy-17-methyl-6-oxomorphinan-14-yl acetate"),
+     "(5R,9R,13S,14S)-14-(acetyloxy)-4,5-epoxy-17-methyl-6-oxomorphinan-3-yl acetate"),
 ]
 
 
