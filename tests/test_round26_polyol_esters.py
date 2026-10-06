@@ -234,3 +234,22 @@ def test_the_polyol_reading_wins_whatever_order_the_decompositions_are_generated
 
     monkeypatch.setattr(Interpretation, "decomposition_candidates", reversed_candidates)
     assert name_smiles("CC(=O)OCCCCOC(C)=O") == "butane-1,4-diyl diacetate"
+
+
+DECLINED = [
+    ("diethylene glycol", "CC(=O)OCCOCCOC(C)=O"),
+    ("bisphenol A", "CC(=O)Oc1ccc(C(C)(C)c2ccc(OC(C)=O)cc2)cc1"),
+    ("pentaerythritol", "CC(=O)OCC(COC(C)=O)(COC(C)=O)COC(C)=O"),
+    ("1,2-phenylenedi(propan-3,1-yl)", "CC(=O)OCCCc1ccccc1CCCOC(C)=O"),
+    ("1,4-phenylenedimethylene", "CC(=O)OCc1ccc(COC(C)=O)cc1"),
+]
+
+
+@pytest.mark.parametrize("label,smiles", DECLINED, ids=[r[0] for r in DECLINED])
+def test_a_polyol_ester_the_rule_declines_still_has_one_name_in_every_atom_order(label, smiles):
+    # The polyol plan is BUILT for these and then declines at execution (its organyl group is not one parent). `_break_ester_tie` must still
+    # run round 25's comparison of the single-ester readings: without it the search falls to raw generation order, which follows atom order, and
+    # D-186 comes back for exactly these molecules. (A round 26 mutant that took polyol_ester out of that function's gate survived every other test.)
+    rdBase.SeedRandomNumberGenerator(20261006)
+    mol = Chem.MolFromSmiles(smiles)
+    assert len({name_smiles(Chem.MolToSmiles(mol, doRandom=True)) for _ in range(12)}) == 1
