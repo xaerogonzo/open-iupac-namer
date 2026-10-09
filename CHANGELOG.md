@@ -1528,3 +1528,15 @@ Found in round 30, where a labelled sweep called `8-(methylsulfanyl)-5,9-dihydro
 * New `tests/test_namer_hydro_ketone_indicated_hydrogen.py`; D-203 in `tests/test_namer_known_defects.py`.
 
 **Measured in the application that vendors this package** (xaerogonzo/OpenChem-Studio#257); the numbers above are from there.
+
+## 2026-10-08 -- naming round 32: a benzo-fused bridged ring system with a ring heteroatom (D-204)
+
+Found by reading the census rows that still name a DIFFERENT molecule (9 `mismatch_formula` of 2000 after round 31): two of them, and a third in the odd-tautomer population of round 31, were one scaffold.
+
+* **Cause.** `ring_naming/benzo_fused_bridged.py` detects one aromatic six-ring ortho-fused to a macrocycle that a small bridge spans and emits `<hydro>-<bridge>-methano-benzocyclo[N]ene`, a CARBOCYCLE. Its scope guard counts rings, bridge length and macrocycle size and never reads an atom's element, so a ring oxygen, nitrogen or sulfur in the macrocycle was dropped without a word: `CC(=O)C1C(=O)NC2(C)CC1c1cc([N+](=O)[O-])ccc1O2` was `6-acetyl-9-methyl-3-nitro-5,6,7,8,9,10-hexahydro-5,9-methanobenzocycloocten-7-one`, which OPSIN reads as a carbocycle with no O and no N.
+* **Fix.** A system whose non-benzene atoms are not all carbon is declined, and the generic bridged path (von Baeyer with replacement prefixes) names it: `12-acetyl-9-methyl-4-nitro-8-oxa-10-azatricyclo[7.3.1.0^{2,7}]trideca-2,4,6-trien-11-one`, read back exact. **Not the preferred name**: P-25.4 would name it as a fusion-bridged system, `2,6-methano-1,3-benzoxazocine`; that is not built, so these are correct and non-preferred, and the day it is built the carbocycle module's guard is the place to route from.
+* **Measured.** 114 skeletons (twelve benzo-fused bridged carbocycles, each non-aromatic ring atom replaced in turn by O, N or S), master -> now: wrong molecule 89 -> 0, exact 25 -> 114 (24 of the 25 were von Baeyer names already: positions the module declined for another reason); 20 carbocyclic controls (the same skeletons with a ketone): 20 exact before and after, no name moved; none of the 114 got worse. Census (2000 rows), master -> now: 2 names move, both `mismatch_formula` -> `exact` (exact 1961 -> 1963); `tools/naming_ref_compare.py` against master: 1712 panel rows, 0 changed, 0 violations.
+* **Seen and not changed.** The carbocycle names the module still writes use an odd hydro multiplier (`5,6,7,8,9-pentahydro-5,9-methanobenzocycloheptene`); OPSIN reads them and they are exact, but hydro prefixes come in pairs (P-31.1.4.2.4) and a bridged parent's hydro description would need its own rule.
+* New `tests/test_namer_benzo_bridged_heteroatoms.py`; 4 of 5 mutants killed, the survivor equivalent (a check restricted to the non-fusion atoms: the fusion atoms are benzene carbons by construction). D-204 in `tests/test_namer_known_defects.py`.
+
+**Measured in the application that vendors this package** (xaerogonzo/OpenChem-Studio#261); the numbers above are from there.
