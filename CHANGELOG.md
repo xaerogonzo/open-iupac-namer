@@ -1564,3 +1564,14 @@ Found by reading the first item round 33 left open: `C[N+]1=C(C)NCC1` was named 
 * New `tests/test_namer_ring_iminium_hydro.py` (5 of 5 mutants killed; a sixth, the carve's formal charge cleared in the neutral mode, survived because the lookup does not need it, and was removed from the code). D-207 in `tests/test_namer_known_defects.py`.
 
 **Measured in the application that vendors this package** (xaerogonzo/OpenChem-Studio#270); the numbers above are from there.
+
+## 2026-10-09 -- naming round 35: a ring cation on a curated fused parent keeps its -ium (D-208)
+
+The first "still open" item of round 33: the cation was LOST for protonated 2-amido-thiazoles, tetrahydrobenzothiazoles and pyrazolo[1,5-a]pyrimidines. It was not three families but one cause.
+
+* **D-208.** The ring-cation block in `engine.py` finds the locant of each charged ring atom in the parent's numbering (`atom_to_loc`) and `continue`d past one with none. A curated ring (`data_loader._RING_CURATED_SMILES`) lists `atom_locants` for the positions a substituent can take, and six entries left out the ring heteroatoms and fusion atoms (`c1nc2c(s1)CCCC2`: S1, N3, C3a, C7a), so the cation was printed as the neutral parent. The six tables are complete now (pyrazolo[1,5-a]pyrimidine N1, N4, N8; thiazolo[5,4-d]pyrimidine N1, S3, N4, N6; the 5,6,7,8-tetrahydro-[1,2,4]triazolo[4,3-a]pyrazine and -pyridine N1, N2, N4; 4,5,6,7-tetrahydro-1,3-benzothiazole S1, N3; 4,5,6,7-tetrahydrothieno[3,2-c]pyridine S1), each locant read back through OPSIN as the cation at that position. And a plan whose cationic ring atom has NO locant now returns an `ErrorTree` (the retry loop tries the next plan) rather than skipping the charge: the hexahydropyrido[2,1-a]isoquinoline entry, which is still incomplete, went from its neutral name to an exact von Baeyer cation name.
+* **Measured.** 700 cations (the six parents, each decorated with methyl, amino, hydroxy, chloro, phenyl, acetyl or acetamido on every ring carbon, then protonated or N-methylated on each pyridine-type nitrogen, and the sp3 NH protonated), master -> now: wrong molecule 528 -> 0, unreadable 44 -> 0, exact 128 -> 700, nothing exact became anything else.
+* **Not changed.** Thirteen other curated ring entries also list no locant for a ring heteroatom (listed by the test that guards the six); until each is completed their cations name by the next plan. The Hantzsch-Widman spelling and the exocyclic-ylidene ring cation of round 34 are untouched.
+* New `tests/test_namer_curated_ring_cation_locants.py` (6 of 6 mutants killed). D-208 in `tests/test_namer_known_defects.py`.
+
+**Measured in the application that vendors this package** (xaerogonzo/OpenChem-Studio#271); the numbers above are from there.
