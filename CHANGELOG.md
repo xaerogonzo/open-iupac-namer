@@ -1693,3 +1693,29 @@ Round 44's open list: an amidinium zwitterion with a second acid, a curated ring
 * New `tests/test_namer_round45_cations_and_zwitterions.py` (each name read back through OPSIN; 4 of 4 mutants killed in the application; the census-scan test stays there). D-233 and D-234 in the fixed table of `tests/test_namer_known_defects.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#310.
+
+## 2026-10-12 -- naming round 46: an anion beside a neutral group, imide / acylurea / sulfamide anions, a sulfamide prefix, and a charge guard (D-235 .. D-238)
+
+Round 45's census was saturated (1993 of 2000, seven rows, all OPSIN artifacts), so the round looked for what the census could not show: it deprotonated ONE acidic site of every census molecule (sulfonamide NH,
+carboxylic acid, phenol, thiol, tetrazole, imide, acylsulfonamide, sulfonic acid: 285 anions) and named each. 21 of the first 169 were wrong, in three families, all of them "the name has no charge".
+
+* **D-235.** `CC(=O)Nc1ccc(S(=O)(=O)[N-]c2ncccn2)cc1` was `N-{4-[N-(pyrimidin-2-yl)sulfamoyl]phenyl}ethanamide` (census row 2072). The charge-conservation step in ANION mode restricts a type to its charged instances,
+  but an AMIDE is not in the anion-variant family, so it competed on its own seniority, won, and the charged sulfonamide fell to a `sulfamoyl` prefix. An anion outranks every neutral class (P-41: anions 4, acids 7, amides 8), as
+  the carved-anion branch already applied. `engine.py` now drops the types with no charged atom when a family type has a charged instance; a cation type is kept. `4-acetamido-N-(pyrimidin-2-yl)benzene-1-sulfonamidate`.
+* **D-236.** No classifier claimed an N- with two heavy neighbours when one is an acyl or sulfamoyl group, so the plan search neutralised it: `O=C1CCC(=O)[N-]1` -> `pyrrolidine-2,5-dione`, a barbiturate -> the neutral trione,
+  `CNS(=O)(=O)[N-]c1ccccc1` -> `sulfamoylmethane` (the phenyl gone as well), `CC(=O)[N-]C(=O)NC` -> a `NAMING ERROR`. New `_classify_azanide` / `_render_azanide` (`perception/charge_perception.py`): P-72.2.2.2 names the anion
+  of an amide, hydrazide or imide with the parent `azanide` (`diacetylazanide`, `acetyl(methylcarbamoyl)azanide`, `(N-methylsulfamoyl)(phenyl)azanide`, the acyl groups named by the acid -> acyl trick `amide_anion` uses), and a ring
+  nitrogen is the ring's own `-ide`, the substituent anchored at N with its `yl` changed (`2,5-dioxopyrrolidin-1-ide`, phthalimide, barbituric acid, a lactam, a cyclic carbamate). The ordinary sulfonamide anion (S bonded to carbon) is
+  not claimed: the engine names it `-sulfonamidate` already. An acyclic ester or carbamate carbon is not claimed either (its acyl name is `methoxymethanoyl`, not `methoxycarbonyl`); it is refused.
+* **D-237.** `[O-]C(=O)c1ccccc1NS(=O)(=O)N(C)C` was `2-(N,N-dimethylsulfamoyl)benzoate`, and `[O-]c1ccccc1NS(=O)(=O)N(C)C` `2-sulfamoylbenzen-1-olate`. A demoted sulfonamide group took the first nitrogen it found; a sulfamide has two,
+  so the linking NH was dropped and the methyls were cited on the wrong atom. A sulfonyl with two nitrogens is named recursively: `2-[(dimethylaminosulfonyl)amino]benzoate`.
+* **D-238.** The net under every fix of this kind: rounds 43 and 44 (alkoxides and thiolates) and this round (imides) each closed one shape and left the next the same way, because an unclaimed charge falls through to the neutraliser BY DESIGN
+  (pyridinium and nitrobenzene are named by other paths). `_check_charge_named` (`engine.py`) refuses a single-fragment ion whose name has no word for its charge: `-ide` (not `amide` / `imide`), `-ate`, `sulfonato` / `oxido` prefixes for an
+  anion, `ium` / `onio` for a cation. A salt (two fragments) and a zwitterion (net zero) are not judged. It refuses what it cannot name: saccharin's anion, an acyclic N-acyl carbamate.
+* **Measured.** Census 1993 exact, unchanged, no row refused. The anion population: 285 anions, 21 of the first 169 wrong before, 4 flagged after, all thioamide / isothiourea thiolates (`NC([S-])=N...`, whose name cites `sulfanide`
+  inside the chain and OPSIN cannot read). `tests/vendor`: 5769 passed (full run); the app's naming tests 3824 passed. **Frozen sets** (blind `--frozen-impact`): heldout_v6 unchanged; bluebook_frozen changed 4 of 1126
+  and fresh_v1 2 of 2000, both re-scored once: heldout_v6 unchanged; bluebook_frozen re-scored once (r46-final-evaluation): wrong_structure 21 -> 17 and no_prediction 13 -> 17, four silent wrong molecules are refusals now, every other count identical; fresh_v1 moved 2 rows and was re-scored once (r46-fresh-v1): every outcome count identical. The stage list for `--frozen-impact` becomes `r46-fresh-v1,r46-final-evaluation,r38-final-evaluation`.
+* New `tests/test_namer_round46_anions_beside_neutral_groups.py` (85 tests, it came across to the fork unchanged but for its import path; each name read back through OPSIN with its charge, `-sulfonamidate` compared on neutral connectivity because OPSIN reads it neutral; 8 of 8 mutants killed).
+  D-236 and D-237 in the fixed table of `tests/test_namer_known_defects.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#316.
