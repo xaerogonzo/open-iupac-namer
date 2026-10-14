@@ -835,3 +835,7 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
   (a pyrazolone anion is refused, `CC(=O)[N-]N` is a `NAMING ERROR`); (c) a carboxylate beside TWO neutral acids on an amidinium is refused; (d) a sulfonamide anion bearing an N-methoxycarbonyl group is
   `N-[methoxy(oxo)methyl]methanesulfonamidate`, readable but not the book's `methoxycarbonyl`; (e) the baseline `quaternary` run measured here included D-246's rule (it started after that edit), so its count is not a
   pure master count; (f) the census's seven non-exact rows are unchanged.
+
+* **What the round 51 site patterns left open (naming round 51; D-248, D-249).** (a) A FUSED lactam anion the engine names with an `-on` suffix is written `3,4-dihydroquinolin-2(1H)-on-1-ide`, which OPSIN cannot
+  parse (`2-oxo-3,4-dihydroquinolin-1(2H)-ide` is readable); (b) a pyrazolone anion with an N-carboximidothioic acid is written `...carboximidothioic acid-2-ide`, unreadable; (c) the O-protonated or O-methylated
+  amide and urea cations: a few refused, a few named as a different molecule (`carbamoyloxidanium`). Round 50's items (b) (N-N anions) and the pyrazolone anion are named now.

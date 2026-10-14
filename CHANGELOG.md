@@ -1806,3 +1806,17 @@ Round 49's open list asked whether the ion populations were saturated. The three
 * New `tests/test_namer_round50_iminium_and_imino.py` (35 tests; 6 of 6 live mutants killed) and `tests/test_naming_ion_populations.py`. D-246 and D-247 in the fixed table of `tests/test_namer_known_defects.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#325.
+
+## Naming round 51: the anion of a hydrazide, ring anions with an added hydrogen or a prime, and a nitro group beside a ring anion (D-248, D-249)
+
+Five site patterns the ion populations had not tried (a lactam NH, a hydrazide NH, an azole NH, a hydroxamic acid, the oxygen of an amide or ketone) took the anion population from 416 to 451 of 453 clean.
+
+* **D-248.** `CC(=O)[N-]N` and the other hydrazide anions were a `NAMING ERROR`: the azanide classifier refused any neighbour that was not carbon or a sulfamoyl sulfur. A neutral nitrogen beside the anionic one is
+  the hydrazide's other nitrogen: `acetyl(amino)azanide` (read back through OPSIN).
+* **D-249.** A ring anion is the ring's substituent group with `yl` changed to `ide`; the attachment-locant regex stopped at `3(2H)-` and `1'-`, so such a group fell through to the parent-hydride splice
+  (`1,3-benzothiazol-2(3H)-on-1-ide`: wrong locant, unreadable) or was refused (a spiro oxindole anion). The locant may now carry an added hydrogen or a prime. A nitro group elsewhere no longer hides a ring
+  anion from `_classify_aromatic_ring_anion` (it counted the nitro charges); the pyrazolone anion round 46 left refused is named, `5-oxo-4,5-dihydro-1H-pyrazol-1-ide`.
+* **Measured.** Census 1993 exact, unchanged. Vendored suite and known-defects file 7438 passed. 4 of 4 live mutants killed. `tests/test_namer_round46_anions_beside_neutral_groups.py` now pins a carboxylate beside two
+  neutral acids on an amidinium as the refusal. New `tests/test_namer_round51_nn_and_added_hydrogen_anions.py`; D-248 and D-249 in the fixed table of `tests/test_namer_known_defects.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#329.
