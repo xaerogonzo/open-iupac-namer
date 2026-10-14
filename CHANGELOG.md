@@ -1820,3 +1820,17 @@ Five site patterns the ion populations had not tried (a lactam NH, a hydrazide N
   neutral acids on an amidinium as the refusal. New `tests/test_namer_round51_nn_and_added_hydrogen_anions.py`; D-248 and D-249 in the fixed table of `tests/test_namer_known_defects.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#329.
+
+## Naming round 52: a second acid in an azanide's acyl group, the thioamide anion, a positive chalcogen taken for a carbonyl (D-250, D-251, D-252)
+
+Ten new ion-population site patterns (an acyclic amide, a urea, a thioamide, an oxime, a phosphonic and a sulfinic acid; a thiocarbonyl sulfur, a sulfoxide oxygen, a phosphine, a nitrile nitrogen).
+
+* **D-250.** An amide anion whose acyl group also carries an acid was written as a DIACYL group (`(pentanedioyl)...azanide`: unreadable, the free acid dropped). `_acyl_prefix_via_acid` declines a fragment with a
+  second acid and the branch namer writes the carboxy as a prefix: `(4-carboxy-1-oxobutyl)...azanide`.
+* **D-251.** A thioamide / thiourea anion was claimed by the amine-anion classifier and then refused (it excluded C=O neighbours, not C=S). The azanide route names it: `ethanethioyl(methyl)azanide`.
+* **D-252.** S-protonated thiourea was `thiocarbamoylsulfanium`, a different molecule with no refusal: `=S` / `=O` in a suffix-group SMARTS match a POSITIVE chalcogen, so the thioamide group matched through the
+  sulfonium sulfur and a nitrogen dropped out. A suffix-group match containing a positively charged O, S, Se or Te is dropped: `(diaminomethylidene)sulfanium`. The same hole made `carbamoyloxidanium` of a protonated urea.
+* **Measured.** Census 1993 exact, unchanged. Vendored suite and known-defects file 7447 passed. 4 of 4 live mutants killed. New `tests/test_namer_round52_acyl_groups_thioamides_and_chalcogen_cations.py`;
+  D-250 to D-252 in the fixed table of `tests/test_namer_known_defects.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#332.

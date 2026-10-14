@@ -839,3 +839,6 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
 * **What the round 51 site patterns left open (naming round 51; D-248, D-249).** (a) A FUSED lactam anion the engine names with an `-on` suffix is written `3,4-dihydroquinolin-2(1H)-on-1-ide`, which OPSIN cannot
   parse (`2-oxo-3,4-dihydroquinolin-1(2H)-ide` is readable); (b) a pyrazolone anion with an N-carboximidothioic acid is written `...carboximidothioic acid-2-ide`, unreadable; (c) the O-protonated or O-methylated
   amide and urea cations: a few refused, a few named as a different molecule (`carbamoyloxidanium`). Round 50's items (b) (N-N anions) and the pyrazolone anion are named now.
+
+* **What the round 52 site patterns left open (naming round 52; D-250 to D-252).** (a) A nitrilium cation with a substituent and an O-protonated or O-methylated sulfoxide are refused (visible); (b) an O-protonated
+  urea beside another substituent is refused or a `NAMING ERROR`; (c) an amide or hydrazide anion in a molecule that also carries another charge is a `NAMING ERROR` (the azanide classifier requires exactly one charge).
