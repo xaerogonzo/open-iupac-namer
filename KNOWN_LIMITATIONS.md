@@ -846,3 +846,7 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
 * **What round 53 left open (naming round 53; D-253 to D-255).** (a) An O-protonated or O-methylated urea beside other substituents is refused or a `NAMING ERROR`; (b) a ring sulfoxide cation is named
   `(1lambda4-thiolan-1-ylidene)oxidanium`, not checked through OPSIN; (c) an amide or hydrazide anion in a molecule that also carries another charge is a `NAMING ERROR`; (d) the acylamino blocks of `engine.py`
   were not audited for the second-acid diacyl defect.
+
+* **What round 54 left open (naming round 54; D-256 .. D-264).** (a) An amide or hydrazide anion in a molecule with TWO anions beside a cation is a `NAMING ERROR`; (b) an N-acyl sulfonamidate is
+  `N-[methoxy(oxo)methyl]methanesulfonamidate`, readable but not the book's `methoxycarbonyl`; (c) a few O-acylated isothioureas and O-methylated amides beside a second charge are refused; (d) an O-methylated
+  sulfoxide on a sulfur bonded to sulfur or phosphorus is refused.
