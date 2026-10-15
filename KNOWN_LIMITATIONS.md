@@ -842,3 +842,7 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
 
 * **What the round 52 site patterns left open (naming round 52; D-250 to D-252).** (a) A nitrilium cation with a substituent and an O-protonated or O-methylated sulfoxide are refused (visible); (b) an O-protonated
   urea beside another substituent is refused or a `NAMING ERROR`; (c) an amide or hydrazide anion in a molecule that also carries another charge is a `NAMING ERROR` (the azanide classifier requires exactly one charge).
+
+* **What round 53 left open (naming round 53; D-253 to D-255).** (a) An O-protonated or O-methylated urea beside other substituents is refused or a `NAMING ERROR`; (b) a ring sulfoxide cation is named
+  `(1lambda4-thiolan-1-ylidene)oxidanium`, not checked through OPSIN; (c) an amide or hydrazide anion in a molecule that also carries another charge is a `NAMING ERROR`; (d) the acylamino blocks of `engine.py`
+  were not audited for the second-acid diacyl defect.
