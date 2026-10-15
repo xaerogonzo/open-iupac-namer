@@ -1834,3 +1834,14 @@ Ten new ion-population site patterns (an acyclic amide, a urea, a thioamide, an 
   D-250 to D-252 in the fixed table of `tests/test_namer_known_defects.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#332.
+
+## Naming round 53: nitrilium cations with a heteroatom, O-protonated sulfoxides, an acyl prefix that dropped its free acid (D-253, D-254, D-255)
+
+* **D-253.** `[NH+]#Cc1ccc(O)cc1` was refused: the plan search promoted the hydroxy and named the neutral nitrile. `_classify_nitrilium` takes a nitrilium whose group holds a heteroatom; the cation is the parent
+  and the group an `ylidyne` prefix: `[(4-hydroxyphenyl)methylidyne]azanium`.
+* **D-254.** An acyclic O-protonated or O-alkylated sulfoxide is the same cation drawn as a sulfonium with a hydroxy or alkoxy substituent: `hydroxydi(methyl)sulfanium`. Ring sulfur is not claimed.
+* **D-255.** An acyl PREFIX whose fragment also held a second acid became a diacyl group (`4-propanedioylanilinium`: a different molecule, no refusal). The engine's acyl substituent block steps aside for such a
+  fragment and the generic path writes the carboxy: `4-(2-carboxy-1-oxoethyl)anilinium`.
+* **Measured.** Census 1993 exact, unchanged; no wrong name in the cation or quaternary ion populations; 7 of 7 live mutants killed. New `tests/test_namer_round53_nitrilium_and_sulfoxide_cations.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#339.
