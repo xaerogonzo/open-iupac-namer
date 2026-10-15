@@ -854,3 +854,7 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
 * **What round 55 left open (naming round 55; D-265 .. D-267).** (a) A molecule with TWO anions where the second must be cited as a prefix (a sulfonamide anion beside a phenolate or carboxylate) is a
   `NAMING ERROR`; (b) a cationic curated ketone ring that also carries an aminium suffix is written `...-4-on-1-ium-2-aminium` (unreadable); (c) a protonated amidoxime beside a second cation loses its charge
   in the name (the guard counts words, not centres).
+
+* **What round 56 left open (naming round 56; D-268 .. D-270).** (a) In a molecule with two anions the parent is whichever the plan search takes, so a carboxylate can be cited as a prefix where the
+  senior-anion name would make it the parent; both read back; (b) a protonated amidoxime beside a second cation is refused (D-269); (c) a name that multiplies an ion word is not judged by count; (d) an O-acylated
+  isothiourea cation and an O-methylated sulfoxide on a sulfur bonded to sulfur or phosphorus are refused.

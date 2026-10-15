@@ -1871,3 +1871,14 @@ Ported from xaerogonzo/OpenChem-Studio#342.
 * **Measured.** Census 1993 exact, unchanged; vendored suite and known-defects file 7486 passed; 5 of 6 live mutants killed (the survivor is equivalent). New `tests/test_namer_round55_multi_charge_ions.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#344.
+
+## Naming round 56: two anions in one molecule, a guard that counts centres, a ketone ring cation with a cation suffix (D-268, D-269, D-270)
+
+* **D-268.** A second anionic nitrogen is cited as an `azanidyl` prefix (`4-(acetylazanidyl)benzen-1-olate`; OPSIN reads it). It was a `NAMING ERROR`, and a sulfonamide anion beside a phenolate was named
+  `[N-(4-oxidophenyl)sulfamoyl]methane` with the sulfonamide's charge silently dropped. `_azanide_text` composes the groups on the nitrogen for the parent and the prefix.
+* **D-269.** The guard asked for A word of each polarity; it now needs as many ion words as there are charged centres (charged atoms on one neighbour, or adjacent, are one centre: a selenate, oxalylium)
+  unless the name multiplies an ion word (`dioxido`, `bis(aminium)`, `diium`, `diylium`).
+* **D-270.** A ketone ring cation with a cation suffix writes the ketone as `oxo`: `7-methyl-4-oxo-4H-pyrido[1,2-a]pyrimidin-1-ium-2-aminium`.
+* **Measured.** Census 1993 exact, unchanged; vendored suite and known-defects file 7495 passed; 7 of 7 live mutants killed. New `tests/test_namer_round56_two_anions_and_ion_counts.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#347.
