@@ -858,3 +858,6 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
 * **What round 56 left open (naming round 56; D-268 .. D-270).** (a) In a molecule with two anions the parent is whichever the plan search takes, so a carboxylate can be cited as a prefix where the
   senior-anion name would make it the parent; both read back; (b) a protonated amidoxime beside a second cation is refused (D-269); (c) a name that multiplies an ion word is not judged by count; (d) an O-acylated
   isothiourea cation and an O-methylated sulfoxide on a sulfur bonded to sulfur or phosphorus are refused.
+
+* **What round 57 left open (naming round 57; D-271 .. D-274).** (a) An O-methylated or O-protonated sulfoxide on a sulfur bonded to sulfur or phosphorus is refused; (b) nested enclosing marks repeat a pair of braces
+  (OPSIN reads it); (c) in a two-anion molecule the parent is whichever the plan search takes.

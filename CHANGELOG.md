@@ -1882,3 +1882,14 @@ Ported from xaerogonzo/OpenChem-Studio#344.
 * **Measured.** Census 1993 exact, unchanged; vendored suite and known-defects file 7495 passed; 7 of 7 live mutants killed. New `tests/test_namer_round56_two_anions_and_ion_counts.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#347.
+
+## Naming round 57: the multi-charge ions that were still refused (D-271 .. D-274)
+
+* **D-271.** With a cation in the molecule the plan search took the cation as parent and wrote an acylsulfonamide anion as the charge-free `N-carbamoylsulfamoyl` prefix. A sulfonyl is acyl-like for the azanide when a cation
+  is present: `carbamoyl[4-(1,3-thiazol-3-ium-2-yl)benzene-1-sulfonyl]azanide`.
+* **D-272.** A sulfonamide or amide whose own nitrogen is the anion, cited as a prefix because another anion is the parent: `4-[(carbamoylazanidyl)sulfonyl]benzen-1-olate`, `4-[(methylazanidyl)carbonyl]benzen-1-olate`.
+* **D-273.** A protonated amidoxime beside a second cation: the prefix is `hydroxyazaniumylidene`, not a neutral `hydroxyimino`.
+* **D-274.** An O-protonated or O-alkylated N-acyl urea or thiourea: `[1-(anilinomethanethioylamino)butylidene]oxidanium`.
+* **Measured.** Census 1993 exact, unchanged; 6 of 6 live mutants killed; every multi-charge population is clean. New `tests/test_namer_round57_acyl_azanide_prefixes_and_second_cations.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#349.
