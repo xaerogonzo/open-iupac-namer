@@ -1861,3 +1861,13 @@ Ported from xaerogonzo/OpenChem-Studio#339.
   the old refusals and names. New `tests/test_namer_round54_open_limitations.py`; D-256 to D-264 in the fixed table of `tests/test_namer_known_defects.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#342.
+
+## Naming round 55: the charge guard learns polarity; two unreadable cationic-ring spellings (D-265, D-266, D-267)
+
+* **D-267.** The guard judged only the NET charge, so a net-neutral ion was never judged: an acylsulfonamide anion beside a thiazolium was named with the anion dropped. Each polarity of a molecule that has both
+  must now have a word in the name. A + and a - on bonded atoms (an isocyanide, `[Cl+]([O-])O`, an ylide) are one neutral dipole and count for neither.
+* **D-265.** A cationic ring in a ring-nitrogen amide was `4-methylpiperazin-4-iume-1-carbonyl`; no `e` follows the `ium` infix.
+* **D-266.** A cationic curated ketone ring as a substituent put `ium` after the ketone (`...-4-on-1-ium-2-yl`); it goes before it, as in the standalone form.
+* **Measured.** Census 1993 exact, unchanged; vendored suite and known-defects file 7486 passed; 5 of 6 live mutants killed (the survivor is equivalent). New `tests/test_namer_round55_multi_charge_ions.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#344.
