@@ -1845,3 +1845,19 @@ Ported from xaerogonzo/OpenChem-Studio#332.
 * **Measured.** Census 1993 exact, unchanged; no wrong name in the cation or quaternary ion populations; 7 of 7 live mutants killed. New `tests/test_namer_round53_nitrilium_and_sulfoxide_cations.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#339.
+
+## Naming round 54: the limitations rounds 50 to 53 left open (D-256 .. D-264)
+
+* **D-256 (silent wrong molecule).** A thioamide N-prefix beside a second acid had its O and S swapped (`[hydroxy(thioxo)methyl]acetamido`): the thio acid made the OTHER acid the parent. It goes to the generic path.
+* **D-257.** An O-protonated or O-alkylated urea is the cation parent, `(diaminomethylidene)oxidanium` (`_classify_oxonium_urea`).
+* **D-258 (silent wrong molecule).** A branch cut off a stereo centre left a radical (the centre's hydrogen is an explicit count), named from which the ring double bond was lost. The carbon gets its hydrogens back.
+* **D-259 (silent stereo loss).** The attachment atom's CIP descriptor was dropped from a prefix on an azanide; `_with_attachment_stereo` adds it.
+* **D-260.** A lactam anion named with a ketone suffix takes the `ide` as an infix: `3,4-dihydroquinolin-1-id-2(1H)-one`.
+* **D-261.** An amidinium beside two or more acids: every neutral acid is masked as its methyl ester and read back (`bis(methoxycarbonyl)` -> `dicarboxy`).
+* **D-262.** A deprotonated amidoxime written with a neutral `hydroxyimino` cites `oxidoimino`.
+* **D-263.** The amide split in `SubstitutivePath.execute` gave a second `oxo` to an oxygen not bonded to the anchor (an N-acyl substituent's carbonyl); strict ownership raised. It skips such an atom.
+* **D-264.** An amide or hydrazide anion beside a cation: the anion is the parent and the cation a prefix (`_classify_azanide` takes one NEGATIVE charge and claims the positive ones).
+* **Measured.** Census 1993 exact, unchanged; no wrong name in the anion, cation or quaternary populations; 10 of 10 live mutants killed. `tests/test_namer_round43_*`, `round45_*`, `round46_*` and `round49_*` repointed from
+  the old refusals and names. New `tests/test_namer_round54_open_limitations.py`; D-256 to D-264 in the fixed table of `tests/test_namer_known_defects.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#342.
