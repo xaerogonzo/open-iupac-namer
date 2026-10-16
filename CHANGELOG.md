@@ -1905,3 +1905,14 @@ Ported from xaerogonzo/OpenChem-Studio#349.
 * **Measured.** Census 1993 exact, unchanged; vendored suite and known-defects file 7510 passed. New `tests/test_namer_round58_carbon_acids_and_sulfonium_guard.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#350.
+
+## Naming round 59: azolide anions, onium prefixes, and a guard that counted words for charges (D-278 .. D-284)
+
+* **D-278 (wrong molecule).** `O=C([O-])Cc1ccn[n-]1` was `1-(carboxylatomethyl)-1H-pyrazol-2-ide`, the substituent on a nitrogen: `_filter_indicated_h_numberings` read the deprotonated `[n-]` as a bare `=N-` and kept only numberings that put a ring carbon at locant 1. A ring anion as a substituent or before a suffix now carries the `-N-id-` infix (`1H-pyrazol-1-id-5-yl`, `1H-indol-1-id-5-ol`). A carbanion beside a ring hetero atom (an oxazolone) is named.
+* **D-279.** A protonated thioether or ether beside another ion was taken for an ether prefix and lost its charge: `(methylsulfaniumyl)acetate`.
+* **D-280 (wrong charge).** The guard grouped a sulfonium and a pyridinium nitrogen as one centre, took `hexanoate` and `tetraazatetracyclo` for multipliers (which switched the count test off), let any multiplied word switch it off, took an ester's `ate` for an anion in a zwitterion and accepted an ester's word in front of a cation parent. Multiplied words count their multiplier now.
+* **D-281 .. D-283.** A ring cation beside a prefix-only anion keeps its `-ium`; an O-protonated carbonyl beside another charge is `oxidaniumylidene`; a sulfanium takes no suffix that stands beside it.
+* **D-284 (wrong stereo).** A carved branch's lone stereo centre could carry the wrong CIP label.
+* **Measured** (in the app repository): anions 1123 of 1123, census 1994 of 2000 exact (six OPSIN artifacts), vendored suite 5863 passed, 17 of 17 mutants killed.
+
+Ported from xaerogonzo/OpenChem-Studio#352.
