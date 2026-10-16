@@ -864,3 +864,5 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
 
 * **What round 58 left open (naming round 58; D-275 .. D-277).** (a) A carbanion with a ring HETERO neighbour (an oxazolone, a thiazolidinedione) is refused; (b) a `N([O-])O` group beside a pyridinium drops
   the cation (refused by the guard); (c) a protonated thioether on an odd purinone tautomer reads back with different hydro prefixes; (d) a cation hydride glued to a suffix is refused, not named.
+
+* **What round 59 left open (naming round 59; D-278 .. D-284).** (a) An O-alkylated amide or ketone beside another charge is a visible `NAMING ERROR` inside the name; (b) a fused pyrano-pyrazole `[n-]` beside an aminium is a `NAMING ERROR`; (c) an azolide with an amine suffix is unparsable; (d) an odd purinone tautomer's substituent form has the wrong indicated hydrogen; (e) in a two-anion molecule the carboxylate may be a prefix where the benzoate should be the parent; (f) a carved branch with two stereo centres is not re-labelled; (g) the `bis([1,3]dioxolo)pyran` name is an OPSIN limit.
