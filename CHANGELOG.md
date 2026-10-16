@@ -1893,3 +1893,15 @@ Ported from xaerogonzo/OpenChem-Studio#347.
 * **Measured.** Census 1993 exact, unchanged; 6 of 6 live mutants killed; every multi-charge population is clean. New `tests/test_namer_round57_acyl_azanide_prefixes_and_second_cations.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#349.
+
+## Naming round 58: carbon acids, an ester taken for an anion, a cation fused with a suffix (D-275, D-276, D-277)
+
+* **D-275.** A carbanion stabilised by acceptors on a ring (the barbiturate carbon RDKit calls aromatic; the fused indane-1,3-dione) was named as the neutral compound or refused. `_classify_stabilised_carbanion`
+  takes a lone carbanion with carbon neighbours, one carrying a carbonyl or nitrile; the renderer kekulises first: `2,4,6-trioxo-1,3-diazinan-5-ide`, `1,3-dioxo-2,3-dihydro-1H-inden-2-ide`.
+* **D-276 (silent wrong molecule).** The charge guard counted an ESTER's final `ate` as an anion word, so a carbanion named as its neutral ester (`methyl 4-oxo-...butanoate`) passed. A name that opens with an alkyl
+  or aryl word and a space no longer gets an anion word from its final `ate`.
+* **D-277.** A cation parent hydride fused with a suffix (`dimethylsulfaniumcarboximidamide`) is refused. A thiosulfonate S-oxide cation (one carbon and a sulfonyl or phosphoryl on the sulfur) is named as the
+  sulfonium: `(benzenesulfonyl)(methoxy)(phenyl)sulfanium`.
+* **Measured.** Census 1993 exact, unchanged; vendored suite and known-defects file 7510 passed. New `tests/test_namer_round58_carbon_acids_and_sulfonium_guard.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#350.

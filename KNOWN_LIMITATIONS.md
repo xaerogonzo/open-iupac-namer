@@ -861,3 +861,6 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
 
 * **What round 57 left open (naming round 57; D-271 .. D-274).** (a) An O-methylated or O-protonated sulfoxide on a sulfur bonded to sulfur or phosphorus is refused; (b) nested enclosing marks repeat a pair of braces
   (OPSIN reads it); (c) in a two-anion molecule the parent is whichever the plan search takes.
+
+* **What round 58 left open (naming round 58; D-275 .. D-277).** (a) A carbanion with a ring HETERO neighbour (an oxazolone, a thiazolidinedione) is refused; (b) a `N([O-])O` group beside a pyridinium drops
+  the cation (refused by the guard); (c) a protonated thioether on an odd purinone tautomer reads back with different hydro prefixes; (d) a cation hydride glued to a suffix is refused, not named.
