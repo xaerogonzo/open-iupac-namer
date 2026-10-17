@@ -882,3 +882,6 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
 
 * **What round 64 left open (naming round 64, 2026-10-17; D-303, D-304).** (a) Two ring anions with a lactam (a lactam beside an azolide, two lactams) are refused: the multiplied `-ide` is written after the suffixes, which OPSIN cannot read; (b) about 10 dianions and 55 betaines or zwitterions are still refused: a carbanion or an anilide beside a phenolate or carboxylate (the carbanion cannot be a prefix),
   an ester named as an ester with a protonated half; (c) the rest of round 63's list stands.
+
+* **What round 65 left open (naming round 65, 2026-10-17; D-305).** (a) Fewer than 10 betaines or zwitterions and 12 dianions are refused: two ring anions with a lactam, a carbanion or anilide beside a phenolate or carboxylate; (b) the acyl of a cationic ring is renumbered with the substituents' own locants (`3-bromopyridin-1-ium-5-carbonyl`), not with the carbonyl lowest (the same molecule, a valid name, not the book's numbering);
+  (c) the rest of round 64's list stands.
