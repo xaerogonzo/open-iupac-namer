@@ -2019,3 +2019,12 @@ Round 66's open lists, read for what had a cause: the dications' ester refusals,
 * New `tests/test_namer_round67_imido_prefix_ester_cations_ring_carbanions.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#369.
+
+## Naming round 68: the cation is the parent, and a chain carbanion beside another anion (D-315, D-316)
+
+* **D-316.** P-41 Table 4.1 ranks cations above acids, amides and alcohols. The plan search had that for a RING cation (round 8) and an `-aminium` suffix, and nothing for the rest: an acyclic iminium (`C=[NH+]Ar`), a hydrazinium (`[NH3+]N`), a nitrilium or a phosphonium ring beside a hydroxyl was a prefix (`azaniumylidene`, `azaniumylamino`) on the alcohol's or amide's parent, so the name ended in `-ol` or `-amide`, and a counter-ion word after it was read by OPSIN as an ESTER or acyl halide of that group (27 salts of the round-66 population read back as a different molecule). In the pcg loop a suffix option is skipped when the molecule has an acyclic N+ (a ring P+ or S+ too) that no atom of the suffix group holds, and no anion is present (an anion outranks a cation; a nitro group's O- counts, so D-109u keeps its `azanium`). The no-suffix plan then has the cation as its parent: `[(5-hexyl-2-hydroxyphenyl)methylidene](2-hydroxyphenyl)azanium perchlorate`, `(3,3,3-trichloro-2-hydroxypropanamido)azanium`. One pinned name moved, and reads back: the guanidinium beside a protonated amide, `(4-amino-4-oxidaniumylidenebutyl)(diaminomethylidene)azanium`. An O+ in the rule was tried and dropped: it moved four pinned names and made two hydroquinolinone esters unreadable.
+* **D-315.** The ring-anion locants took a ring `[C-]` in round 67; a CHAIN `[C-]` (the enolate of a 2,4-dioxo acid, `CC(=O)[CH-]C(=O)C(=O)[O-]`) was refused with the carbanion in no word of the name. It takes the infix too: `1-oxido-1-oxopentan-3-id-2,4-dione` (OPSIN reads it).
+* **Measured.** Dianions 278 of 280 (was 277), dications and quat-dications 1926 of 1930 (unchanged), the other modes unchanged. Salts 14,768 of 14,881 (was 14,736; the ones that read back as a different molecule fell from 31 to 6). Census 1994 of 2000, unchanged.
+* New `tests/test_namer_round68_chain_carbanions_and_cation_parents.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#371.
