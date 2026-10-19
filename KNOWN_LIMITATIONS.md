@@ -920,3 +920,9 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
   (d) the sulfonamidate anion is a name OPSIN reads as the neutral sulfonamide (round 71 (d)), so the ion populations still cannot judge it, labelled or not;
   (e) a retained morphinan's name carries stereo that the SMILES lacks, so a labelled morphinan reads back with a stereo layer the input did not have (not an engine defect);
   (f) the rest of round 71's list stands.
+
+* **What round 73 left open (naming round 73, 2026-10-19; D-334 .. D-336).** (a) A quinoid ring is named as `benzene` with ylidenes, not as `cyclohexa-2,5-diene`; OPSIN reads it, the book would write the diene;
+  (b) a guanidinium or amidinium nitrogen joined to its group by a double bond is refused (`NC(=[NH+]CC)N=C(O)Nc1ccccc1`): `_name_branch_as_prefix` has no ylidene form;
+  (c) an exocyclic imine on a fused azole in a bigger name is unreadable (`7-(2,2-dimethoxyethylimino)-5-phenyl-3-[...]-3H-pyrrolo[2,3-d]pyrimidine`, one in 3,200);
+  (d) a tautomer of a bridgehead alkene (`bicyclo[2.2.1]hepta-1,5-diene`) and a ketene hemiacetal in a ring are named and read back as another tautomer: exotic forms of RDKit's enumerator that the census does not hold;
+  (e) the rest of round 72's list stands.
