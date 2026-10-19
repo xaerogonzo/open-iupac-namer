@@ -913,3 +913,10 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
   (c) 37Cl, 81Br and 18F labels read back in every census row (171 of 171) but only on single-halogen rows; two or more labels of different elements are untried;
   (d) the sulfonamidate anion's charge is lost by OPSIN with or without a label (`N,4-dimethylbenzene-1-sulfonamidate` reads as the neutral sulfonamide), so the ion populations cannot judge it;
   (e) the rest of round 70's list stands.
+
+* **What round 72 left open (naming round 72, 2026-10-19; D-329 .. D-333).** (a) Two labels on ONE suffix group stay unreadable: `dodecane-1-(18O,34S)sulfonamide` and `1,2-oxazole-5-(13C,18O)carboxamide` (OPSIN reads the labels of an unlocanted bracket only in front of the whole name, `(34S,18O)dodecane-1-sulfonamide`, and there it can read the RING for a carboxamide: `(13C,18O)1,2-oxazole-5-carboxamide` came back as the isoxazole ring's oxygen, a wrong molecule, so it is not emitted);
+  (b) the labelled `(2-18O)...-2,5-dione`, diol and diacid names of round 71 (a) stand, 22 of 366 in the census;
+  (c) 38 labelled oxygens and 23 labelled nitrogens of the ion populations are refused: the nitrogen or oxygen of a SECOND amide or ester, a carbamate or urea, a hydroxamic nitrogen, or an `-onium` or `-ium` beside the label;
+  (d) the sulfonamidate anion is a name OPSIN reads as the neutral sulfonamide (round 71 (d)), so the ion populations still cannot judge it, labelled or not;
+  (e) a retained morphinan's name carries stereo that the SMILES lacks, so a labelled morphinan reads back with a stereo layer the input did not have (not an engine defect);
+  (f) the rest of round 71's list stands.
