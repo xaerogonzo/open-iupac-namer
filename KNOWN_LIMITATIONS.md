@@ -940,3 +940,9 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
   (c) a selenosulfide `S-Se` bond (`CCNc1nc(S[Se]c2...)`) and the silicon swaps (an acylsilane `C(=O)-Si`, a silanecarboxamide named with the N-substituent on the silicon, a ring `Si` with an exocyclic `=O`) are NAMING ERRORs or wrong molecules: exotic, one or two in a thousand of the swaps, not looked into;
   (d) a selenoisourea `NC([SeH])=NC` is named `N'-methylselanylmethanimidamide`, which OPSIN reads as an N-(methylselanyl) group: the unlocated `selanyl` runs onto the `methyl` before it (the thio analogue takes another route); a phosphorus analogue is named with the N-substituent on the phosphorus;
   (e) the rest of round 74's list stands.
+
+* **What round 76 left open (naming round 76, 2026-10-20; D-344 .. D-350).** (a) A carbamate beside a phosphate or sulfate monoester is named by prefix (`1-(carbamoyloxy)-2-(phosphonooxy)ethane`), where the book names the acid's ester (`2-(carbamoyloxy)ethyl dihydrogen phosphate`): the functional-class route declines for a carbamate beside a more senior group, and the phosphate route does not take a `carbamoyloxy` alcohol;
+  (b) a diamide with its substituted nitrogen on the LOWEST-numbered group cites a bare `N` (`N-ethylbutanediamide`), not `N1`; OPSIN reads it as the first group's and the pinned names keep that spelling;
+  (c) two thioic S-acids are named with one as a `sulfanyl(oxo)methyl` prefix (`3-[sulfanyl(oxo)methyl]propanethioic S-acid`): no two-group suffix is readable by OPSIN;
+  (d) the rest of `deco4`'s 12 in 2,100 is OPSIN's: the stereo of a morphinan, a cephem and a bis([1,3]dioxolo)pyran, and a sulfonamidate anion read neutral;
+  (e) the rest of round 75's list stands.
