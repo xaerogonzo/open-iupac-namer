@@ -934,3 +934,9 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
   (e) an azo group in a prefix that also has descriptors of its own is written `(E)-(1Z)-{...}methyldiazenyl`, and OPSIN reads the N=N the other way (one molecule); an exocyclic C=C on a ONE-carbon parent beside a stereo ring (`{[(3aR,6aS)-octahydropentalen-2-ylidene](phenyl)methyl}silane`) is uncited (one molecule);
   (f) the rest of the 20 in 700 is the enumerator's: bridgehead centres of adamantane and of bicyclo[3.3.1] rings that no molecule can have the other way, and a phosphate's P (`P(=O)(O)O`, whose `=O` and `-OH` exchange);
   (g) the rest of round 73's list stands.
+
+* **What round 75 left open (naming round 75, 2026-10-19; D-340 .. D-343).** (a) An N- or C-substituted sulfonothioamide / sulfonoselenoamide is named by its prefix (`(methylaminosulfonothioyl)benzene`), which OPSIN reads, not as the parent `N-methylbenzenesulfonothioamide` the book would write: the FG matches NH2 only, and loosening it drops the N-substituent;
+  (b) a group with a thio AND a seleno replacement (`sulfinothioselenoyl`) is a NAMING ERROR;
+  (c) a selenosulfide `S-Se` bond (`CCNc1nc(S[Se]c2...)`) and the silicon swaps (an acylsilane `C(=O)-Si`, a silanecarboxamide named with the N-substituent on the silicon, a ring `Si` with an exocyclic `=O`) are NAMING ERRORs or wrong molecules: exotic, one or two in a thousand of the swaps, not looked into;
+  (d) a selenoisourea `NC([SeH])=NC` is named `N'-methylselanylmethanimidamide`, which OPSIN reads as an N-(methylselanyl) group: the unlocated `selanyl` runs onto the `methyl` before it (the thio analogue takes another route); a phosphorus analogue is named with the N-substituent on the phosphorus;
+  (e) the rest of round 74's list stands.
