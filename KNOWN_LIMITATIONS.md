@@ -926,3 +926,11 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
   (c) an exocyclic imine on a fused azole in a bigger name is unreadable (`7-(2,2-dimethoxyethylimino)-5-phenyl-3-[...]-3H-pyrrolo[2,3-d]pyrimidine`, one in 3,200);
   (d) a tautomer of a bridgehead alkene (`bicyclo[2.2.1]hepta-1,5-diene`) and a ketene hemiacetal in a ring are named and read back as another tautomer: exotic forms of RDKit's enumerator that the census does not hold;
   (e) the rest of round 72's list stands.
+
+* **What round 74 left open (naming round 74, 2026-10-19; D-337 .. D-339).** (a) The E/Z of an amidine's C=N (`N'-decyl-N,N,4-trimethylbenzene-1-carboximidamide`) is not cited: OPSIN reads no `(1E)` on an imidamide, so a descriptor could not be checked;
+  (b) a group with TWO sulfinamide (or sulfoxide-in-suffix, P, Se, As) centres is uncited (`ethane-1,2-disulfinamide` for every stereoisomer): the centres have no locants, two unlocated descriptors are matched to the centres in an order OPSIN picks, and the one molecule probed (`(R,S)-ethane-1,2-disulfinamide`) is symmetric, so it cannot show that order right;
+  (c) a P-stereogenic phosphinate ESTER (`methyl methylphenylphosphinate`) is named without its centre (the cause was not looked for); a P in a prefix (a phosphoramidate, sofosbuvir's) is cited;
+  (d) the pseudoasymmetric `(1r,4r)` / `(1s,4s)` of a cyclohexane (and `(1r,3R)` of a cyclobutane) is emitted, as the book writes it, and OPSIN ignores it (`Could not find atom`): the name reads back with no cis/trans, so it cannot be verified (as for tropine, above); a handful of every 700 isomers;
+  (e) an azo group in a prefix that also has descriptors of its own is written `(E)-(1Z)-{...}methyldiazenyl`, and OPSIN reads the N=N the other way (one molecule); an exocyclic C=C on a ONE-carbon parent beside a stereo ring (`{[(3aR,6aS)-octahydropentalen-2-ylidene](phenyl)methyl}silane`) is uncited (one molecule);
+  (f) the rest of the 20 in 700 is the enumerator's: bridgehead centres of adamantane and of bicyclo[3.3.1] rings that no molecule can have the other way, and a phosphate's P (`P(=O)(O)O`, whose `=O` and `-OH` exchange);
+  (g) the rest of round 73's list stands.
