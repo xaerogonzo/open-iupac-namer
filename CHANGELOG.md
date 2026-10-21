@@ -2137,3 +2137,16 @@ Ported from xaerogonzo/OpenChem-Studio#387.
 * New `tests/test_namer_round76_diamide_n_locants_and_groups_a_parent_cannot_take.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#397.
+
+## Naming round 77: naphthyridine components, multiparent names, aromatic von Baeyer (D-351 .. D-354)
+
+`ring.py` (scratch, `D:\_scratch\r60\r77`): one ring atom of each census molecule changed (aromatic CH -> N, N -> C, a saturated ring CH2 -> O/S/NH), 2,200 molecules, one to three atoms: clean to 0.3%. `fuse.py`: 19 polycyclic skeletons with up to three CH -> N and a varied five-ring heteroatom, 916 systems (1,443 with a methyl): 150 of 916 failed before.
+
+* **D-351.** `POLYCYCLES` (the fusion constructor's components) had no naphthyridine, and `_LOCANT_NAMED_POLYCYCLES` was empty: a pyridine fused to a diaza bicycle had three equal pyridine parents ("a multiparent system"). The six `[1,5]` .. `[2,7]naphthyridine` are components (numbered by the fusion rules, Table 2.8's bracketed form); a naphthyridine alone keeps `1,8-naphthyridine`. A benzo-fused one is now `benzo[b][1,6]naphthyridine`, not `pyrido[4,3-b]quinoline` (two rings and two nitrogens is the senior parent); both read back.
+* **D-352.** Two occurrences of the parent joined by ONE other component (P-25.3.4.1.2) were refused (`NEEDS_UNBUILT_CONSTRUCTION`): `_multiparent_name` builds `central[loc-letter:loc-letter']di<parent>` for a plain parent and one central component with one letter each, the lowest letters then the lowest locants, the first group the one with the lowest locants (`furo[2,3-b:5,4-c']dipyridine`, `9H-pyrrolo[2,3-b:5,4-c']dipyridine`). Anything else keeps the refusal.
+* **D-353.** `_detect_vb_unsaturation` returned no bonds for a wholly aromatic system (`if ring_system.aromatic: return [], []`), so a fully aromatic system the fusion constructor declined was named a SATURATED von Baeyer cage (`2,5,9-triaza...tetracosane`): another molecule. The aromatic bonds are Kekulized and cited as enes (`...tetracosa-1(23),2,4,...-dodecaene`); valid and read back, not a PIN.
+* **D-354.** `fusion_descriptor` returns no descriptor when the attached component's locants repeat a label (`pyreno[3a,3,5,4,3a-aklmn]phenanthridine`), which OPSIN cannot read.
+* **Measured.** `fuse.py` 916 systems: 150 failures -> 0 after D-351..D-354 (naming errors 75 -> 0, wrong 40 -> 0, unparsable 1 -> 0); with a methyl on each, 1,443 of 1,443. Vendored suite 5989 passed.
+* New `tests/test_namer_round77_ring_atom_scan_naphthyridine_components_and_multiparent_fusion.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#404.
