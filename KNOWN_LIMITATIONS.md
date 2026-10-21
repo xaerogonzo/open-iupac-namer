@@ -946,3 +946,6 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
   (c) two thioic S-acids are named with one as a `sulfanyl(oxo)methyl` prefix (`3-[sulfanyl(oxo)methyl]propanethioic S-acid`): no two-group suffix is readable by OPSIN;
   (d) the rest of `deco4`'s 12 in 2,100 is OPSIN's: the stereo of a morphinan, a cephem and a bis([1,3]dioxolo)pyran, and a sulfonamidate anion read neutral;
   (e) the rest of round 75's list stands.
+
+* **What round 77 left open (naming round 77, 2026-10-21; D-351 .. D-354).** (a) A wholly aromatic system the fusion constructor cannot name (peri-fused azaarenes beyond coronene, pyrene and the retained set) is a von Baeyer name with the aromatic bonds as enes: valid and read back, not the PIN; (b) a multiparent name is built only for two occurrences of a plain parent joined by one component with a single letter each (three occurrences, a second-order central component or a bracketed parent such as `[1,3]oxazole` keep the refusal); (c) the descriptor order of a multiparent name (lowest letters, then lowest locants, first group the lowest) is from the book's examples, checked by OPSIN read-back and not against a second source;
+  (d) the rest of round 76's list stands.
