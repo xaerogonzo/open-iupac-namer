@@ -2150,3 +2150,17 @@ Ported from xaerogonzo/OpenChem-Studio#397.
 * New `tests/test_namer_round77_ring_atom_scan_naphthyridine_components_and_multiparent_fusion.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#404.
+
+## Naming round 78: interior atoms, the ring table's fusion-atom labels, hydro before selenium (D-355 .. D-360)
+
+`hydro.py`, `hydro2.py` (scratch, `D:\\_scratch\\r60\\r78`): 28 to 38 polycyclic skeletons (naphthalene to pyrene, indole, carbazole, the azines, imidazo/pyrazolo-fused azines), 1 to 4 ring double bonds saturated, an optional ring C=O, one or two CH replaced by N; named, read back through OPSIN, compared on the standard InChIKey. `tab.py`: every fully aromatic curated ring of the ring table with each ring double bond saturated in turn (505 molecules).
+
+* **D-355.** `fusion_orientation._interior_carbon_locant` gave an interior atom the book's superscript form (`2a1`, `3a1`); OPSIN cannot read it, so a hydro or substituent name citing one (`1,2,2a,2a1,5,5a-hexahydroacenaphthylene`) was unverifiable. `_cas_interior_labels` writes the CAS letter after the highest peripheral locant, nearest atom first, the book's locant deciding a tie (`8b`, pyrene's `10b`, `10c`). The book's function stays as the tie-break and as the declared normative target: `known_deviations.toml` has a `[[constructor_deviation]]` entry beside the ring table's, user choice of 2026-10-22 (the ring table already made the same exception).
+* **D-356, D-357.** The table labelled imidazo[1,2-b]pyridazine's bridgehead N `3a` and pyrazolo[1,5-a]pyridine's `7a`; a fusion heteroatom takes a numeral (`4`, `8`) and OPSIN has neither `3a` nor `7a` there.
+* **D-358.** The 4a/8a labels of isochromenylium, isothiochromenylium, isoselenochromenylium, isotellurochromenylium and 1,5-naphthyridine and the 3a/7a of 2,1,3-benzoxadiazole were swapped (`fusion_locants.py` had already noted the first group as the entries in error). The benzoxadiazole's hydro name read back as another molecule.
+* **D-359.** Dibenz[a,h]anthracene's 14a and 7b were swapped: `6a,7b-dihydrodibenz[a,h]anthracene` was another molecule.
+* **D-360.** OPSIN reads `3,4-dihydroselenochromenylium` as a `hydroseleno` prefix on chromenylium; `_HYDRO_BEFORE_CHALCOGEN` (engine, the last step of `_name_smiles_bound`) hyphenates a hydro prefix directly before `seleno`/`telluro` (`3,4-dihydro-selenochromenylium`, `2,3-dihydro-selenole`). Sulfur has no such prefix.
+* **Measured.** Hydro population 31 of 2,100 unreadable -> 0 (1,000 with the pyrazolo-fused and naphthyridine skeletons: 1,000 of 1,000); ring table dihydro scan 22 of 505 wrong or unreadable -> 0. Eighteen curated entries differ from the constructor's labels; the rest (below) are left because OPSIN cannot confirm the other label.
+* New `tests/test_namer_round78_hydro_polycycles_interior_atoms_and_the_ring_table_fusion_labels.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#417.
