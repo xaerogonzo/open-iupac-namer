@@ -2177,3 +2177,15 @@ Ported from xaerogonzo/OpenChem-Studio#417.
 * New `tests/test_namer_round79_ring_table_scans_bridged_parents_oxo_on_cations_and_missing_locants.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#428.
+
+## Naming round 80: a ring named as a substituent (D-364 .. D-366)
+
+`yl.py` (scratch, `D:\_scratch\r60\r80`): every substitutable ring atom of every curated ring (371 entries, 1,952 molecules per attachment) joined to a more senior parent so that the ring is named as a `-yl` prefix: acetic acid, acetamide, acetate, thioacetate, a methyl ketone, a secondary alcohol, acetonitrile. Named, read back through OPSIN, compared on the standard InChIKey.
+
+* **D-364.** `_heteroaryl_substituent_with_locant` prefixed the ring name's indicated hydrogen (`2H-`) to a substituent form that already began with oxo prefixes, giving `(2H-2,4-dioxo-1H-3,1-benzoxazin-6-yl)acetic acid` and `(4H-4,6-dioxo-9H-pyrano[3,2-g]quinolin-2-yl)acetic acid`, which OPSIN cannot read (ten molecules). The prefix is skipped when the form starts with oxo prefixes, and the two curated substituent forms say the ring's hydrogens in full: `2,4-dioxo-1,4-dihydro-2H-3,1-benzoxazin-N-yl`, `4,6-dioxo-4,6-dihydro-9H-pyrano[3,2-g]quinolin-yl`.
+* **D-365.** `strategy.accept_plan` refused a functional-class (ester) plan only for a ring N+ piece. A ring O+, S+, Se+ or Te+ piece (chromenylium, thiochromenylium, selenochromenylium, tellurochromenylium and the iso forms; pyrylium) took the ester route with the NEUTRAL ring's name, `chromen-2-yl acetate`, and the charge guard refused it (61 molecules). The refusal now covers P, As, Sb, Bi, O, S, Se and Te as well (P-73 cations outrank P-66 esters): `2-(acetyloxy)chromenylium`. One name changed with it: the pyrylium ester `pyrylium-4-yl acetate` is `4-(acetyloxy)pyrylium`.
+* **D-366.** The curated octahydro-1H-pyrrolo[3,4-b]pyridine labelled its fusion carbon `3a` (its pyridine ring has N1 to C4, so the fusion carbon is `4a`); OPSIN reads `4a-yl` and not `3a-yl`. This is one of the entries round 78 could not settle with a hydro probe and a substituent on the fusion atom settles.
+* **Measured.** 1,952 molecules x 7 attachments: ester attachment 61 refused -> 0, acid attachment 13 unreadable -> 0; the rest is OPSIN's stereo defaults for the cephem, penam, carbapenem, cepham and morphinan rings (35 per attachment) and the arsenic and N+ drawings the generator makes (5 and 5).
+* New `tests/test_namer_round80_ring_as_substituent_oxo_forms_cation_esters_and_a_fusion_label.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#434.
