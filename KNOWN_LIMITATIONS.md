@@ -957,3 +957,5 @@ dropped), tricyclic and amidinium ring cations, four neutral polycycles with no 
   (b) a hydro parent text with a bridge (`2,6-methano-3-benzazocine`) is never re-described by the P-58.2 module, so a ring ketone on such a parent keeps the hydro parent's own wording (checked: `1,2,3,4,5,6-hexahydro-2,6-methano-3-benzazocin-1-one` reads back);
   (c) the stereo OPSIN gives a cephem, a penam, a carbapenem or a morphinan when the name carries none is OPSIN's, as in earlier rounds;
   (d) the rest of round 78's list stands.
+
+* **What round 80 left open (naming round 80, 2026-10-22; D-364 .. D-366).** (a) The other curated ring labels round 78 listed as unconfirmable still stand; only the pyrrolo[3,4-b]pyridine one was settled; (b) a ring cation is named as the parent whenever it is present, so an ester of a cationic alcohol is an acyloxy prefix (`2-(acetyloxy)chromenylium`), not the ester name OPSIN would also read; (c) the substituent forms of the two ring ketones are in hydro-prefix style, whereas the quinazolinedione form (`2,4-dioxo-1H,3H-quinazolin-6-yl`) keeps its older added-hydrogen style that OPSIN also reads; (d) the rest of round 79's list stands.
