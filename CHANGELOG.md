@@ -2244,3 +2244,12 @@ Populations: three curated rings in a chain (400; clean apart from OPSIN's beta-
 * New `tests/test_namer_round85_methanoazepinoquinoxaline_labels_every_atom_and_pairs_its_nitrogens.py`; mutation: 3 of 5 killed by script and the nitrogen swap killed by hand (the script replaced the first of four identical strings, which belonged to another entry); `benchmarks/naming/ring_sweep_population.json` was regenerated.
 
 Ported from xaerogonzo/OpenChem-Studio#471.
+
+## Naming round 86: the curated ring table's labels follow the ring's bonds (D-380)
+
+No new population this round (rounds 83 to 85 showed the generated ones are nearly spent); the check is structural and needs no OPSIN. In a ring numbering two consecutive locants (`n` and `n+1`, or `n` and `na`) are bonded atoms or are joined through one atom between them. 3,104 consecutive pairs over the 371 curated entries: 17 do not satisfy it and are the book's own numbering (anthracene, acridine, xanthene and thioxanthene's `4a` then `5`, perylene's interior atoms, morphinan, adamantane's two CH2 bridges, corrin's nitrogens, the methano bridges and four large bridged systems), and one is a mislabel.
+
+* **D-380.** The curated `4a,5a,6,12a-tetrahydrotetracene-1,3,11(2H,4H,5H)-trione` had its C1 and C3 carbonyls the other way round against C12a (C12a is bonded to the carbon labelled 3, not 1). The two carbonyls are symmetric, so a chlorine probe could not tell and the names read back either way; the labels now follow the bonds. No name changes.
+* New `tests/test_namer_round86_curated_ring_labels_follow_the_rings_bonds.py`, which fails for any other pair and for an exception that is no longer needed. Its limit: it does not see a swap of two atoms that both touch the same labelled atom (round 85's nitrogens did); a stricter rule flags the steroid skeleton's 10 and 11, which is the book's numbering.
+
+Ported from xaerogonzo/OpenChem-Studio#473.
