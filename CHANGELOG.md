@@ -2234,3 +2234,13 @@ Ported from xaerogonzo/OpenChem-Studio#456.
 * New `tests/test_namer_round84_spiro_joints_of_lactam_rings_and_a_numbering_search_that_never_returned.py`; 6 of 6 mutants killed (the hang test is left out of the mutation run, since a mutant that removes the cap makes it run forever).
 
 Ported from xaerogonzo/OpenChem-Studio#467.
+
+## Naming round 85: one curated ring that labelled 11 of its 16 atoms (D-379)
+
+Populations: three curated rings in a chain (400; clean apart from OPSIN's beta-lactam stereo, one name took 7 s), and the round 84 spiro joint with one or two substituents (500: 489 read back, 11 did not; 498 after the fix).
+
+* **D-379.** The curated `7,8,9,10-tetrahydro-6H-6,10-methanoazepino[4,5-g]quinoxaline` labelled 11 of its 16 atoms (none of 3, 4a, 5a, 10a, 11a) and had N1 and N4 the wrong way round beside their carbons (a single chlorine probe cannot tell: the pair is symmetric). A substituent on an unlabelled atom of a spiro name was numbered by the generic fallback (`...-16-carboxamide`), which OPSIN cannot read. Every atom is labelled from the adjacency now (`-2'-carboxamide`). Round 84's open item (a), the molecule that used to hang and then read back unreadably, is the same cause and reads back.
+* **Audit.** The other 370 curated entries: 144 have fewer labels than atoms, almost all monocycles, exocyclic oxo atoms and beta-lactams that need none; a single chlorine on every ring position of every entry with unlabelled ring atoms (helicenes, tetracenes, steroids, indolizino-, dibenzo-, pyrido[1,2,3-de]- and methano-bridged systems; 475 variants) read back in full.
+* New `tests/test_namer_round85_methanoazepinoquinoxaline_labels_every_atom_and_pairs_its_nitrogens.py`; mutation: 3 of 5 killed by script and the nitrogen swap killed by hand (the script replaced the first of four identical strings, which belonged to another entry); `benchmarks/naming/ring_sweep_population.json` was regenerated.
+
+Ported from xaerogonzo/OpenChem-Studio#471.
