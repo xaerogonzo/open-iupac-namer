@@ -2223,3 +2223,14 @@ Four populations, clean: curated rings joined by 12 functional linkers (ester, a
 * New `tests/test_namer_round83_hypoxanthine_with_no_ring_nh_takes_the_oxo_carbons_indicated_hydrogen.py`. Mutation: of five mutants, one killed; the survivors are a `len == 1` against `>= 1` guard (no input has two oxo carbons and no N-H), the `GetTotalNumHs() == 0` guard (an N-H at the indicated slot of a non-aromatic ring) and the `oxo_loc is None` guard (the helper is only reached with an oxo).
 
 Ported from xaerogonzo/OpenChem-Studio#456.
+
+## Naming round 84: spiro joints of lactam rings and a numbering search that never returned (D-376 .. D-378)
+
+`spiro.py` (scratch, `D:\_scratch6080`): two curated rings (16 atoms or fewer, no charge) joined at one sp3 carbon of each, 600 molecules: 566 read back, 30 NAMING ERROR, 3 unreadable, 1 wrong; after the fixes 593, 2, 4, 1. Before it, ring pairs joined by 12 functional linkers, richer substituents and charged rings (about 11,000 molecules in round 83) were clean.
+
+* **D-376.** `compute_vb_numberings` tried every ordering of each run of equal-length bridges and the cross product of the runs. A spiro joint on a bridged, benzo-fused polycycle (25 atoms, 36 bridges, runs of ten of one length) is billions of orderings: the naming never returned (one molecule held an 800-molecule scan for 50 minutes). A ring system with more than `_MAX_BRIDGE_ORDERINGS` (50,000) has no von Baeyer numbering. The name that molecule now gets (a spiro of a tetrahydroquinoline and a methanoazepinoquinoxaline) is not readable by OPSIN: recorded open.
+* **D-377.** A ring ketone on a pyridone-type component of a spiro system was a NAMING ERROR: the partner sub-molecule is rebuilt from bare elements without its `=O`, and a ring `c...[nH]` cannot be kekulized. `_sanitize_partner` drops the aromatic N-H (the component is the pyridine) and the engine, whose P-58 planner declines a spiro name, cites the N-H as the added hydrogen of the suffix: `spiro[5,6,7,8-tetrahydroquinoline-6,1'-cyclopropane]-4(1H)-one` (without the `(1H)` OPSIN reads another tautomer).
+* **D-378.** The same with no N-H to drop (bridgehead nitrogen, ring sulfur): the partner is built from the Kekule form, so the carbon that held the `=O` is a CH2 of the component with the indicated hydrogen: `spiro[6,7,8,9-tetrahydro-4H-pyrido[1,2-a]pyrimidine-8,1'-cyclohexane]-4-one`, `spiro[5,6,7,8-tetrahydro-4H-1-benzothiopyran-6,1'-cyclopentane]-4-one`.
+* New `tests/test_namer_round84_spiro_joints_of_lactam_rings_and_a_numbering_search_that_never_returned.py`; 6 of 6 mutants killed (the hang test is left out of the mutation run, since a mutant that removes the cap makes it run forever).
+
+Ported from xaerogonzo/OpenChem-Studio#467.
