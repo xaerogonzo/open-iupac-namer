@@ -2274,3 +2274,13 @@ A new population shape: a curated ring (or a bridged ring) spiro-joined to a BRI
 * New `tests/test_namer_round88_spiro_joints_to_bridged_partners_and_hetero_spiro_atoms.py` (25 named pins, OPSIN read-back, the descriptor that used to win) and four rows in `tests/test_namer_known_defects.py`. Every guard was mutated (nine mutations, all caught).
 
 Ported from xaerogonzo/OpenChem-Studio#475.
+
+## Naming round 89: stereoisomers of a substituted bridged bicycle no longer share one name (D-386)
+
+Alex asked for the stereo layer's collapse on adamantane and bicyclo[2.2.2]octane parents, left open by round 88, to be measured and fixed. Measured first: 3-methylbicyclo[2.2.2]octan-2-ol has four embeddable stereoisomers and got ONE flat name; 3,7-dimethylbicyclo[3.3.1]nonan-3-ol, eight isomers and two names; 2,6-dimethylnorbornane, four and two.
+
+* **D-386 the bridgehead descriptors OPSIN cannot take cost the name every descriptor on a bridged parent.** RDKit's CIP labeller gives R/S to the bridgeheads of 3-methylbicyclo[2.2.2]octan-2-ol (`(1S,2S,3R,4S)-`), whose two other bridges are equivalent; OPSIN sees no centre there (`Could not find atom that: <stereoChemistry locant="1" ...>`) and rejects the name, and `_validate_stereo_via_opsin` then fell to `bridged_or_spiro` and stripped EVERY tetrahedral descriptor, the 2 and 3 that OPSIN reads and the ring does not force. `(2S,3R)-3-methylbicyclo[2.2.2]octan-2-ol` reads back to the right molecule, the bridgeheads undefined because the ring fixes them. New mode `unanchored`, tried before `bridged_or_spiro`: `_drop_unanchored_stereo` drops the locants OPSIN names in its own error text (`_opsin_probe`, one verdict at a time), and when OPSIN only says "Failed to assign CIP stereochemistry" (norbornane) the ring atoms in two or more rings. A shorter name is kept ONLY if `_name_pins_structure` says OPSIN reads it to exactly one embeddable stereoisomer and that one is the input, so `(9S)-9-chlorobicyclo[3.3.1]nonan-1-ol` (two molecules) is still the flat name.
+* Measured on 39 generated substituted bridged bicycles (norbornane, bicyclo[2.2.2]/[3.2.1]/[3.3.1]/[2.1.1]octane family, tropane, quinuclidine, adamantane and hetero analogues; 178 stereoisomers): molecules whose isomers all had distinct names 27 -> 35, names that did not say which isomer they were 31 -> 12, names that read back to a set EXCLUDING the input 0 -> 0.
+* New `tests/test_namer_round89_forced_bridgehead_descriptors_are_dropped_alone.py` and a row in `tests/test_namer_known_defects.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#477.
