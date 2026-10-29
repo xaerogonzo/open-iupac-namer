@@ -2295,3 +2295,11 @@ Alex asked for the confirmed wrong molecule found by the limitations inventory (
 * New `tests/test_namer_round90_a_diazo_carbon_is_not_an_imine.py` and four rows (D-387, D-387b to d) in `tests/test_namer_known_defects.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#488.
+
+## Naming round 91: a bridged parent keeps the stereo descriptors OPSIN can read (D-388)
+
+* When OPSIN rejected a name, `_drop_unanchored_stereo` dropped every bridged or spiro descriptor whose locant NUMBER OPSIN named, in every component. A norbornyl group lost its three centres because the bicyclo[2.2.2]octane it hangs on has a 1 and a 4 OPSIN cannot anchor (10 of 10 sampled isomers of `3-(bicyclo[2.2.1]heptan-2-yl)bicyclo[2.2.2]octan-2-ol` were named flat), and 2,4-difluoroadamantane lost the centres OPSIN reads along with the two it cannot (2 of 4).
+* When the by-locant strip parses but no longer pins the input, `_pinning_subset_of_descriptors` drops descriptors by atom, fewest first (at most 48 candidates, read in one OPSIN launch), and keeps the first name OPSIN reads to exactly the input (`_smiles_pins_structure`, the criterion `_name_pins_structure` already used). Measured: the adamantane 2 of 4 to 4 of 4, the norbornyl case 0 of 10 to 10 of 10, the cyclohexyl control 4 of 4 unchanged. The validator limits are unchanged (a substituted bicyclo[3.3.1]nonane bridgehead, pseudoasymmetric `r`/`s`, an adamantane spiro).
+* New `tests/test_namer_round91_stereo_is_dropped_by_atom_not_by_locant_number.py`. The application's known-defects rows D-388 and D-388b have no counterpart here: this fork's table does not carry the rows of rounds 88 to 90 either.
+
+Ported from xaerogonzo/OpenChem-Studio#501.
