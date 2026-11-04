@@ -2304,12 +2304,10 @@ Ported from xaerogonzo/OpenChem-Studio#488.
 
 Ported from xaerogonzo/OpenChem-Studio#501.
 
-## Coverage matrix (2026-11-03): nested dispiro, acyl azanide, boron spiro anion (D-390 .. D-394)
+## Naming round 93: flat dispiro, azanide enclosure, boron spiro uide (D-390 .. D-394)
 
-No engine change. The application's WS2 coverage cells were run; five measured gaps are now OPEN rows. This is not naming round 92 (that round is D-389, already in the application).
+* **`name_polycyclic_spiro`** calls `_try_multicomponent_spiro` before nested articulation (NL-011). Measured flat names on the three seed-8901 chains that read back (`D-390`, `D-393`, `D-394`); seventeen other flats in that set are still unparsable by OPSIN.
+* **`_render_azanide`** parenthesises compound acyl prefixes with an inline substituent and no locant character (`(chloroacetyl)azanide`, D-391).
+* **`_classify_boron_spiro_anion`** / **`_render_boron_spiro_anion`**: a ring spiro-centred boron anion names as the P-72.4 method-(1) PIN (`4-boraspiro[3.4]octan-4-uide`, D-392).
 
-* **D-390, D-393, D-394.** A chain of three polycyclic components is classed bridged (`spiro_sizes` empty), so `_try_multicomponent_spiro`'s flat dispiro name is never offered and `name_polycyclic_spiro` emits a nested `spiro[spiro[...]]` that OPSIN cannot parse. The three flat names read back as the inputs.
-* **D-391.** `_render_azanide` only encloses an acyl name that contains a locant, a comma, a parenthesis or a space, so `chloroacetylazanide` is written solid. OPSIN reads `(chloroacetyl)azanide` as the anion.
-* **D-392.** A tetracoordinate boron anion as the spiro atom is refused. P-72.4 method (1) is the PIN, formed on the skeletal-replacement parent with the suffix `uide`; the printed analogue is `2,2-dimethyl-2-boraspiro[4.5]decan-2-uide` (BlueBookV2.pdf p. 812). OPSIN reads `4-boraspiro[3.4]octan-4-uide` as this anion. The nearest name in the error is the neutral `4lambda4-boraspiro[3.4]octane`. Method (2), `4-boranuidaspiro[3.4]octane`, also denotes the anion and is not the PIN. `test_open_defect_still_open` treats a `ValueError` as no name, so the xfail stays an xfail instead of an error.
-
-The application's known-defects rows came across by hand. Ported from xaerogonzo/OpenChem-Studio#542.
+Ported from xaerogonzo/OpenChem-Studio (naming round 93, pending application PR).
