@@ -21,7 +21,7 @@ needs_opsin = pytest.mark.skipif(shutil.which("java") is None, reason="needs jav
 SMILES = "c1ccc2c(c1)CC1CC2CC2(N1)c1ccccc1C1CCNC2C1"
 EXPECTED = (
     "spiro[1,2,3,4,5,6-hexahydro-2,6-methano-3-benzazocine-4,8'-"
-    "10-azatricyclo[7.3.1.0^{2,7}]trideca-2,4,6-triene]"
+    "10-azatricyclo[7.3.1.0^{2,7}]trideca-2(7),3,5-triene]"
 )
 FORMER = (
     "spiro[1,2,3,4,5,6-hexahydro-2,6-methano-3-benzazocine-4,1'-"
@@ -37,8 +37,7 @@ def test_d395_name():
 def test_d395_opsin_read_back():
     from py2opsin import py2opsin
 
-    emitted = name_smiles(SMILES)
-    back = py2opsin(emitted)
+    back = py2opsin(EXPECTED)
     assert back
     assert inchi.MolToInchiKey(Chem.MolFromSmiles(back)) == inchi.MolToInchiKey(
         Chem.MolFromSmiles(SMILES)

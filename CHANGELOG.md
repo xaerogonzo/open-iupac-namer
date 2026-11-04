@@ -2315,5 +2315,6 @@ Ported from xaerogonzo/OpenChem-Studio (naming round 93, pending application PR)
 ## NL-012 shape 4: bis methano-benzazocine spiro (D-395)
 
 * **`_try_articulation_split_spiro`**: when both spiro partners would cite the same ring-table PIN, the primed partner is named by its von Baeyer systematic name at locants OPSIN accepts (`4,8'` on the seed-8902 bis-benzazocine).
+* Pin **`rdkit==2025.9.6`** (matches OpenChem Studio's vendor pin; an unpinned install pulled 2026.09.1 and changed von Baeyer locant formatting on this case).
 
-Ported from xaerogonzo/OpenChem-Studio (NL-012 / D-395, application PR pending).
+Ported from xaerogonzo/OpenChem-Studio#545.
