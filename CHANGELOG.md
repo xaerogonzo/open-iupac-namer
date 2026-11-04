@@ -2318,3 +2318,10 @@ Ported from xaerogonzo/OpenChem-Studio (naming round 93, pending application PR)
 * Pin **`rdkit==2025.9.6`** (matches OpenChem Studio's vendor pin; an unpinned install pulled 2026.09.1 and changed von Baeyer locant formatting on this case).
 
 Ported from xaerogonzo/OpenChem-Studio#545.
+
+## Naming round 94 (NL-011 bucket A): multicomponent von-Baeyer spiro locants
+
+* **`_spiro_locants_for_component` / `_component_fallback_locants`**: when a chain component's von-Baeyer partner exposes empty `numbering_options`, spiro locants come from `compute_vb_numberings` (same pin as D-381/D-382 in the split-spiro path). Seed 8901 chains #10, #16 and #17 compose flat `dispiro[...]` instead of nested `spiro[spiro[...]]`; measured 19 of 20 emitted names read back (was 3).
+* New `tests/test_namer_round94_nl011_multicomponent_vb_locants.py`.
+
+Pending xaerogonzo/OpenChem-Studio application PR on `claude/naming-round-94-nl011-wt`.
