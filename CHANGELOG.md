@@ -2335,3 +2335,13 @@ RDKit drops `=[C@]=` and does not CIP-label an even cumulene. The engine restore
 * New `tests/test_namer_nl109_vs231_cumulene_axis.py`.
 
 Ported from xaerogonzo/OpenChem-Studio#569.
+
+## NL-109: VS231 cites (1s) with the cumulene (1p)
+
+RDKit still leaves the cyclohexyl centre as `?`. Pair that SMILES `@`/`@@` with the one restored helix (`p`+`@` → `s`; flipping either bit → `r`).
+
+* CIP Validation Suite VS231 `CC=[C@]=C1CC[C@H](CC1)CC` names as `(1s)-1-ethyl-4-[(1p)-prop-1-en-1-ylidene]cyclohexane`; opposite allene is `(1r)` with `(1m)`; opposite ring winding is `(1r)` with `(1p)`.
+* Helical sense and the paired `r`/`s` are that mapping, not a full CIP ranking of the extended tetrahedron.
+* `tests/test_namer_nl109_vs231_cumulene_axis.py` updated. `tests/test_namer_nl001_nl005_ws1_validator_evidence.py` ported; NL-001 closed as a validator limit.
+
+Ported from xaerogonzo/OpenChem-Studio#571.
