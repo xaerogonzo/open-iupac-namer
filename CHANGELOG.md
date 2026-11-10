@@ -2325,3 +2325,13 @@ Ported from xaerogonzo/OpenChem-Studio#545.
 * New `tests/test_namer_round94_nl011_multicomponent_vb_locants.py`.
 
 Pending xaerogonzo/OpenChem-Studio application PR on `claude/naming-round-94-nl011-wt`.
+
+## NL-109: VS231 cumulene axis cites (1p) on the ylidene
+
+RDKit drops `=[C@]=` and does not CIP-label an even cumulene. The engine restores a helical letter from the SMILES winding onto the centre (`perception/cumulene.py`), emits `StereoCenter.type == "axial"`, and cites it on the carved ylidene.
+
+* CIP Validation Suite VS231 `CC=[C@]=C1CC[C@H](CC1)CC` names as `1-ethyl-4-[(1p)-prop-1-en-1-ylidene]cyclohexane`; `=[C@@]=` is `(1m)`.
+* The cyclohexyl `7s` is still omitted (RDKit `_CIPCode` absent, centre `?`). Helical sense is the `@`/`@@` mapping, not a full CIP ranking of the extended tetrahedron.
+* New `tests/test_namer_nl109_vs231_cumulene_axis.py`.
+
+Ported from xaerogonzo/OpenChem-Studio#569.
