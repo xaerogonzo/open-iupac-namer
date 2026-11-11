@@ -2345,3 +2345,11 @@ RDKit still leaves the cyclohexyl centre as `?`. Pair that SMILES `@`/`@@` with 
 * `tests/test_namer_nl109_vs231_cumulene_axis.py` updated. `tests/test_namer_nl001_nl005_ws1_validator_evidence.py` ported; NL-001 closed as a validator limit.
 
 Ported from xaerogonzo/OpenChem-Studio#571.
+
+## NL-005: close adamantane-spiro stereo as a validator limit
+
+No engine change. The round-88 ylidene 23 keep the measured triage; the methyl adamantane spiro still names every embeddable stereoisomer as `6'-methylspiro[tricyclo[3.3.1.1^{3,7}]decane-2,1'-cyclohexane]` and OPSIN does not pin that flat name.
+
+* `tests/test_namer_nl001_nl005_ws1_validator_evidence.py` updated with an OPSIN non-pinning pin alongside the flat-name pin.
+
+Ported from xaerogonzo/OpenChem-Studio#576.
