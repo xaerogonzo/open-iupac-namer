@@ -2353,3 +2353,11 @@ No engine change. The round-88 ylidene 23 keep the measured triage; the methyl a
 * `tests/test_namer_nl001_nl005_ws1_validator_evidence.py` updated with an OPSIN non-pinning pin alongside the flat-name pin.
 
 Ported from xaerogonzo/OpenChem-Studio#576.
+
+## NL-012 spiro diketones (round 84/85 pteridinone shapes)
+
+When a spiro parent carries two ring ketones whose suffix locants mix primed and unprimed numbers, cite ``-2',4(3H)-dione``: the unprimed tetrahydropteridine lactam carries the ``(3H)`` added hydrogen; ``-2',4-dione`` stayed unreadable. Unprimed-only spiro diketones (for example hydantoin on norbornane) are unchanged.
+
+* Pinned in ``tests/test_namer_nl012_spiro_open_defects_post_round84.py`` (OPSIN read-back measured).
+
+Pending xaerogonzo/OpenChem-Studio application PR on ``naming/ws3-nl023-p3-closure``.
